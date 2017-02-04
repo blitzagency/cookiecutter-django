@@ -1,0 +1,5 @@
+-r base.txt
+
+gevent==1.1.1
+django-postgrespool==0.3.0
+newrelic==2.32.0.28

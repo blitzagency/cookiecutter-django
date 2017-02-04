@@ -1,0 +1,35 @@
+<div class="tcms-modal fade" id="js-tcms-modal" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="tcms-modal-dialog">
+        <div class="tcms-modal-content">
+            <div class="tcms-modal-header">
+                <button type="button" class="tcms-btn-close"
+                   data-dismiss="modal">
+                       <span aria-hidden="true">&times;</span>
+                       <span class="sr-only">Close</span>
+                </button>
+                <h4 class="tcms-modal-title">Edit Copy</h4>
+            </div>
+            <div class="tcms-modal-body">
+                <form role="form" id="editable-form">
+                  <div class="tcms-form-group">
+                    <label for="edit-copy">Text:</label>
+                        <div class="edit-copy"></div>
+                  </div>
+                  <button type="submit" class="tcms-btn-submit">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    UPLOADCARE_PUBLIC_KEY = 'demopublickey';
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js">
+    jQuery.noConflict();
+</script>
+<script src="https://ucarecdn.com/libs/widget/2.10.3/uploadcare.min.js" charset="utf-8"></script>
+<script src="/static/templatecms-modal.js"></script>
+<script src="/static/templatecms.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/styles.css">

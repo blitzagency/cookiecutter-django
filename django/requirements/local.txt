@@ -1,0 +1,7 @@
+-r base.txt
+
+django-debug-toolbar~=1.6.0
+pdbpp
+pylint
+coverage
+Fabric==1.11.1

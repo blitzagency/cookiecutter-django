@@ -1,0 +1,34 @@
+
+version: "2"
+services:
+  django:
+    image: blitzagency/python-web:3
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./django:/usr/app
+    stdin_open: true
+    working_dir: /usr/app/
+    tty: true
+    command: "/bin/bash"
+    links:
+      - postgres:postgres
+    environment:
+      DJANGO_SETTINGS_MODULE: app.config.settings.local
+      PYTHONPATH: /usr/app/django/project:/usr/app/django/project/vendor
+      DJANGO_DEBUG: "true"
+    logging:
+      driver: none
+
+  postgres:
+    image: postgres:latest
+    restart: always
+    volumes:
+      - /usr/lib/postgresql
+      - .:/usr/app
+    environment:
+     POSTGRES_USER: vagrant
+     POSTGRES_PASSWORD: vagrant
+    logging:
+      driver: none
+

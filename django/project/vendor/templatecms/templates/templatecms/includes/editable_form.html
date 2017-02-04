@@ -1,0 +1,15 @@
+<span class="tcms-editable">
+    {{parsed}}
+    {% if editable_type == 'copy' %}
+    <button class="tcms-btn-edit" data-toggle="modal" data-target="#js-tcms-modal" data-key={{lookup_key}} data-copy="{{copy_value}}">Edit</button>
+    {% else %}
+    <input 
+        type="hidden"
+        role="uploadcare-uploader"
+        name="editable-image"
+        data-key="{{lookup_key}}"
+    />
+    {% endif %}
+</span>
+
+
