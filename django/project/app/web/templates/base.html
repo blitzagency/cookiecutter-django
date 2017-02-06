@@ -1,6 +1,6 @@
 {% load static from staticfiles %}
 {% load mezzanine_tags %}
-{% load require %}<!doctype html>
+<!doctype html>
 <!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
 <!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
 <!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
@@ -21,8 +21,7 @@
     {% block headstyle %}{% endblock %}
 
     {% block headscript %}
-        <script type="text/javascript" src="{{STATIC_URL}}js/vendor/require.js"></script>
-        <script>
+        <script type="text/javascript">
         window.config = {
             staticUrl: '{{STATIC_URL}}',
             mediaUrl: '{{MEDIA_URL}}'
@@ -46,12 +45,7 @@
 
         {% block jsapp %}
             <script type="text/javascript">
-            require(["{% static 'js/common.js'%}"], function (common) {
-                require.config({
-                    baseUrl: "{{STATIC_URL}}js"
-                });
-                require(['{%  block jsmain %}global{% endblock %}']);
-            });
+
             </script>
         {% endblock %}
 
@@ -59,11 +53,6 @@
 
         {% block extra_js %}{% endblock extra_js %}
 
-        {% if user.is_staff %}
-        <script src="{{ STATIC_URL }}mezzanine/js/jquery-1.8.3.min.js">
-            jQuery.noConflict();
-        </script>
-        {% endif %}
         {% editable_loader %}
 
         <script>

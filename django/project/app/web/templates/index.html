@@ -1,72 +1,9 @@
 {% extends 'base.html' %}
-{% load templatecms_tags %}
 
 {% block body_class %}home-page{% endblock body_class %}
 
 {% block content %}
-<style type="text/css">
-    .container {
-        width: 1000px;
-        margin: 0 auto;
-    }
-</style>
-<h1>Home Page</h1>
-
-<div class="container">
-    <div class="row">
-        <div class="col-xs-12">
-            {% editable headline copy %}
-            <h2>
-                {% initial_value headline %}
-                aaaaaaaaaaa
-                {% endinitial_value %}
-            </h2>
-            {% endeditable %}
-        </div>
-    </div>
-</div>
-
-<div class="container">
-    <div class="row">
-        <div class="col-xs-12">
-            {% editable headline copy %}
-            <h2>
-                {% initial_value headline %}
-                bbbbbbbbbbbb
-                {% endinitial_value %}
-            </h2>
-            {% endeditable %}
-        </div>
-    </div>
-</div>
-
-<div class="container">
-    <div class="row">
-        <div class="col-xs-12">
-            {% editable headline copy %}
-            <h2>
-                {% initial_value headline %}
-                cccccccccccc
-                {% endinitial_value %}
-            </h2>
-            {% endeditable %}
-        </div>
-    </div>
-</div>
-
-<div class="container">
-    <div class="row">
-        <div class="col-xs-12">
-            {% editable someImage uc_image %}
-                <img src="{% initial_value someImage %}http://placehold.it/350x150{% endinitial_value %}">
-            {% endeditable %}
-        </div>
-    </div>
-</div>
-
-{% if request.user.is_superuser %}
-    {% include "templatecms/templatecms.html" %}
-{% endif %}
+home!
 
 
 {% endblock %}

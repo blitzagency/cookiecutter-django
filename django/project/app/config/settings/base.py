@@ -163,7 +163,7 @@ FIXTURE_DIRS = (
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": (normpath(join(PROJECT_ROOT, "templates")),),
+        "DIRS": (normpath(join(PROJECT_ROOT, "app", "overrides", "templates")),),
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": (
@@ -219,7 +219,7 @@ ROOT_URLCONF = 'app.config.urls'
 
 # ######### APP CONFIGURATION
 DJANGO_APPS = (
-    'app.utils',
+    'app.utils.apps.AppUtilsConfig',
     'grappelli_safe',
     'filebrowser_safe',
     # Default Django apps:
@@ -241,7 +241,6 @@ DJANGO_APPS = (
 
 THIRD_PARTY_APPS = (
     'django_extensions',
-    # 'require',
     "mezzanine.boot",
     "mezzanine.conf",
     "mezzanine.core",
@@ -251,19 +250,15 @@ THIRD_PARTY_APPS = (
     "mezzanine.galleries",
     'redactor',
     'adminsortable2',
-    # Database migration helpers:
-
-
 )
 
 # Apps specific for this project go here.
 LOCAL_APPS = (
     'app.web.apps.AppWebConfig',
-    'templatecms',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
-INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
+INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_PARTY_APPS
 # ######### END APP CONFIGURATION
 
 # ######### WSGI CONFIGURATION
