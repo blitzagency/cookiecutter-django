@@ -1,6 +1,11 @@
 """Common settings and globals."""
 import dj_database_url
+import environ
 from os.path import abspath, basename, dirname, join, normpath
+
+env = environ.Env()
+
+environ.Env.read_env(".env")
 
 # ######### PATH CONFIGURATION
 # Absolute filesystem path to the Django project directory:
@@ -12,7 +17,7 @@ PROJECT_ROOT = abspath(join(dirname(__file__), '../../../'))
 
 # Site name:
 SITE_NAME = basename(DJANGO_ROOT)
-GRAPPELLI_ADMIN_TITLE = "sportlogos"
+GRAPPELLI_ADMIN_TITLE = "project_name"
 # ######### END PATH CONFIGURATION
 
 
@@ -61,13 +66,16 @@ REDIS_HOST = 'redis://localhost:6379'
 
 
 # ######### CACHE CONFIGURATION
+
+CACHE_TIMEOUT = env("CACHE_TIMEOUT", default=60 * 60)
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        'LOCATION': '127.0.0.1:11211',
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'TIMEOUT': CACHE_TIMEOUT,
     }
 }
-CACHE_TIMEOUT = 60 * 60
+
+
 # ######### END CACHE CONFIGURATION
 
 # ######### GENERAL CONFIGURATION

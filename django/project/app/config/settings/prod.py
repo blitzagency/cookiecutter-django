@@ -1,8 +1,11 @@
-from os import getenv
 import dj_database_url
-from os import environ
+import environ
 from .base import *
 
+
+env = environ.Env(
+    DEBUG=(bool, False),
+)
 
 # DEBUG CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#debug
@@ -18,16 +21,16 @@ TEMPLATE_DEBUG = DEBUG
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#email-host
-EMAIL_HOST = environ.get('EMAIL_HOST', 'smtp.gmail.com')
+EMAIL_HOST = env('EMAIL_HOST', default='smtp.gmail.com')
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#email-host-password
-EMAIL_HOST_PASSWORD = environ.get('EMAIL_HOST_PASSWORD', '')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD', default='')
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#email-host-user
-EMAIL_HOST_USER = environ.get('EMAIL_HOST_USER', 'your_email@example.com')
+EMAIL_HOST_USER = env('EMAIL_HOST_USER', default='your_email@example.com')
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#email-port
-EMAIL_PORT = environ.get('EMAIL_PORT', 587)
+EMAIL_PORT = env('EMAIL_PORT', default=587)
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#email-subject-prefix
 EMAIL_SUBJECT_PREFIX = '[%s] ' % SITE_NAME
@@ -53,9 +56,6 @@ DATABASE_POOL_ARGS = {
     'pool_size': 7,
     'recycle': 300,
 }
-
-# REDIS_HOST = getenv('REDISTOGO_URL', 'redis://localhost:6379')
-# END DATABASE CONFIGURATION
 
 
 # CACHE CONFIGURATION
@@ -162,9 +162,9 @@ LOGGING = {
 
 # AWS settings
 USE_HTTPS_FOR_ASSETS = False
-AWS_ACCESS_KEY_ID = getenv('AWS_ACCESS_KEY_ID', '#####################')
-AWS_SECRET_ACCESS_KEY = getenv(
-    'AWS_SECRET_ACCESS_KEY', '########################################')
+AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID', default='#####################')
+AWS_SECRET_ACCESS_KEY = env(
+    'AWS_SECRET_ACCESS_KEY', default='#######################################')
 AWS_QUERYSTRING_AUTH = False
 AWS_BUCKET_NAME = AWS_STORAGE_BUCKET_NAME = 'sportlogos-prod'
 STATICFILES_STORAGE = 'app.utils.storage.OptimizedS3BotoStorage'
@@ -177,8 +177,8 @@ MEDIA_URL = '{}://{}.s3.amazonaws.com/uploads/'.format(
 
 
 UPLOADCARE = {
-    'pub_key': os.environ.get('UPLOADCARE_PUB_KEY',),
-    'secret': os.environ.get('UPLOADCARE_SECRET_KEY',),
+    'pub_key': env('UPLOADCARE_PUB_KEY', default="#####################"),
+    'secret': env('UPLOADCARE_SECRET_KEY', default="#####################"),
 }
 
 
@@ -192,7 +192,7 @@ UPLOADCARE = {
 # "##############.cloudfront.net"
 
 
-ASSET_VERSION = getenv("ASSET_VERSION")
+ASSET_VERSION = env("ASSET_VERSION", default=False)
 if ASSET_VERSION:
     # set path of assets in s3 bucket, note this is '' by default
     AWS_LOCATION = '%s/' % ASSET_VERSION
@@ -204,6 +204,6 @@ AWS_HEADERS = {
     'Cache-Control': 'max-age=31536000',
 }
 
-ALLOWED_HOSTS += ('.sportlogos.com', '.herokuapp.com', '*',)
+ALLOWED_HOSTS += ('.sportlogos.com', '.herokuapp.com',)
 
 SLACK_USER_NAME = 'Logger:PROD'
