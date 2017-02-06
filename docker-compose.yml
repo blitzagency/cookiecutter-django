@@ -15,7 +15,7 @@ services:
       - postgres:postgres
     environment:
       DJANGO_SETTINGS_MODULE: app.config.settings.local
-      PYTHONPATH: /usr/app/django/project:/usr/app/django/project/vendor
+      PYTHONPATH: /usr/app/project:/usr/app/project/vendor
       DJANGO_DEBUG: "true"
     logging:
       driver: none

@@ -10,8 +10,7 @@ DJANGO_ROOT = dirname(dirname(abspath(__file__)))
 
 # Absolute filesystem path to the top-level project folder:
 SITE_ROOT = dirname(DJANGO_ROOT)
-PROJECT_ROOT = abspath(join(dirname(__file__), '../'))
-
+PROJECT_ROOT = abspath(join(dirname(__file__), '../../../'))
 # remove apps prefix
 # APPS_ROOT = join(PROJECT_ROOT, "apps")
 # if APPS_ROOT not in path:
@@ -176,10 +175,9 @@ TEMPLATES = [
                 "django.template.context_processors.tz",
                 "django.contrib.messages.context_processors.messages",
                 "django.template.context_processors.request",
-                "utils.context_processors.global_variables",
+                "app.utils.context_processors.global_variables",
                 "mezzanine.conf.context_processors.settings",
                 "mezzanine.pages.context_processors.page",
-                "sportlogos.context_processors.site"
             ),
             "builtins": [
                 "mezzanine.template.loader_tags",
@@ -221,7 +219,7 @@ ROOT_URLCONF = 'app.config.urls'
 
 # ######### APP CONFIGURATION
 DJANGO_APPS = (
-    # 'utils',
+    'app.utils',
     # 'grappelli_safe',
     # 'filebrowser_safe',
     # Default Django apps:

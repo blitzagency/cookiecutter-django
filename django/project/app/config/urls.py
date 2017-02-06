@@ -9,9 +9,8 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = [
-    # url(r'^grappelli/', include('grappelli.urls')),
-    # url(r'^admin/', include(admin.site.urls)),
-    # url(r'^redactor/', include('redactor.urls')),
-    # url(r'^', include('sportlogos.urls')),
-    # url(r'^', include("mezzanine.urls")),
+    url(r'^grappelli/', include('grappelli.urls')),
+    url(r'^admin/', include(admin.site.urls)),
+    url(r'^redactor/', include('redactor.urls')),
+    url(r'^', include("mezzanine.urls")),
 ]
