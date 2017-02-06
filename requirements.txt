@@ -1,1 +1,1 @@
--r django/requirements/prod.txt
+-r django/requirements/production.txt
