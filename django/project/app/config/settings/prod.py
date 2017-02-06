@@ -125,7 +125,7 @@ LOGGING = {
         },
         'slack': {
             'level': 'ERROR',
-            'class': 'app.project.apps.utils.log.SlackHandler',
+            'class': 'app.utils.log.SlackHandler',
             'formatter': 'verbose',
         },
     },

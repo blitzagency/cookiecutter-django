@@ -45,6 +45,7 @@ heroku config:set DISABLE_COLLECTSTATIC=1
 heroku config:set DJANGO_SETTINGS_MODULE=app.config.settings.prod
 heroku addons:create heroku-postgresql:hobby-dev
 heroku config:set DISABLE_COLLECTSTATIC=1
+heroku config:set PYTHONPATH=/app/django/project:/app/django/project/vendor
 git push heroku master
 ```
 `git push prod master` if you renamed your remote

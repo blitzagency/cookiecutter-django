@@ -77,6 +77,11 @@ LOGGING = {
             'class': 'logging.StreamHandler',
             'formatter': 'simple',
         },
+        'slack': {
+            'level': 'ERROR',
+            'class': 'app.utils.log.SlackHandler',
+            'formatter': 'verbose',
+        },
     },
     'loggers': {
         '': {
