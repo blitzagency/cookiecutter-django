@@ -1,4 +1,3 @@
-from os.path import join, normpath
 from os import getenv
 import dj_database_url
 from os import environ
@@ -62,33 +61,7 @@ DATABASE_POOL_ARGS = {
 # CACHE CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#caches
 # https://devcenter.heroku.com/articles/django-memcache#start-using-memcache
-def get_cache():
-    import os
-    try:
-        os.environ['MEMCACHE_SERVERS'] = os.environ['MEMCACHIER_SERVERS']\
-            .replace(',', ';')
-        os.environ['MEMCACHE_USERNAME'] = os.environ['MEMCACHIER_USERNAME']
-        os.environ['MEMCACHE_PASSWORD'] = os.environ['MEMCACHIER_PASSWORD']
 
-        return {
-            'default': {
-                'BACKEND': 'django_pylibmc.memcached.PyLibMCCache',
-                'TIMEOUT': 500,
-                'BINARY': True,
-                'OPTIONS': {'tcp_nodelay': True}
-            }
-        }
-    except:
-        return {
-            'default': {
-                'BACKEND': 'django.core.cache.backends.locmem.LocMemCache'
-            }
-        }
-
-# uncomment this, and delete the next instance of CACHES to turn on memcachier
-# which is a heroku plugin
-# https://addons.heroku.com/memcachier?utm_campaign=category&utm_medium=dashboard&utm_source=addons
-# CACHES = get_cache()
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',

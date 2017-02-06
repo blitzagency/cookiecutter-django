@@ -1,8 +1,6 @@
 """Common settings and globals."""
 import dj_database_url
-import os
 from os.path import abspath, basename, dirname, join, normpath
-from sys import path
 
 # ######### PATH CONFIGURATION
 # Absolute filesystem path to the Django project directory:
@@ -11,18 +9,10 @@ DJANGO_ROOT = dirname(dirname(abspath(__file__)))
 # Absolute filesystem path to the top-level project folder:
 SITE_ROOT = dirname(DJANGO_ROOT)
 PROJECT_ROOT = abspath(join(dirname(__file__), '../../../'))
-# remove apps prefix
-# APPS_ROOT = join(PROJECT_ROOT, "apps")
-# if APPS_ROOT not in path:
-#     path.insert(0, APPS_ROOT)
 
 # Site name:
 SITE_NAME = basename(DJANGO_ROOT)
 GRAPPELLI_ADMIN_TITLE = "sportlogos"
-# Add our project to our pythonpath, this way we don't need to type our project
-# name in our dotted import paths:
-# path.append(DJANGO_ROOT)
-
 # ######### END PATH CONFIGURATION
 
 
@@ -34,7 +24,7 @@ DEBUG = False
 # ######### MANAGER CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#admins
 ADMINS = (
-    ('sportlogos administrator',
+    ('app admin',
      'ryanfabian21@gmail.com'),
 )
 
@@ -50,6 +40,11 @@ DATABASES = {
 }
 # ######### END DATABASE CONFIGURATION
 
+
+# ######### EMAIL CONFIGURATION
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# ######### END EMAIL CONFIGURATION
 
 # ######### CELERY CONFIGURATION
 #: Only add pickle to this list if your broker is secured
@@ -163,7 +158,8 @@ FIXTURE_DIRS = (
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": (normpath(join(PROJECT_ROOT, "app", "overrides", "templates")),),
+        "DIRS": (normpath(
+            join(PROJECT_ROOT, "app", "overrides", "templates")),),
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": (
