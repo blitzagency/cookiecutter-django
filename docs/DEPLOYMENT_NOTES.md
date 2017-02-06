@@ -43,10 +43,7 @@ heroku config:set DISABLE_COLLECTSTATIC=1
 
 ```
 heroku config:set DJANGO_SETTINGS_MODULE=app.config.settings.prod
-heroku config:set BUILDPACK_URL=https://github.com/ddollar/heroku-buildpack-multi.git
-heroku buildpacks:set heroku/python
 heroku addons:create heroku-postgresql:hobby-dev
-heroku pg:promote {name of db that was created from last command}
 git push heroku master
 ```
 `git push prod master` if you renamed your remote
