@@ -2,55 +2,39 @@
 
 from .base import *
 
+# -------------------------------------
+# DJANGO CONFIGURATION
+# -------------------------------------
 
-# ######### DEBUG CONFIGURATION
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#debug
+# Django Setup
+# =====================================
+
 DEBUG = True
 
+ALLOWED_HOSTS += ("docker.local", ".ngrok.io",)
 
-# ######### TOOLBAR CONFIGURATION
-# See:
-# https://github.com/django-debug-toolbar/django-debug-toolbar#installation
+# Installed Apps
+# =====================================
+
 INSTALLED_APPS += (
     'debug_toolbar',
-    # 'storages',
+    'storages',
 )
 
-# See:
-# https://github.com/django-debug-toolbar/django-debug-toolbar#installation
-INTERNAL_IPS = ('127.0.0.1',)
-
-# See:
-# https://github.com/django-debug-toolbar/django-debug-toolbar#installation
-
-
-def show_toolbar(request):
-    return True
-
-DEBUG_TOOLBAR_CONFIG = {
-    'SHOW_TOOLBAR_CALLBACK': show_toolbar,
-}
+# Middleware
+# =====================================
 
 MIDDLEWARE += (
     "debug_toolbar.middleware.DebugToolbarMiddleware",
 )
-# ######### END TOOLBAR CONFIGURATION
 
-# ######### STORAGE SETTINGS
+# Staticfiles
+# =====================================
 
 STATICFILES_STORAGE = 'require.storage.OptimizedStaticFilesStorage'
 
-# ######### END STORAGE SETTINGS
-
-
-# ######### LOGGING CONFIGURATION
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#logging
-# A sample logging configuration. The only tangible logging
-# performed by this configuration is to send an email to
-# the site admins on every HTTP 500 error when DEBUG=False.
-# See http://docs.djangoproject.com/en/dev/topics/logging for
-# more details on how to customize your logging configuration.
-#
+# Logging
+# =====================================
 
 LOGGING = {
     'version': 1,
@@ -89,11 +73,6 @@ LOGGING = {
             'level': 'WARNING',
             'propagate': False,
         },
-        'sportlogos': {
-            'handlers': ['stream'],
-            'level': 'DEBUG',
-            'propagate': False,
-        },
         'django.db': {
             'handlers': ['stream'],
             'level': 'WARNING',
@@ -111,4 +90,21 @@ LOGGING = {
         },
     }
 }
-# ######### END LOGGING CONFIGURATION
+
+# -------------------------------------
+# THIRD-PARTY CONFIGURATION
+# -------------------------------------
+
+# Django Debug Toolbar
+# =====================================
+
+
+def show_toolbar(request):
+    return True
+
+
+INTERNAL_IPS = ('127.0.0.1',)
+
+DEBUG_TOOLBAR_CONFIG = {
+    'SHOW_TOOLBAR_CALLBACK': show_toolbar,
+}

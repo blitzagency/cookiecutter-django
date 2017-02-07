@@ -1,53 +1,28 @@
-import dj_database_url
-import environ
+"""Production settings and globals."""
+
 from .base import *
 
+# -------------------------------------
+# DJANGO CONFIGURATION
+# -------------------------------------
 
-env = environ.Env(
-    DEBUG=(bool, False),
-)
+# Django Setup
+# =====================================
 
-# DEBUG CONFIGURATION
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#debug
 DEBUG = False
 
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#template-debug
-TEMPLATE_DEBUG = DEBUG
-# END DEBUG CONFIGURATION
+ALLOWED_HOSTS += ('.herokuapp.com',)
 
+# Installed Apps
+# =====================================
 
-# EMAIL CONFIGURATION
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+INSTALLED_APPS += (
+    'gunicorn',
+    'storages',
+)
 
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#email-host
-EMAIL_HOST = env('EMAIL_HOST', default='smtp.gmail.com')
-
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#email-host-password
-EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD', default='')
-
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#email-host-user
-EMAIL_HOST_USER = env('EMAIL_HOST_USER', default='your_email@example.com')
-
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#email-port
-EMAIL_PORT = env('EMAIL_PORT', default=587)
-
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#email-subject-prefix
-EMAIL_SUBJECT_PREFIX = '[%s] ' % SITE_NAME
-
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#email-use-tls
-EMAIL_USE_TLS = True
-
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#server-email
-SERVER_EMAIL = EMAIL_HOST_USER
-# END EMAIL CONFIGURATION
-
-
-# DATABASE CONFIGURATION
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
-DATABASES = {
-    'default': dj_database_url.config(default='postgres://localhost'),
-}
+# Databases
+# =====================================
 
 DATABASES['default']['ENGINE'] = 'django_postgrespool'
 
@@ -57,42 +32,50 @@ DATABASE_POOL_ARGS = {
     'recycle': 300,
 }
 
+# Staticfiles
+# =====================================
 
-# CACHE CONFIGURATION
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#caches
-# https://devcenter.heroku.com/articles/django-memcache#start-using-memcache
+STATICFILES_STORAGE = 'app.utils.storage.OptimizedS3BotoStorage'
 
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-    }
-}
-# END CACHE CONFIGURATION
+DEFAULT_FILE_STORAGE = "app.utils.storage.MediaRootS3BotoStorage"
 
+ASSET_PROTOCOL = 'https' if USE_HTTPS_FOR_ASSETS else 'http'
 
-# TOOLBAR CONFIGURATION
-# See:
-# https://github.com/django-debug-toolbar/django-debug-toolbar#installation
-INSTALLED_APPS += (
-    'gunicorn',
-    'storages',
-)
+STATIC_URL = '{}://{}.s3.amazonaws.com/'.format(
+    ASSET_PROTOCOL, AWS_STORAGE_BUCKET_NAME)
 
-# See:
-# https://github.com/django-debug-toolbar/django-debug-toolbar#installation
-INTERNAL_IPS = ('127.0.0.1',)
+MEDIA_URL = '{}://{}.s3.amazonaws.com/uploads/'.format(
+    ASSET_PROTOCOL, AWS_STORAGE_BUCKET_NAME)
 
+if ASSET_VERSION:
+    # set path of assets in s3 bucket, note this is '' by default
+    AWS_LOCATION = '%s/' % ASSET_VERSION
+    STATIC_URL += AWS_LOCATION
 
-# ALLOWED_HOSTS += ('example.com',)
+# Email / SMTP
+# =====================================
 
+# TODO: Update to use env
 
-# ######### LOGGING CONFIGURATION
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#logging
-# A sample logging configuration. The only tangible logging
-# performed by this configuration is to send an email to
-# the site admins on every HTTP 500 error when DEBUG=False.
-# See http://docs.djangoproject.com/en/dev/topics/logging for
-# more details on how to customize your logging configuration.
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_HOST = env('EMAIL_HOST', default='smtp.gmail.com')
+
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD', default='')
+
+EMAIL_HOST_USER = env('EMAIL_HOST_USER', default='your_email@example.com')
+
+EMAIL_PORT = env('EMAIL_PORT', default=587)
+
+EMAIL_SUBJECT_PREFIX = '[%s] ' % SITE_NAME
+
+EMAIL_USE_TLS = True
+
+SERVER_EMAIL = EMAIL_HOST_USER
+
+# Logging
+# =====================================
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': True,
@@ -136,11 +119,6 @@ LOGGING = {
             'level': 'WARNING',
             'propagate': False,
         },
-        'sportlogos': {
-            'handlers': ['slack', 'stream'],
-            'level': 'INFO',
-            'propagate': False,
-        },
         'django.db': {
             'handlers': ['slack', 'stream'],
             'level': 'WARNING',
@@ -157,53 +135,19 @@ LOGGING = {
         },
     }
 }
-# ######### END LOGGING CONFIGURATION
 
+# -------------------------------------
+# THIRD-PARTY CONFIGURATION
+# -------------------------------------
 
-# AWS settings
-USE_HTTPS_FOR_ASSETS = False
-AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID', default='#####################')
-AWS_SECRET_ACCESS_KEY = env(
-    'AWS_SECRET_ACCESS_KEY', default='#######################################')
-AWS_QUERYSTRING_AUTH = False
-AWS_BUCKET_NAME = AWS_STORAGE_BUCKET_NAME = 'sportlogos-prod'
-STATICFILES_STORAGE = 'app.utils.storage.OptimizedS3BotoStorage'
-DEFAULT_FILE_STORAGE = "app.utils.storage.MediaRootS3BotoStorage"
-ASSET_PROTOCOL = 'https' if USE_HTTPS_FOR_ASSETS else 'http'
-STATIC_URL = '{}://{}.s3.amazonaws.com/'.format(
-    ASSET_PROTOCOL, AWS_STORAGE_BUCKET_NAME)
-MEDIA_URL = '{}://{}.s3.amazonaws.com/uploads/'.format(
-    ASSET_PROTOCOL, AWS_STORAGE_BUCKET_NAME)
+# Utils
+# =====================================
 
+SLACK_USER_NAME = env("SLACK_USER_NAME", default='Logger:PROD')
 
-UPLOADCARE = {
-    'pub_key': env('UPLOADCARE_PUB_KEY', default="#####################"),
-    'secret': env('UPLOADCARE_SECRET_KEY', default="#####################"),
-}
-
-
-# Cloudfront
-# STATIC_URL = "http://##############.cloudfront.net/"
-# MEDIA_URL = "http://##############.cloudfront.net/uploads/"
-
-# BOTO custom domain: cloudfront
-# Note you do not need to include protocol or trailing slash
-# AWS_S3_CUSTOM_DOMAIN = AWS_CLOUDFRONT_DOMAIN =
-# "##############.cloudfront.net"
-
-
-ASSET_VERSION = env("ASSET_VERSION", default=False)
-if ASSET_VERSION:
-    # set path of assets in s3 bucket, note this is '' by default
-    AWS_LOCATION = '%s/' % ASSET_VERSION
-    STATIC_URL += AWS_LOCATION
-
-AWS_IS_GZIPPED = True
+# Mezzanine
+# =====================================
 
 AWS_HEADERS = {
     'Cache-Control': 'max-age=31536000',
 }
-
-ALLOWED_HOSTS += ('.sportlogos.com', '.herokuapp.com',)
-
-SLACK_USER_NAME = 'Logger:PROD'

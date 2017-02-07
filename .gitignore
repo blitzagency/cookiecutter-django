@@ -1,20 +1,29 @@
-# Ignore other vcs ---------------------------------------------------------- #
+# -------------------------------------
+# .GITIGNORE
+# -------------------------------------
 
-.svn
-.hg
 
-# Compiled source ----------------------------------------------------------- #
+# PROJECT IGNORE
+# =====================================
+karma-*/
+*.css
+.env
+django/project/static
 
+# UNIGNORE
+# =====================================
+!collected-static/.gitkeep
+!uploads/README
+
+# ALWAYS IGNORE
+# =====================================
 *.com
 *.class
 *.dll
 *.exe
 *.o
 *.so
-*.css
-
-# Always ignore ------------------------------------------------------------ #
-
+*.map
 *.diff
 *.err
 *.orig
@@ -22,10 +31,6 @@
 *~
 *.psd
 *.vi
-nohup.out
-
-# Packages ------------------------------------------------------------------ #
-
 *.7z
 *.dmg
 *.gz
@@ -36,6 +41,34 @@ nohup.out
 *.zip
 *.egg
 *.egg-info
+*.log
+*.sql
+*.sqlite
+*.esproj
+*.mo
+*.log
+*.pot
+*.pyc
+*.swp
+*.db
+nohup.out
+*.sublime-project
+*.sublime-workspace
+._*
+.DS_Store
+.DS_Store?
+.Spotlight-V100
+.Trashes
+.cache
+.project
+.pydevproject
+.settings
+.tmproj
+.sass-cache/
+.coverage
+.tox
+.installed.cfg
+__pycache__
 dist
 build
 eggs
@@ -44,74 +77,15 @@ bin
 var
 sdist
 develop-eggs
-.installed.cfg
-
-# Logs and databases -------------------------------------------------------- #
-
-*.log
-*.sql
-*.sqlite
 pip-log.txt
-
-# OS generated files -------------------------------------------------------- #
-
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
 ehthumbs.db
 Thumbs.db
-
-# Editor files -------------------------------------------------------------- #
-
-*.swp
-.cache
-.project
-.pydevproject
-.settings
-.tmproj
-*.esproj
 nbproject
-*.sublime-project
-*.sublime-workspace
-*.vscode
-.cache
-
-# SCSS pre-compiler dirs ---------------------------------------------------- #
-
-.sass-cache/
-
-# Translations -------------------------------------------------------------- #
-
-*.mo
-
-# Django -------------------------------------------------------------------- #
-
-*.log
-*.pot
-*.pyc
 local_settings.py
-*.db
 collected-static/*
 uploads/*
-!collected-static/.gitkeep
-!uploads/README
 celerybeat-schedule
 celerybeat.pid
-
-# NPM ----------------------------------------------------------------------- #
-
 node_modules
-
-# Unit test / coverage reports ---------------------------------------------- #
-
-.coverage
-.tox
-
-# Dreamweaver added files --------------------------------------------------- #
-_notes
-dwsync.xml
-
-.vagrant/
-django/project/static/
+npm-debug.log
+webpack-stats.json
