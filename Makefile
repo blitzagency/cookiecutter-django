@@ -17,6 +17,11 @@ resetdb: ## resets django db
 serve:
 	docker exec -it ${NAME}_django_1 ./manage.py runserver 0.0.0.0:8000
 
+heroku: build-assets
+	-docker exec -it ${NAME}_heroku_1 easy_install pdbpp
+	docker exec -it ${NAME}_heroku_1 pip install -U -r requirements/production.txt
+	docker exec -it ${NAME}_heroku_1 fab prod.deploy -f /usr/fabfile/
+
 test: test-django
 
 test-django:
@@ -24,6 +29,9 @@ test-django:
 
 assets: ## start npm build/watch
 	cd django/project/@static && npm start
+
+build-assets: ## start npm build/watch
+	cd django/project/@static && npm build
 
 shell: ## start docker shell
 	docker exec -it ${NAME}_django_1 /bin/bash

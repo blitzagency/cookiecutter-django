@@ -1,6 +1,5 @@
 from django.conf import settings
 from django.contrib.staticfiles.storage import CachedFilesMixin
-# from django.core.files.base import ContentFile
 
 from storages.backends.s3boto import S3BotoStorage
 

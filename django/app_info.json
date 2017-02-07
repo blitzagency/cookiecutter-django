@@ -12,9 +12,9 @@
 		"DJANGO_SETTINGS_MODULE":"app.config.settings.prod"
 	},
 	"prod": {
-		"heroku_app_name": "sportslab",
+		"heroku_app_name": "secret-thicket-35470",
 		"heroku_remote_name": "prod",
-		"branch_name": "master",
+		"branch_name": "heroku",
 		"DJANGO_SETTINGS_MODULE":"app.config.settings.prod"
 	}
 }

@@ -32,3 +32,20 @@ services:
     logging:
       driver: none
 
+  heroku:
+    image: dinopetrone/heroku:latest
+    working_dir: /usr/app/django
+    command: "/bin/bash"
+    stdin_open: true
+    tty: true
+    volumes:
+      - .:/usr/app
+    links:
+      - postgres:postgres
+    environment:
+      DJANGO_SETTINGS_MODULE: app.config.settings.prod
+      PYTHONPATH: /usr/app/django/project:/usr/app/django/project/vendor
+      DEBUG: "true"
+    logging:
+      driver: none
+
