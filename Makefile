@@ -30,3 +30,10 @@ shell: ## start docker shell
 
 up:
 	docker-compose -f ./docker-compose.yml up -d
+
+
+prod_deploy:
+	cd django/project/@static && npm build
+	docker exec -it ${NAME}_django_1 fab prod.deploy
+	git push prod master
+

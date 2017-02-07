@@ -2,6 +2,7 @@
   "scripts": {
     "test": "./node_modules/.bin/karma start",
     "start": "./node_modules/.bin/webpack --config webpack.config.dev.js --watch",
+    "build": "./node_modules/.bin/webpack --config webpack.config.dev.js",
     "dev": "./node_modules/.bin/webpack-dev-server --config webpack.config.dev.js --port 8000 --host 0.0.0.0 --content-base dev/ --hot --inline --progress --colors"
   },
   "dependencies": {
