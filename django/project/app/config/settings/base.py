@@ -80,7 +80,7 @@ INSTALLED_APPS = (
     'grappelli_safe',
     'filebrowser_safe',
 
-    # Django Apps
+    # django apps
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -88,11 +88,9 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.redirects',
-
+    'django.contrib.admin',
 
     # Local apps
-    # TODO: leverage __init__.default_app_config, `default_app_config =
-    # "rock_n_roll.apps.RockNRollConfig"`
     'app.web.apps.AppWebConfig',
 
 
@@ -112,8 +110,6 @@ INSTALLED_APPS = (
 
 # Middleware
 # =====================================
-# Middleware Ordering Info:
-# https://docs.djangoproject.com/en/1.10/ref/middleware/#middleware-ordering
 
 MIDDLEWARE = (
     # Default Django middleware.
