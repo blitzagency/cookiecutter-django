@@ -6,16 +6,16 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./django:/usr/app
+      - .:/usr/app
     stdin_open: true
-    working_dir: /usr/app/
+    working_dir: /usr/app/django
     tty: true
     command: "/bin/bash"
     links:
       - postgres:postgres
     environment:
       DJANGO_SETTINGS_MODULE: app.config.settings.local
-      PYTHONPATH: /usr/app/project:/usr/app/project/vendor
+      PYTHONPATH: /usr/app/django/project:/usr/app/django/project/vendor
       DJANGO_DEBUG: "true"
     logging:
       driver: none
@@ -25,7 +25,7 @@ services:
     restart: always
     volumes:
       - /usr/lib/postgresql
-      - .:/usr/app
+      - .:/usr/app/django
     environment:
      POSTGRES_USER: vagrant
      POSTGRES_PASSWORD: vagrant
