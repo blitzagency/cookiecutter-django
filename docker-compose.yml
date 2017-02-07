@@ -31,4 +31,3 @@ services:
      POSTGRES_PASSWORD: vagrant
     logging:
       driver: none
-

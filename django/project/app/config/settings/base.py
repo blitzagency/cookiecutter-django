@@ -15,7 +15,8 @@ from os.path import abspath, basename, dirname, join, normpath
 # Paths
 # =====================================
 
-# TODO: Update paths below to use env paths, e.g, ROOT_DIR = environ.Path(__file__) - 3
+# TODO: Update paths below to use env paths, e.g, ROOT_DIR =
+# environ.Path(__file__) - 3
 
 DJANGO_ROOT = dirname(dirname(abspath(__file__)))
 
@@ -51,7 +52,8 @@ SITE_ID = 1
 SITE_NAME = basename(DJANGO_ROOT)
 
 # NOTE: This key only used for development and testing!
-SECRET_KEY = env("SECRET_KEY", default=r"f2(!%hox^koxhw%%0a)@@!f5^7lu(1$@es*#1szh2q^@3dejr$")
+SECRET_KEY = env(
+    "SECRET_KEY", default=r"f2(!%hox^koxhw%%0a)@@!f5^7lu(1$@es*#1szh2q^@3der$")
 
 ADMINS = (
     ('app admin'),
@@ -78,7 +80,7 @@ INSTALLED_APPS = (
     'grappelli_safe',
     'filebrowser_safe',
 
-    # Django Apps
+    # django apps
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -86,6 +88,11 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.redirects',
+    'django.contrib.admin',
+
+    # Local apps
+    'app.web.apps.AppWebConfig',
+
 
     # Third-party Apps
     'django_extensions',
@@ -99,14 +106,10 @@ INSTALLED_APPS = (
     'redactor',
     'adminsortable2',
 
-    # Local apps
-    # TODO: leverage __init__.default_app_config, `default_app_config = "rock_n_roll.apps.RockNRollConfig"`
-    'app.web.apps.AppWebConfig',
 )
 
 # Middleware
 # =====================================
-# Middleware Ordering Info: https://docs.djangoproject.com/en/1.10/ref/middleware/#middleware-ordering
 
 MIDDLEWARE = (
     # Default Django middleware.
@@ -246,7 +249,7 @@ CELERY_RESULT_SERIALIZER = 'json'
 
 REDIS_HOST = env("REDIS_HOST", default='redis://localhost:6379')
 
-# Mezzanine
+# Storages
 # =====================================
 
 AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
@@ -261,6 +264,11 @@ USE_HTTPS_FOR_ASSETS = env.bool('USE_HTTP_FOR_ASSETS', False)
 
 AWS_IS_GZIPPED = True
 
+ASSET_VERSION = env("ASSET_VERSION", default=False)
+
+# Mezzanine
+# =====================================
+
 USE_MODELTRANSLATION = False
 
 PACKAGE_NAME_FILEBROWSER = "filebrowser_safe"
@@ -272,8 +280,6 @@ INLINE_EDITING_ENABLED = True
 SITE_TITLE = GRAPPELLI_ADMIN_TITLE
 
 RICHTEXT_WIDGET_CLASS = 'redactor.widgets.RedactorEditor'
-
-ASSET_VERSION = env.bool("ASSET_VERSION", False)
 
 # UploadCare
 # =====================================
