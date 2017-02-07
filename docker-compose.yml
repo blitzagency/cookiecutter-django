@@ -16,7 +16,7 @@ services:
     environment:
       DJANGO_SETTINGS_MODULE: app.config.settings.local
       PYTHONPATH: /usr/app/django/project:/usr/app/django/project/vendor
-      DJANGO_DEBUG: "true"
+      DEBUG: "true"
     logging:
       driver: none
 
