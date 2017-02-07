@@ -89,6 +89,13 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.redirects',
 
+
+    # Local apps
+    # TODO: leverage __init__.default_app_config, `default_app_config =
+    # "rock_n_roll.apps.RockNRollConfig"`
+    'app.web.apps.AppWebConfig',
+
+
     # Third-party Apps
     'django_extensions',
     "mezzanine.boot",
@@ -101,10 +108,6 @@ INSTALLED_APPS = (
     'redactor',
     'adminsortable2',
 
-    # Local apps
-    # TODO: leverage __init__.default_app_config, `default_app_config =
-    # "rock_n_roll.apps.RockNRollConfig"`
-    'app.web.apps.AppWebConfig',
 )
 
 # Middleware
