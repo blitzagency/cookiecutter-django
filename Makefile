@@ -1,4 +1,5 @@
 NAME := $(shell basename $$PWD | sed -e s/[\\.-]//g)
+LOCATION := $(shell pwd -P)
 
 init: reqs resetdb nodeinit
 
@@ -17,10 +18,26 @@ resetdb: ## resets django db
 serve:
 	docker exec -it ${NAME}_django_1 ./manage.py runserver 0.0.0.0:8000
 
-heroku: build-assets
-	-docker exec -it ${NAME}_heroku_1 easy_install pdbpp
-	docker exec -it ${NAME}_heroku_1 pip install -U -r requirements/production.txt
-	docker exec -it ${NAME}_heroku_1 fab prod.deploy -f /usr/fabfile/
+heroku.prod: build-assets
+	docker run --rm -w /usr/app/django \
+		-v ${LOCATION}:/usr/app \
+		--net ${NAME}_default \
+		-e "DJANGO_SETTINGS_MODULE=app.config.settings.prod" \
+		-e "PYTHONPATH=/usr/app/django/project:/usr/app/django/project/vendor" \
+		-e "DEBUG=true" \
+		-it dinopetrone/heroku:latest \
+		fab prod.deploy -f /usr/fabfile
+
+heroku.staging: build-assets
+	docker run --rm -w /usr/app/django \
+		-v ${LOCATION}:/usr/app \
+		--net ${NAME}_default \
+		-e "DJANGO_SETTINGS_MODULE=app.config.settings.prod" \
+		-e "PYTHONPATH=/usr/app/django/project:/usr/app/django/project/vendor" \
+		-e "DEBUG=true" \
+		-it dinopetrone/heroku:latest \
+		fab staging.deploy -f /usr/fabfile
+
 
 test: test-django
 
