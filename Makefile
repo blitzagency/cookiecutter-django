@@ -45,8 +45,8 @@ test.js: ## Run Javascript test suite
 	open http://localhost:3000
 	cd django/project/\@static && npm test
 
-.PHONY: heroku.prod
-heroku.prod: assets.build ## Deploy to heroku (prod)
+.PHONY: heroku.prod.deploy
+heroku.prod.deploy: heroku.build.prod ## Deploy to heroku (prod)
 	docker run --rm -w /usr/app/django \
 		-v ${LOCATION}:/usr/app \
 		--net ${NAME}_default \
@@ -56,8 +56,8 @@ heroku.prod: assets.build ## Deploy to heroku (prod)
 		-it dinopetrone/heroku:latest \
 		fab prod.deploy -f /usr/fabfile
 
-.PHONY: heroku.staging
-heroku.staging: assets.build ## Deploy to heroku (staging)
+.PHONY: heroku.staging.deploy
+heroku.staging.deploy: heroku.build.prod ## Deploy to heroku (staging)
 	docker run --rm -w /usr/app/django \
 		-v ${LOCATION}:/usr/app \
 		--net ${NAME}_default \
@@ -67,9 +67,9 @@ heroku.staging: assets.build ## Deploy to heroku (staging)
 		-it dinopetrone/heroku:latest \
 		fab staging.deploy -f /usr/fabfile
 
-.PHONY: assets.build
-assets.build:
-	cd django/project/@static && npm build
+.PHONY: heroku.build.prod
+heroku.build.prod:
+	cd django/project/@static && IS_HEROKU=1 VERSION=$$(git rev-parse HEAD) USE_HTTPS_FOR_ASSETS=$$(heroku config:get USE_HTTPS_FOR_ASSETS) AWS_BUCKET_NAME=$$(heroku config:get AWS_BUCKET_NAME) npm run build
 
 .PHONY: reqs.git
 reqs.git:
