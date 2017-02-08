@@ -186,7 +186,8 @@ STATIC_URL = "/static/"
 
 # Add project/static to staticfile resolution
 # Entries here are eligible for `collectstatic` as well
-# See: https://docs.djangoproject.com/en/1.10/ref/contrib/staticfiles/#collectstatic
+# See:
+# https://docs.djangoproject.com/en/1.10/ref/contrib/staticfiles/#collectstatic
 STATICFILES_DIRS = (
     str(join(PROJECT_ROOT, "static")),
 )

@@ -9,8 +9,6 @@ from .base import *
 # Django Setup
 # =====================================
 
-DEBUG = False
-
 ALLOWED_HOSTS += (".herokuapp.com",)
 
 # Installed Apps
