@@ -1,10 +1,25 @@
 {% extends 'base.html' %}
+{% load webpack_loader %}
 
 {% block body_class %}home-page{% endblock body_class %}
 
 {% block content %}
-home!
-
+<div class="container">
+    <header>
+        <h1>Congrats!</h1>
+    </header>
+    <p>This template is up and running successfully!</p>
+    <hr>
+    <p><strong>What's next?</strong></p>
+    <ul>
+        <li>Modify this page by editing <code>web/templates/index.html</code></li>
+        <li>Static assets are in <code>project/@static/</code></li>
+        <li><a href="{% url "ui-kit-index" %}">Check out the UI-Kit</a></li>
+    </ul>
+</div>
 
 {% endblock %}
 
+{% block extra_js %}
+    {% render_bundle "js/home" %}
+{% endblock extra_js %}

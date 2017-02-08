@@ -5,7 +5,7 @@ from . import views
 
 if settings.DEBUG:
     urlpatterns = [
-        url(r"^ui/$", views.UiIndexView.as_view(), name="ui-index"),
+        url(r"^ui-kit/$", views.UiIndexView.as_view(), name="ui-kit-index"),
     ]
 else:
     urlpatterns = []

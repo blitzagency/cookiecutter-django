@@ -32,8 +32,10 @@ var config = {
     entry: {
         "js/common":  "common/index.js",
         "css/common": "common/index.scss",
-        "js/ui":      "ui/index.js",
-        "css/ui":     "ui/index.scss",
+        "js/ui-kit":  "ui-kit/index.js",
+        "css/ui-kit": "ui-kit/index.scss",
+        "js/home":    "home/index.js",
+        "css/home":   "home/index.scss",
     },
     output: {
         path:          "../static",

@@ -1,6 +1,8 @@
+def web_settings(request):
+    from django.conf import settings
 
-
-def site(request):
     return {
-        # "site_settings": Settings.objects.first()
+        "web_settings": {
+            # "foo": getattr(settings, FOO, None)
+        }
     }

@@ -2,4 +2,4 @@ from django.views.generic import TemplateView
 
 
 class UiIndexView(TemplateView):
-    template_name = "ui/index.html"
+    template_name = "ui_kit/index.html"

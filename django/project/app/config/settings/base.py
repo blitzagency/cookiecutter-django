@@ -92,7 +92,7 @@ INSTALLED_APPS = (
 
     # Local apps
     "app.web",
-    "app.ui",
+    "app.ui_kit",
 
     # Third-party Apps
     "django_extensions",
@@ -164,6 +164,7 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "django.template.context_processors.request",
                 "app.utils.context_processors.global_variables",
+                "app.web.context_processors.web_settings",
                 "mezzanine.conf.context_processors.settings",
                 "mezzanine.pages.context_processors.page",
             ),
@@ -183,6 +184,9 @@ STATIC_ROOT = join(PROJECT_ROOT, "collected-static")
 
 STATIC_URL = "/static/"
 
+# Add project/static to staticfile resolution
+# Entries here are eligible for `collectstatic` as well
+# See: https://docs.djangoproject.com/en/1.10/ref/contrib/staticfiles/#collectstatic
 STATICFILES_DIRS = (
     str(join(PROJECT_ROOT, "static")),
 )
@@ -203,13 +207,13 @@ MEDIA_URL = "/media/"
 
 TIME_ZONE = "America/Los_Angeles"
 
+USE_TZ = True
+
 LANGUAGE_CODE = "en-us"
 
 USE_I18N = False
 
 USE_L10N = False
-
-USE_TZ = True
 
 # Authentication
 # =====================================

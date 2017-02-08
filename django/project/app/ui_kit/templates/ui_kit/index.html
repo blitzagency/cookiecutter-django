@@ -1,0 +1,218 @@
+{% extends "ui_kit/base.html" %}
+
+{% block content %}
+<main class="ui-main" role="main">
+
+{# ABOUT ------------------------------------------------------------------- #}
+
+<section class="ui-section">
+    <header class="container">
+        <a name="about" class="ui-anchor"></a>
+        <h1 class="ui-h1">About</h1>
+        <blockquote>
+            We’re not designing pages, we’re designing systems of components.
+            <footer><cite><a href="http://www.the-haystack.com/">Stephen Hay</a></cite></footer>
+        </blockquote>
+    </header>
+    <hr class="ui-hr">
+    <div class="container">
+        <h3 class="ui-h3">Purpose</h3>
+        <p class="ui-body">This kit documents the user-interface styles, components, and modules for this project.</p>
+        <br>
+        <h3 class="ui-h3">Notes</h3>
+        <ul>
+            <li><p class="ui-body">Powered by <a href="http://getbootstrap.com">Bootstrap 3.x</a></p></li>
+            <li><p class="ui-body">The default state of this page is meant as a starting point; modify as necessary!</p></li>
+        </ul>
+    </div>
+</section>
+
+{# STYLE ------------------------------------------------------------------- #}
+<section class="ui-section">
+    <header class="container">
+        <a name="style" class="ui-anchor"></a>
+        <h1 class="ui-h1">Style</h1>
+    </header>
+    <hr class="ui-hr" />
+    <header class="container">
+        <h2 class="ui-h2">Color</h2>
+    </header>
+    <div class="ui-block">
+        <div class="container">
+            <h3 class="ui-h3">Basic</h3>
+            {% include "ui_kit/includes/swatch.html" with color_name="white" %}
+            {% include "ui_kit/includes/swatch.html" with color_name="black"%}
+            <br><br>
+            <h3 class="ui-h3">Brand</h3>
+            {% include "ui_kit/includes/todo.html" with text="Update" %}
+        </div>
+    </div>
+    <header class="container">
+        <h2 class="ui-h2">Icons</h2>
+    </header>
+    <div class="ui-block">
+        <div class="container">
+            <h3 class="ui-h3">Brand</h3>
+            {% include "ui_kit/includes/todo.html" with text="Update" %}
+        </div>
+    </div>
+    <header class="container">
+        <h2 class="ui-h2">Font Sets</h2>
+    </header>
+    <div class="ui-block">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    {% include "ui_kit/includes/fontset.html" with title="Sans Serif Thin(FPO)" font_class="ui-font-sans-thin" %}
+                </div><div class="col-lg-6">
+                    {% include "ui_kit/includes/fontset.html" with title="Sans Serif Thin (FPO)" font_class="ui-font-sans-thin" extra_class="ui-block-reverse"%}
+                </div>
+                <div class="col-lg-6">
+                    {% include "ui_kit/includes/fontset.html" with title="Sans Serif Regular (FPO)" font_class="ui-font-sans" %}
+                </div>
+                <div class="col-lg-6">
+                    {% include "ui_kit/includes/fontset.html" with title="Sans Serif Regular (FPO)" font_class="ui-font-sans" extra_class="ui-block-reverse"%}
+                </div>
+                <div class="col-lg-6">
+                    {% include "ui_kit/includes/fontset.html" with title="Sans Serif Bold (FPO)" font_class="ui-font-sans-bold" %}
+                </div>
+                <div class="col-lg-6">
+                    {% include "ui_kit/includes/fontset.html" with title="Sans Serif Bold (FPO)" font_class="ui-font-sans-bold" extra_class="ui-block-reverse"%}
+                </div>
+            </div>
+        </div>
+    </div>
+    <header class="container">
+        <h2 class="ui-h2">Typography</h2>
+    </header>
+    <div class="ui-block">
+        <div class="container">
+            <h3 class="ui-h3">Headings</h3>
+            <p class="ui-body">Heading tags <em>define the document outline</em> and should not be selected based on how they appear visually. Default styles are useful during live-wireframing but beyond that they become cumbersome to override and their visual appearence should be reset.</p>
+            <p class="ui-body">TIP: Reset headings automatically, see <strong>@css/common/variables.scss</strong> and set <strong>$reset-heading-styles</strong> to <strong>true</strong>.</p>
+            <br>
+            <p class="ui-redline">&lt;h1&gt;, .h1</p>
+            <h1>Heading 1</h1>
+            <p class="ui-redline">&lt;h2&gt;, .h2</p>
+            <h2>Heading 2</h2>
+            <p class="ui-redline">&lt;h3&gt;, .h3</p>
+            <h3>Heading 3</h3>
+            <p class="ui-redline">&lt;h4&gt;, .h4</p>
+            <h4>Heading 4</h4>
+            <p class="ui-redline">&lt;h5&gt;, .h5</p>
+            <h5>Heading 5</h5>
+            <p class="ui-redline">&lt;h6&gt;, .h6</p>
+            <h6>Heading 6</h6>
+            <br>
+            <h3 class="ui-h3">Content-Based Typography</h3>
+            {% include "ui_kit/includes/todo.html" with text="Update" %}
+        </div>
+    </div>
+    <header class="container">
+        <h2 class="ui-h2">Typography (Reversed)</h2>
+        <p class="ui-body">If an element needs to appear on both light &amp; dark backgrounds; create a reverse version. A common convention is to add a secondary class of <code>[original-class-attr]-reverse</code>.</p>
+        <p class="ui-body">Note: This section uses <code>.ui-block-reverse</code> to set the background and text color. Keep this in mind when adding specific examples.</p>
+        <br>
+    </header>
+    <div class="ui-block ui-block-reverse">
+        <div class="container">
+            <h3 class="ui-h3">Headings</h3>
+            <p class="ui-redline">&lt;h1&gt;, .h1</p>
+            <h1>Heading 1</h1>
+            <p class="ui-redline">&lt;h2&gt;, .h2</p>
+            <h2>Heading 2</h2>
+            <p class="ui-redline">&lt;h3&gt;, .h3</p>
+            <h3>Heading 3</h3>
+            <p class="ui-redline">&lt;h4&gt;, .h4</p>
+            <h4>Heading 4</h4>
+            <p class="ui-redline">&lt;h5&gt;, .h5</p>
+            <h5>Heading 5</h5>
+            <p class="ui-redline">&lt;h6&gt;, .h6</p>
+            <h6>Heading 6</h6>
+            <br>
+            <h3 class="ui-h3">Content-Based Typography</h3>
+            {% include "ui_kit/includes/todo.html" with text="Update" %}
+        </div>
+    </div>
+    <header class="container">
+        <h2 class="ui-h2">Lists</h2>
+    </header>
+    <div class="ui-block">
+        <div class="container">
+            {% include "ui_kit/includes/lists.html" %}
+        </div>
+    </div>
+</section>
+
+{# COMPONENTS -------------------------------------------------------------- #}
+<section>
+    <header class="container">
+        <a name="components" class="ui-anchor"></a>
+        <h1 class="ui-h1">Components</h1>
+    </header>
+    <hr class="ui-hr" />
+    <header class="container">
+        <h2 class="ui-h2">Buttons</h2>
+        <p class="ui-body"><a href="http://getbootstrap.com/css/#buttons">Bootstrap Buttons</a> are great for live wires but are cumbersome to override in practice. Once the design is underway it's best to reset the <code>.btn</code> base class with a simpler default and / or create custom button classes that do not conflict with existing bootstrap <code>.btn-*</code> option classes.</p>
+        <p class="ui-body">TIP: Reset button styles automatically, see: <strong>@css/common/variables.scss</strong> and set <strong>$reset-btn-base-styles</strong> to <strong>true</strong> (be sure to <em>also</em> follow the instructions located in the comments).</p>
+        <br>
+    </header>
+    <div class="ui-block">
+        <div class="container">
+            {% include "ui_kit/includes/buttons.html" %}
+        </div>
+    </div>
+    <header class="container">
+        <h2 class="ui-h2">Forms</h2>
+        <p class="ui-body"><a href="http://getbootstrap.com/css/#forms">Bootstrap Forms</a> offer additional features and components than documented here.</p>
+        <br>
+    </header>
+    <div class="ui-block">
+        <div class="container">
+            {% include "ui_kit/includes/form-inputs.html" %}
+        </div>
+    </div>
+    <header class="container">
+        <h2 class="ui-h2">Tables</h2>
+    </header>
+    <div class="ui-block">
+        <div class="container">
+            {% include "ui_kit/includes/tables.html" %}
+        </div>
+    </div>
+</section>
+
+{# MODULES ----------------------------------------------------------------- #}
+<section>
+    <header class="container">
+        <a name="modules" class="ui-anchor"></a>
+        <h1 class="ui-h1">Modules</h1>
+        <p class="ui-body">Modules combine basic elements into more complex objects. The following should include all visual and interactive states; e.g., responsive breakpoints, active / inactive, javascript based interactivity, etc.</p>
+    </header>
+    <hr class="ui-hr">
+    <header class="container">
+        <h2 class="ui-h2">Global Navigation</h2>
+        <p class="ui-body">The global navigation is shared across all pages.</p>
+        <br>
+    </header>
+    <div class="ui-block">
+        <div class="container">
+            {% include "ui_kit/includes/todo.html" with text="Update" %}
+        </div>
+    </div>
+    <header class="container">
+        <h2 class="ui-h2">Global Footer</h2>
+        <p class="ui-body">The global footer is shared across all pages.</p>
+        <br>
+    </header>
+    <div class="ui-block">
+        <div class="container">
+            {% include "ui_kit/includes/todo.html" with text="Update" %}
+        </div>
+    </div>
+
+</section>
+
+{# EO .ui-main #}
+</main>
+{% endblock content %}

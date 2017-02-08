@@ -1,56 +1,59 @@
-{% load static from staticfiles %}
-{% load mezzanine_tags %}
+{% load staticfiles i18n webpack_loader mezzanine_tags %}
+{% get_current_language as LANGUAGE_CODE %}
 <!doctype html>
-<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
-<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
-<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
-<!--[if gt IE 8]><!--> <html itemscope itemtype="http://schema.org/Article" class="no-js" lang="en" xmlns="http://www.w3.org/1999/xhtml"> <!--<![endif]-->
-  <head>
+<html class="no-js" lang="{{LANGUAGE_CODE}}">
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>{% block title %}SportLogos, Inc.{% endblock %}</title>
-    <meta name="description" content="{% block meta_description %}{% endblock meta_description %}">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta property="og:title" content="{% block og_title %}SportLogos{% endblock og_title %}">
     <meta property="og:description" content="{% block og_description %}{% endblock og_description %}">
     <meta property="og:image" content="{% block og_image %}{% static 'img/og_image.jpg' %}{% endblock og_image %}">
-    <link rel="shortcut icon" href="{% static 'img/favicon.png' %}" type="image/x-icon">
-    <link rel="icon" href="{% static 'img/favicon.png' %}" type="image/x-icon">
-    <link rel="stylesheet" type="text/css" media="all" href="{% static 'css/common.css' %}"/>
 
-    {% block headstyle %}{% endblock %}
+    {% block extra_meta %}{% endblock extra_meta %}
 
-    {% block headscript %}
-        <script type="text/javascript">
-        window.config = {
-            staticUrl: '{{STATIC_URL}}',
-            mediaUrl: '{{MEDIA_URL}}'
-        };
-        </script>
-    {% endblock %}
+    <title>{% block title %}{% endblock title %}</title>
 
-    {% block head %}{% endblock %}
+    <link rel="apple-touch-icon" href="{% static "img/apple-touch-icon.png" %}">
+    <!-- Place favicon.ico in the root directory -->
 
-  </head>
-  <body class="{% block body_class %}{% endblock body_class %}">
+    {# Common Styles #}
+    <link rel="stylesheet" media="all" href="{% static 'css/common.css' %}"/>
 
-        {% block header %}
-            {% include "partials/header.html" %}
-        {% endblock %}
+    {% block extra_head %}{% endblock extra_head %}
 
-        {% block content %}
-        {% endblock %}
+    <script>
+        // Create JS namespace
+        window.DJANGO = window.DJANGO || {};
 
+        !(function(window, document, exports){
+            /**
+             * Inject settings from template context into a JS namespace
+             */
+
+            exports["staticUrl"] = "{{STATIC_URL}}";
+            exports["mediaUrl"]  = "{{MEDIA_URL}}";
+
+        })(window, document, window.DJANGO)
+    </script>
+
+<body class="{% block body_class %}{% endblock body_class %}">
+
+    {% block header %}
+        {% include "partials/header.html" %}
+    {% endblock header %}
+
+    {# Extend this block in child templates #}
+    {% block content %}{% endblock content %}
+
+    {% block footer %}
         {% include "partials/footer.html" %}
+    {% endblock footer %}
 
-        {% block jsapp %}
-            <script type="text/javascript">
+    {# Common Javascript #}
+    {% render_bundle "js/common" %}
 
-            </script>
-        {% endblock %}
+    {% block extra_js %}{% endblock extra_js %}
 
-        {% block extra_js %}{% endblock extra_js %}
-
-        {% include "partials/ga.html" %}
-    </body>
+    {% include "partials/analytics.html" %}
+</body>
 </html>
