@@ -32,9 +32,9 @@ migrate: ## Runs Django makemigrations and migrate in a single command
 	docker exec -it ${NAME}_django_1 python manage.py makemigrations
 	docker exec -it ${NAME}_django_1 python manage.py migrate
 
-.PHONY: sh
-sh: ## Run a bash session on a container
-	@echo "sh"
+.PHONY: shell
+shell: ## Run a bash session on a container
+	docker exec -it ${NAME}_django_1 /bin/bash
 
 .PHONY: test.py
 test.py: ## Run Python / Django test suite
