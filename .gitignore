@@ -68,6 +68,7 @@ nohup.out
 .coverage
 .tox
 .installed.cfg
+.vscode
 __pycache__
 dist
 build
