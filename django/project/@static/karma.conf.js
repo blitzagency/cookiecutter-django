@@ -1,4 +1,4 @@
-var webpackConfig = require("./webpack.config.dev.js");
+var webpackConfig = require("./webpack.config.js");
 var path = require('path');
 
 

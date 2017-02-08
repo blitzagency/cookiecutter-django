@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load staticfiles i18n webpack_loader%}
+
+{% block title %}UI Kit{% endblock title %}
+
+{% block extra_head %}
+    <link rel="stylesheet" href="{% static "css/ui-kit.css" %}">
+{% endblock extra_head %}
+
+{% block extra_js %}
+    {% render_bundle "js/ui-kit" %}
+{% endblock extra_js %}
+
+{% block body_class %}ui-kit{% endblock body_class %}
+
+{% block header %}
+    {% include "ui_kit/partials/header.html" %}
+{% endblock header %}
+
+{% block content %}{% endblock content %}
+
+{% block footer %}
+    {% include "ui_kit/partials/footer.html" %}
+{% endblock footer %}
+
