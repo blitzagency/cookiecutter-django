@@ -1,5 +1,6 @@
 NAME := $(shell basename $$PWD | sed -e s/[\\.-]//g)
 CONTAINER_NAME ?= "django"
+LOCATION := $(shell pwd -P)
 
 # -------------------------------------
 # Project Commands
