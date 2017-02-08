@@ -1,0 +1,57 @@
+// ------------------------------------
+// UI KIT STYLES
+// ------------------------------------
+
+// Order matters here...
+@import "~bootstrap-styles/bootstrap/variables";
+@import "~bourbon-styles/bourbon";
+@import "~breakpoint-styles/breakpoint";
+@import "../common/config";
+@import "../common/mixins";
+@import "./config";
+@import "./mixins";
+@import "./base";
+
+// UI Kit
+// ====================================
+// These styles will be project specific, used to set specific styles on
+// more generic elements / classes.
+// TODO: Remove and / or update.
+
+// Color Swatches ---------------------
+
+@include create-ui-swatch("white", $white, $outline: true);
+@include create-ui-swatch("black", $black);
+
+// Fontsets ---------------------------
+
+// TODO: FPO
+.ui-font-sans {
+    font-family: sans-serif !important;
+}
+
+// TODO: FPO
+.ui-font-sans-bold {
+    @extend .ui-font-sans;
+    font-weight: bold;
+}
+
+// TODO: FPO
+.ui-font-sans-thin {
+    @extend .ui-font-sans;
+    font-weight: 100;
+}
+
+// Forms ------------------------------
+
+// (FPO) Force focus state for display purposes
+// Note: This dupes backbone styling for display only;
+//       use a @extend or @mixin to link the real focus state
+//       to this style when the design is implemented
+.ui-input-emulate-focus {
+    border-color: #66afe9;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+}
+

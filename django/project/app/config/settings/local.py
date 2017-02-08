@@ -17,8 +17,8 @@ ALLOWED_HOSTS += ("docker.local", ".ngrok.io",)
 # =====================================
 
 INSTALLED_APPS += (
-    'debug_toolbar',
-    'storages',
+    "debug_toolbar",
+    "storages",
 )
 
 # Middleware
@@ -31,62 +31,62 @@ MIDDLEWARE += (
 # Staticfiles
 # =====================================
 
-STATICFILES_STORAGE = 'require.storage.OptimizedStaticFilesStorage'
+STATICFILES_STORAGE = "require.storage.OptimizedStaticFilesStorage"
 
 # Logging
 # =====================================
 
 LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': True,
-    'filters': {
-        'require_debug_false': {
-            '()': 'django.utils.log.RequireDebugFalse'
+    "version": 1,
+    "disable_existing_loggers": True,
+    "filters": {
+        "require_debug_false": {
+            "()": "django.utils.log.RequireDebugFalse"
         },
-        'ratelimit': {
-            '()': 'app.utils.error_ratelimit_filter.RateLimitFilter',
+        "ratelimit": {
+            "()": "app.utils.error_ratelimit_filter.RateLimitFilter",
         }
     },
-    'formatters': {
-        'verbose': {
-            'format': '%(name)s %(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+    "formatters": {
+        "verbose": {
+            "format": "%(name)s %(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s"
         },
-        'simple': {
-            'format': '%(levelname)s %(asctime)s %(message)s'
-        },
-    },
-    'handlers': {
-        'stream': {
-            'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
-            'formatter': 'simple',
-        },
-        'slack': {
-            'level': 'ERROR',
-            'class': 'app.utils.log.SlackHandler',
-            'formatter': 'verbose',
+        "simple": {
+            "format": "%(levelname)s %(asctime)s %(message)s"
         },
     },
-    'loggers': {
-        '': {
-            'handlers': ['stream'],
-            'level': 'WARNING',
-            'propagate': False,
+    "handlers": {
+        "stream": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+            "formatter": "simple",
         },
-        'django.db': {
-            'handlers': ['stream'],
-            'level': 'WARNING',
-            'propagate': False,
+        "slack": {
+            "level": "ERROR",
+            "class": "app.utils.log.SlackHandler",
+            "formatter": "verbose",
         },
-        'django': {
-            'handlers': ['stream'],
-            'level': 'WARNING',
-            'propagate': False,
+    },
+    "loggers": {
+        "": {
+            "handlers": ["stream"],
+            "level": "WARNING",
+            "propagate": False,
         },
-        'z.pool': {
-            'handlers': ['stream'],
-            'level': 'WARNING',
-            'propagate': False,
+        "django.db": {
+            "handlers": ["stream"],
+            "level": "WARNING",
+            "propagate": False,
+        },
+        "django": {
+            "handlers": ["stream"],
+            "level": "WARNING",
+            "propagate": False,
+        },
+        "z.pool": {
+            "handlers": ["stream"],
+            "level": "WARNING",
+            "propagate": False,
         },
     }
 }
@@ -103,8 +103,8 @@ def show_toolbar(request):
     return True
 
 
-INTERNAL_IPS = ('127.0.0.1',)
+INTERNAL_IPS = ("127.0.0.1",)
 
 DEBUG_TOOLBAR_CONFIG = {
-    'SHOW_TOOLBAR_CALLBACK': show_toolbar,
+    "SHOW_TOOLBAR_CALLBACK": show_toolbar,
 }

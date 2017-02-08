@@ -1,0 +1,27 @@
+{
+    "compilerOptions": {
+        "outDir": "../static",
+        "module": "amd",
+        "noImplicitAny": false,
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "target": "es5",
+        "sourceMap": true,
+        "moduleResolution": "node",
+        "experimentalDecorators": true,
+        "types": [
+            "node",
+            "backbone",
+            "backbone.marionette",
+            "backbone.radio",
+            "bluebird",
+            "bootstrap",
+            "jasmine",
+            "jquery",
+            "underscore"
+        ]
+    },
+    "exclude": [
+        "node_modules"
+    ]
+}

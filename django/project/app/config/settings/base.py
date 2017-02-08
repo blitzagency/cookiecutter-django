@@ -22,7 +22,7 @@ DJANGO_ROOT = dirname(dirname(abspath(__file__)))
 
 SITE_ROOT = dirname(DJANGO_ROOT)
 
-PROJECT_ROOT = abspath(join(dirname(__file__), '../../../'))
+PROJECT_ROOT = abspath(join(dirname(__file__), "../../../"))
 
 # Env
 # =====================================
@@ -38,9 +38,9 @@ environ.Env.read_env(abspath(join(PROJECT_ROOT, "../.env")))
 # Django Setup
 # =====================================
 
-WSGI_APPLICATION = 'app.config.wsgi.application'
+WSGI_APPLICATION = "app.config.wsgi.application"
 
-ROOT_URLCONF = 'app.config.urls'
+ROOT_URLCONF = "app.config.urls"
 
 DEBUG = env.bool("DEBUG", False)
 
@@ -56,7 +56,7 @@ SECRET_KEY = env(
     "SECRET_KEY", default=r"f2(!%hox^koxhw%%0a)@@!f5^7lu(1$@es*#1szh2q^@3der$")
 
 ADMINS = (
-    ('app admin'),
+    ("app admin"),
 )
 
 MANAGERS = ADMINS
@@ -64,11 +64,11 @@ MANAGERS = ADMINS
 # Testing
 # =====================================
 
-TEST_RUNNER = 'testing.PytestTestRunner'
+TEST_RUNNER = "testing.PytestTestRunner"
 
 # TODO: Update to use env paths
 FIXTURE_DIRS = (
-    normpath(join(PROJECT_ROOT, 'fixtures')),
+    normpath(join(PROJECT_ROOT, "fixtures")),
 )
 
 # Installed Apps
@@ -76,26 +76,26 @@ FIXTURE_DIRS = (
 
 INSTALLED_APPS = (
     # Apps that must come first (may include local apps)
-    'app.utils.apps.AppUtilsConfig',
-    'grappelli_safe',
-    'filebrowser_safe',
+    "app.utils",
+    "grappelli_safe",
+    "filebrowser_safe",
 
-    # django apps
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.sites',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'django.contrib.redirects',
-    'django.contrib.admin',
+    # Django apps
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.sites",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "django.contrib.redirects",
+    "django.contrib.admin",
 
     # Local apps
-    'app.web.apps.AppWebConfig',
-
+    "app.web",
+    "app.ui",
 
     # Third-party Apps
-    'django_extensions',
+    "django_extensions",
     "mezzanine.boot",
     "mezzanine.conf",
     "mezzanine.core",
@@ -103,9 +103,9 @@ INSTALLED_APPS = (
     "mezzanine.pages",
     "mezzanine.forms",
     "mezzanine.galleries",
-    'redactor',
-    'adminsortable2',
-
+    "redactor",
+    "adminsortable2",
+    "webpack_loader",
 )
 
 # Middleware
@@ -179,22 +179,31 @@ TEMPLATES = [
 
 # TODO: Update to use env paths
 
-STATIC_ROOT = join(PROJECT_ROOT, 'collected-static')
+STATIC_ROOT = join(PROJECT_ROOT, "collected-static")
 
-STATIC_URL = '/static/'
+STATIC_URL = "/static/"
+
+STATICFILES_DIRS = (
+    str(join(PROJECT_ROOT, "static")),
+)
+
+STATICFILES_FINDERS = (
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+)
 
 SERVE_STATIC = False
 
-MEDIA_ROOT = normpath(join(SITE_ROOT, 'media'))
+MEDIA_ROOT = normpath(join(SITE_ROOT, "media"))
 
-MEDIA_URL = '/media/'
+MEDIA_URL = "/media/"
 
 # Locale / I18N & L10N
 # =====================================
 
 TIME_ZONE = "America/Los_Angeles"
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = "en-us"
 
 USE_I18N = False
 
@@ -222,9 +231,9 @@ ACCOUNT_ALLOW_REGISTRATION = env.bool(
 CACHE_TIMEOUT = env("CACHE_TIMEOUT", default=60 * 60)
 
 CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'TIMEOUT': CACHE_TIMEOUT,
+    "default": {
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+        "TIMEOUT": CACHE_TIMEOUT,
     }
 }
 
@@ -240,27 +249,27 @@ GRAPPELLI_ADMIN_TITLE = "project_name"
 # Celery
 # =====================================
 
-CELERY_ACCEPT_CONTENT = ['json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
+CELERY_ACCEPT_CONTENT = ["json"]
+CELERY_TASK_SERIALIZER = "json"
+CELERY_RESULT_SERIALIZER = "json"
 
 # Redis
 # =====================================
 
-REDIS_HOST = env("REDIS_HOST", default='redis://localhost:6379')
+REDIS_HOST = env("REDIS_HOST", default="redis://localhost:6379")
 
 # Storages
 # =====================================
 
-AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
+AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID")
 
-AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
+AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
 
 AWS_BUCKET_NAME = AWS_STORAGE_BUCKET_NAME = env("AWS_BUCKET_NAME")
 
 AWS_QUERYSTRING_AUTH = False
 
-USE_HTTPS_FOR_ASSETS = env.bool('USE_HTTP_FOR_ASSETS', False)
+USE_HTTPS_FOR_ASSETS = env.bool("USE_HTTP_FOR_ASSETS", False)
 
 AWS_IS_GZIPPED = True
 
@@ -279,30 +288,30 @@ INLINE_EDITING_ENABLED = True
 
 SITE_TITLE = GRAPPELLI_ADMIN_TITLE
 
-RICHTEXT_WIDGET_CLASS = 'redactor.widgets.RedactorEditor'
+RICHTEXT_WIDGET_CLASS = "redactor.widgets.RedactorEditor"
 
 # UploadCare
 # =====================================
 
 UPLOADCARE = {
-    'pub_key': env('UPLOADCARE_PUB_KEY'),
-    'secret': env('UPLOADCARE_SECRET_KEY'),
+    "pub_key": env("UPLOADCARE_PUB_KEY"),
+    "secret": env("UPLOADCARE_SECRET_KEY"),
 }
 
 # Redactor
 # =====================================
 
 REDACTOR_OPTIONS = {
-    'lang': 'en',
-    'plugins': ['uploadcare'],
-    'uploadcare': {
-        'publicKey': UPLOADCARE['pub_key'],
-        'crop': 'free',
-        'tabs': 'all',
+    "lang": "en",
+    "plugins": ["uploadcare"],
+    "uploadcare": {
+        "publicKey": UPLOADCARE["pub_key"],
+        "crop": "free",
+        "tabs": "all",
     }
 }
 
-REDACTOR_UPLOAD = 'uploads/'
+REDACTOR_UPLOAD = "uploads/"
 
 # -------------------------------------
 # DYNAMIC SETTINGS

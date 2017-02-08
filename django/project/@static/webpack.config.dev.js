@@ -1,85 +1,93 @@
 var webpack = require("webpack");
 var path = require("path");
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
-var BundleTracker = require('webpack-bundle-tracker');
+var BundleTracker = require("webpack-bundle-tracker");
+
+
+/**
+ * Webpack Docs:
+ * - https://webpack.js.org/configuration/
+ * - https://webpack.js.org/guides/migrating/ (1.x -> 2.x)
+ */
 
 
 module.exports = {
-    // http://webpack.github.io/docs/configuration.html#context
-    context: __dirname,
-
-    // http://webpack.github.io/docs/configuration.html#entry
+    context: path.resolve(__dirname),
     entry: {
-        'styles': './@css/styles.scss',
-        // 'js/home': "./@modules/home/index.ts",
+        "js/common":  "common/index.js",
+        "css/common": "common/index.scss",
+        "js/ui":      "ui/index.js",
+        "css/ui":     "ui/index.scss",
     },
-
-    // http://webpack.github.io/docs/configuration.html#output
     output: {
-        path: "../static",
-        filename: "[name].js",
-        publicPath: '/static/',
-        // http://webpack.github.io/docs/configuration.html#output-chunkfilename
-        chunkFilename: "[id].chunck.js"
+        path:          "../static",
+        filename:      "[name].js",
+        publicPath:    "/static/",
+        chunkFilename: "[id].chunck.[ext]"
     },
-
-    // http://webpack.github.io/docs/configuration.html#plugins
-    // http://webpack.github.io/docs/using-plugins.html
     plugins: [
-        require('webpack-fail-plugin'), // makes the process return an error code on failure
-        // https://webpack.github.io/docs/list-of-plugins.html#commonschunkplugin
         new webpack.optimize.CommonsChunkPlugin({
-          name: "js/common",
+          name:     "js/common",
           filename: "js/common.js"
         }),
-        new ExtractTextPlugin("css/[name].css"),
-        new BundleTracker({filename: '../../webpack-stats.json'}),
+        new ExtractTextPlugin({filename: "[name].css"}),
+        new BundleTracker({filename: "../../webpack-stats.json"}),
         new webpack.ProvidePlugin({
-            'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch',
-            'Promise':'bluebird'
+            "fetch":   "imports?this=>global!exports?global.fetch!whatwg-fetch",
+            "Promise": "bluebird",
+            "$":       "jquery",    // bootstrap.js support
+            "jQuery":  "jquery",    // bootstrap.js support
         }),
     ],
-
-    // http://webpack.github.io/docs/configuration.html#module
     module: {
-        // http://webpack.github.io/docs/using-loaders.html
-        loaders: [
-            { test: /\.hbs$/, loader: "handlebars-loader",
-                query: {
-                    helperDirs: [
-                        path.resolve(__dirname, './@modules/shared/ext/handlebars')
-                    ]
-                }
+        rules: [
+            {
+                test: /\.css$/,
+                use: ExtractTextPlugin.extract({
+                    fallback: "style-loader",
+                    use: "css-loader"
+                })
             },
-
-            { test: /\.css$/, loader: ExtractTextPlugin.extract("style-loader", "css-loader") },
-            { test: /\.scss$/, loader: ExtractTextPlugin.extract("style","css!sass")},
-            { test: /\.tsx?$/, exclude: /node_modules/, loader: "ts-loader" },
-            { test: /\.json$/, loader: 'json'},
-            { test: /\.(woff|woff2|eot|ttf|svg)(\?[a-z0-9\#]+)?$/, loader: 'file-loader?name=fonts/[name].[ext]&limit=100000' },
-            { test: /\.(jpe?g|png|gif)(\?[a-z0-9\#]+)?$/, loader: 'file-loader?name=img/[name].[ext]' },
-            { test: /animation\.gsap\.js$/, loader: 'imports?define=>false'},
-            { test: /ScrollToPlugin\.js$/, loader: 'imports?define=>false'},
-            { test: /three\/examples\/.*/, loader: 'three-examples'},
-            { test: /vex\.combined\.js$/, loader: 'imports?define=>false'}
-        ],
+            {
+                test: /\.scss$/,
+                use: ExtractTextPlugin.extract({
+                    fallback: "style-loader",
+                    use: "css-loader!sass-loader"
+                })
+            },
+            {
+                test: /\.tsx?/,
+                exclude: /node_modules/,
+                loader: "ts-loader"
+            },
+            {
+                test: /\.(woff|woff2|eot|ttf|svg)(\?\S*)?$/,
+                use: [
+                    {
+                        loader: "file-loader",
+                        options: {
+                            name: "fonts/[name].[ext]",
+                            limit: "100000"
+                        }
+                    }
+                ]
+            },
+            {
+                test: /\.(hbs|handlebars)$/,
+                loader: "handlebars-loader"
+            }
+        ]
     },
-    // http://webpack.github.io/docs/configuration.html#devtool
     devtool: "source-map",
-
-    // http://webpack.github.io/docs/configuration.html#resolve
     resolve: {
+        extensions: [".webpack.js", "web.js", ".ts", ".tsx", ".js"],
         alias: {
-            'scrollmagic.gsap': 'scrollmagic/scrollmagic/uncompressed/plugins/animation.gsap',
-            'scrolltoplugin': 'gsap/src/uncompressed/plugins/ScrollToPlugin'
+            "webworkify":        "webworkify-webpack",
+            "bootstrap":         "bootstrap-sass/assets/javascripts/bootstrap",
+            "bootstrap-styles":  "bootstrap-sass/assets/stylesheets",
+            "breakpoint-styles": "breakpoint-sass/stylesheets",
+            "bourbon-styles":    "bourbon/app/assets/stylesheets",
         },
-        // http://webpack.github.io/docs/configuration.html#resolve-modulesdirectories
-        modulesDirectories: ["node_modules", "@modules", "@css", "@img"],
-        // http://webpack.github.io/docs/configuration.html#resolve-extensions
-        extensions: ["", ".webpack.js", ".web.js", ".ts", ".tsx", ".js"]
-    },
-
-    resolveLoader: {
-        modulesDirectories: ["node_modules", "./loaders"],
+        modules: ["node_modules", "@modules", "@css", "@img", "@tests"]
     }
 }

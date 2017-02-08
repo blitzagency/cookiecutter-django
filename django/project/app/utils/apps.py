@@ -5,7 +5,7 @@ import logging
 log = logging.getLogger(__name__)
 
 
-class AppUtilsConfig(AppConfig):
+class Config(AppConfig):
     name = "app.utils"
     label = "app_utils"
     verbose_name = "Utils"
