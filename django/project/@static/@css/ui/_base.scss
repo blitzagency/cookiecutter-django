@@ -1,0 +1,177 @@
+// ------------------------------------
+// UI KIT BASE STYLES
+// ------------------------------------
+// These styles are used to build the structure and layout of the UI kit.
+
+// Ui nav; leverages the bootstrap navbar.
+.ui-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+
+    // override bs
+    border-radius: 0;
+}
+
+// Ui main content area
+// Provides some padding to compensate for fixed nav.
+.ui-main {
+    padding-top: 54px; // nav height
+}
+
+// Usually added to a <section> tag
+// Used to define major sections of the ui kit
+.ui-section {
+    padding: 2em 0;
+}
+
+// A added to a <div>
+// Used to provide a generic container with some default margin-bottom
+.ui-block {
+    margin-bottom: 2em;
+}
+
+// A base class to reverse ui kit elements
+.ui-reverse {
+    background-color: $black;
+    color: $white;
+}
+
+// The reversed version of a ui-block
+// Adds some nicer inner top/bottom padding
+.ui-block-reverse {
+    @extend .ui-reverse;
+    padding: 2em 0;
+}
+
+// Anchor link for headings
+// Compensates for fixed nav by adding some positioning
+// See: http://stackoverflow.com/a/13184714
+.ui-anchor {
+    display: block;
+    position: relative;
+    top: -70px; // eyeballed
+    left: 0;
+    visibility: hidden;
+}
+
+// UI heading resets
+.ui-h1, .ui-h2, .ui-h3 {
+    margin: 0;
+    line-height: 1;
+}
+
+// A large, bold heading
+// Usually nested inside a <header class="container">
+// Usually the first header inside a .ui-section
+.ui-h1 {
+    font-size: $ui-h1-font-size;
+    color: $ui-h1-color;
+    font-weight: 800;
+    margin-bottom: 0.25em;
+}
+
+// A medium heading
+// Usually nested inside a <header class="container">
+// Marks a ui kit sub section
+.ui-h2 {
+    font-size: $ui-h2-font-size;
+    color: $ui-h2-color;
+    margin-bottom: 6rem;
+}
+
+// A small heading
+// Marks groups of ui kit example elements
+.ui-h3 {
+    font-size: $ui-h3-font-size;
+    color: $ui-h3-color;
+    text-transform: uppercase;
+    margin-bottom: 3rem;
+}
+
+// The ui-kit body class
+// Useful for notes and other documentation
+.ui-body {
+    color: $ui-body-color;
+}
+
+// Creates nicer spacing between .ui-h2 and .ui-body
+// when they are adjacent.
+.ui-h2 + .ui-body {
+    margin-top: -2.5em;
+}
+
+// Creates nicer spacing between .ui-h3 and .ui-body
+// when they are adjacent.
+.ui-h3 + .ui-body {
+    margin-top: -1em;
+}
+
+// Usually attached to an <hr> tag
+// A more distinct hr with custom spacing
+// Usually proceeds a .ui-h1 header block
+.ui-hr {
+    margin-top: 2rem;
+    margin-bottom: 6rem;
+    border-top-color: $ui-hr-border-color;
+}
+
+// Redline text to denote helpful, code oriented information
+// such as class names.
+.ui-redline {
+    color: $ui-readline-color;
+    font-size: 0.9em;
+    line-height: 1.2;
+    margin: 0;
+    margin-bottom: 0.2em;
+    font-family: monospace;
+}
+
+// A color swatch
+// Note: Use the color-swatch mixin above to create specific colors!
+.ui-swatch {
+    display: inline-block;
+    margin-right: 24px;
+    margin-bottom: 60px;
+    position: relative;
+
+    &::after {
+        font-family: sans-serif;
+        font-weight: 800;
+        font-size: 1.2rem;
+        white-space: pre;
+        text-align: center;
+        position: absolute;
+        width: 140px;
+        margin-left: -70px;
+        left: 50%;
+        bottom: -50px;
+    }
+}
+
+// A sub-component of the ui-swatch above
+.ui-swatch-circle {
+    height: 140px;
+    width: 140px;
+    border-radius: 50%;
+}
+
+// A block well-suited to display a typeface
+// TIP: Combine with .ui-block and .ui-block-reverse
+//      to create a nicely spaced reversible block.
+.ui-fontset {
+    border: 1px solid $black;
+    padding: 1em;
+    overflow: scroll;
+
+    > p {
+        font-size: 1.55em;
+        letter-spacing: 0.1em;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+}

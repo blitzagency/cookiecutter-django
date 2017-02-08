@@ -1,0 +1,89 @@
+// ------------------------------------
+// COMMON CONFIG
+// ------------------------------------
+
+// Project Variables
+// ====================================
+
+// Colors -----------------------------
+
+$white: #fff;
+$black: #000;
+
+// Add more colors here!
+// See: http://chir.ag/projects/name-that-color
+
+// Misc -------------------------------
+
+$reset-heading-styles: false;
+
+// NOTE: Comment out the import for bootstrap buttons if you set this to true
+//       (Unfortunately "conditional imports" are not supported at this time).
+// See: common/index.scss
+$reset-btn-base-styles: false;
+
+// Bourbon Variables
+// ====================================
+
+// Easing presets available from Bourbon: http://bourbon.io/docs/
+
+$transTime:          0.3s;
+$transTimeFast:      $transTime * 0.5;
+$transTimeSlow:      $transTime * 1.5;
+$transTimeSuperSlow: $transTime * 2;
+$easeDefault:        $ease-out-cubic;
+
+// Bootstrap Variables
+// ====================================
+
+// Type -------------------------------
+
+$font-family-sans-serif: sans-serif;
+$font-family-serif:      serif;
+$font-family-monospace:  monospace;
+$font-family-base:       $font-family-sans-serif;
+$font-size-base:         16px;
+$font-size-large:        ceil(($font-size-base * 1.25)); // ~20px
+$font-size-small:        ceil(($font-size-base * 0.85)); // ~13px
+$line-height-base:       1.4;
+$line-height-computed:   floor(($font-size-base * $line-height-base)); // ~20px
+
+// Headings ---------------------------
+
+@if $reset-heading-styles {
+
+$font-size-h1: $font-size-base;
+$font-size-h2: $font-size-base;
+$font-size-h3: $font-size-base;
+$font-size-h4: $font-size-base;
+$font-size-h5: $font-size-base;
+$font-size-h6: $font-size-base;
+
+$headings-font-weight: 400;
+
+}
+@else {
+
+$font-size-h1: modular-scale(4);
+$font-size-h2: modular-scale(3);
+$font-size-h3: modular-scale(2);
+$font-size-h4: modular-scale(1);
+$font-size-h5: modular-scale(0);
+$font-size-h6: modular-scale(-1);
+
+}
+
+$headings-font-weight:    400;
+$headings-line-height:    1;
+$headings-letter-spacing: -0.01em;
+$headings-font-family:    inherit;
+$headings-color:          inherit;
+
+
+// Components -------------------------
+
+$default-border-radius: 0px;
+$border-radius-base:    $default-border-radius;
+$border-radius-large:   $default-border-radius;
+$border-radius-small:   $default-border-radius;
+$border-width:          1px;

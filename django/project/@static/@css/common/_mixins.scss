@@ -1,0 +1,91 @@
+// ------------------------------------
+// BOOSTRAP HELPERS
+// ------------------------------------
+// Note: It's imperative this file includes SCSS that _never_
+//       generates css!
+
+@import "~breakpoint-styles/breakpoint";
+
+@function get-bootstrap-breakpoints() {
+    @return (
+        xs: $screen-xs,
+        sm: $screen-sm,
+        md: $screen-md,
+        lg: $screen-lg,
+        xs-max: $screen-xs-max,
+        sm-max: $screen-sm-max,
+        md-max: $screen-md-max
+    )
+};
+
+@mixin bootstrap-breakpoint($key) {
+    $breakpoints: get-bootstrap-breakpoints();
+
+    @include breakpoint(map-get($breakpoints, $key)) {
+        @content;
+    }
+}
+
+@mixin bootstrap-breakpoint-max($key) {
+    $breakpoints: get-bootstrap-breakpoints();
+
+    @include breakpoint(max-width map-get($breakpoints, $key)) {
+        @content;
+    }
+}
+
+@mixin breakpoint-xs() {
+    @include bootstrap-breakpoint(xs) {
+        @content;
+    }
+}
+
+@mixin breakpoint-xs-max() {
+    @include bootstrap-breakpoint-max(xs-max) {
+        @content;
+    }
+}
+
+@mixin breakpoint-sm() {
+    @include bootstrap-breakpoint(sm) {
+        @content;
+    }
+}
+
+@mixin breakpoint-sm-max() {
+    @include bootstrap-breakpoint-max(sm-max) {
+        @content;
+    }
+}
+
+@mixin breakpoint-md() {
+    @include bootstrap-breakpoint(md) {
+        @content;
+    }
+}
+
+@mixin breakpoint-md-max() {
+    @include bootstrap-breakpoint-max(md-max) {
+        @content;
+    }
+}
+
+@mixin breakpoint-lg() {
+    @include bootstrap-breakpoint(lg) {
+        @content;
+    }
+}
+
+@mixin center-row {
+    text-align: center;
+}
+
+@mixin center-column {
+    [class*="col-"] {
+        display: inline-block;
+        float: none;
+        // fix inline element "mystery" space
+        // (occurs when doc has newlines between elements)
+        margin-right: -4px;
+    }
+}

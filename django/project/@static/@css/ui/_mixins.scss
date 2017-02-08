@@ -1,0 +1,25 @@
+// ------------------------------------
+// UI Mixins
+// ------------------------------------
+
+/**
+ * Create a new ui-swatch-* class
+ * @param  $color-name              A string version of the color-var
+ * @param  $color-var               The color variable
+ * @param  $swatch-outline: false   Outline the swatch circle in a gray outline
+ * @return
+ */
+@mixin create-ui-swatch($color-name, $color-var, $outline: false) {
+    .ui-swatch-#{$color-name} {
+        .ui-swatch-circle {
+            background-color: $color-var;
+            @if $outline {
+                border: 1px solid $ui-swatch-outline-color;
+            }
+        }
+        &::after {
+            // TODO: Revisit, \A is not working again...
+            content: "#{$color-var}\A $#{$color-name}"
+        }
+    }
+}

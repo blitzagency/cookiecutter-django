@@ -11,45 +11,45 @@ from .base import *
 
 DEBUG = False
 
-ALLOWED_HOSTS += ('.herokuapp.com',)
+ALLOWED_HOSTS += (".herokuapp.com",)
 
 # Installed Apps
 # =====================================
 
 INSTALLED_APPS += (
-    'gunicorn',
-    'storages',
+    "gunicorn",
+    "storages",
 )
 
 # Databases
 # =====================================
 
-DATABASES['default']['ENGINE'] = 'django_postgrespool'
+DATABASES["default"]["ENGINE"] = "django_postgrespool"
 
 DATABASE_POOL_ARGS = {
-    'max_overflow': 7,
-    'pool_size': 7,
-    'recycle': 300,
+    "max_overflow": 7,
+    "pool_size": 7,
+    "recycle": 300,
 }
 
 # Staticfiles
 # =====================================
 
-STATICFILES_STORAGE = 'app.utils.storage.OptimizedS3BotoStorage'
+STATICFILES_STORAGE = "app.utils.storage.OptimizedS3BotoStorage"
 
 DEFAULT_FILE_STORAGE = "app.utils.storage.MediaRootS3BotoStorage"
 
-ASSET_PROTOCOL = 'https' if USE_HTTPS_FOR_ASSETS else 'http'
+ASSET_PROTOCOL = "https" if USE_HTTPS_FOR_ASSETS else "http"
 
-STATIC_URL = '{}://{}.s3.amazonaws.com/'.format(
+STATIC_URL = "{}://{}.s3.amazonaws.com/".format(
     ASSET_PROTOCOL, AWS_STORAGE_BUCKET_NAME)
 
-MEDIA_URL = '{}://{}.s3.amazonaws.com/uploads/'.format(
+MEDIA_URL = "{}://{}.s3.amazonaws.com/uploads/".format(
     ASSET_PROTOCOL, AWS_STORAGE_BUCKET_NAME)
 
 if ASSET_VERSION:
     # set path of assets in s3 bucket, note this is '' by default
-    AWS_LOCATION = '%s/' % ASSET_VERSION
+    AWS_LOCATION = "%s/" % ASSET_VERSION
     STATIC_URL += AWS_LOCATION
 
 # Email / SMTP
@@ -57,17 +57,17 @@ if ASSET_VERSION:
 
 # TODO: Update to use env
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
-EMAIL_HOST = env('EMAIL_HOST', default='smtp.gmail.com')
+EMAIL_HOST = env("EMAIL_HOST", default="smtp.gmail.com")
 
-EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD', default='')
+EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD", default="")
 
-EMAIL_HOST_USER = env('EMAIL_HOST_USER', default='your_email@example.com')
+EMAIL_HOST_USER = env("EMAIL_HOST_USER", default="your_email@example.com")
 
-EMAIL_PORT = env('EMAIL_PORT', default=587)
+EMAIL_PORT = env("EMAIL_PORT", default=587)
 
-EMAIL_SUBJECT_PREFIX = '[%s] ' % SITE_NAME
+EMAIL_SUBJECT_PREFIX = "[%s] " % SITE_NAME
 
 EMAIL_USE_TLS = True
 
@@ -77,61 +77,61 @@ SERVER_EMAIL = EMAIL_HOST_USER
 # =====================================
 
 LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': True,
-    'filters': {
-        'require_debug_false': {
-            '()': 'django.utils.log.RequireDebugFalse'
+    "version": 1,
+    "disable_existing_loggers": True,
+    "filters": {
+        "require_debug_false": {
+            "()": "django.utils.log.RequireDebugFalse"
         },
-        'ratelimit': {
-            '()': 'app.utils.error_ratelimit_filter.RateLimitFilter',
+        "ratelimit": {
+            "()": "app.utils.error_ratelimit_filter.RateLimitFilter",
         }
     },
-    'formatters': {
-        'verbose': {
-            'format': '%(name)s %(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+    "formatters": {
+        "verbose": {
+            "format": "%(name)s %(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s"
         },
-        'simple': {
-            'format': '%(levelname)s %(asctime)s %(message)s'
+        "simple": {
+            "format": "%(levelname)s %(asctime)s %(message)s"
         },
     },
-    'handlers': {
-        'mail_admins': {
-            'level': 'ERROR',
-            'filters': ['require_debug_false', 'ratelimit'],
-            'class': 'django.utils.log.AdminEmailHandler'
+    "handlers": {
+        "mail_admins": {
+            "level": "ERROR",
+            "filters": ["require_debug_false", "ratelimit"],
+            "class": "django.utils.log.AdminEmailHandler"
         },
-        'stream': {
-            'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
-            'formatter': 'verbose',
+        "stream": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+            "formatter": "verbose",
         },
-        'slack': {
-            'level': 'ERROR',
-            'class': 'app.utils.log.SlackHandler',
-            'formatter': 'verbose',
+        "slack": {
+            "level": "ERROR",
+            "class": "app.utils.log.SlackHandler",
+            "formatter": "verbose",
         },
     },
 
-    'loggers': {
-        '': {
-            'handlers': ['slack', 'stream'],
-            'level': 'WARNING',
-            'propagate': False,
+    "loggers": {
+        "": {
+            "handlers": ["slack", "stream"],
+            "level": "WARNING",
+            "propagate": False,
         },
-        'django.db': {
-            'handlers': ['slack', 'stream'],
-            'level': 'WARNING',
-            'propagate': False,
+        "django.db": {
+            "handlers": ["slack", "stream"],
+            "level": "WARNING",
+            "propagate": False,
         },
-        'z.pool': {
-            'handlers': ['slack', 'stream'],
-            'level': 'WARNING',
-            'propagate': False,
+        "z.pool": {
+            "handlers": ["slack", "stream"],
+            "level": "WARNING",
+            "propagate": False,
         },
-        'django': {
-            'handlers': ['slack', 'stream'],
-            'propagate': False,
+        "django": {
+            "handlers": ["slack", "stream"],
+            "propagate": False,
         },
     }
 }
@@ -143,11 +143,11 @@ LOGGING = {
 # Utils
 # =====================================
 
-SLACK_USER_NAME = env("SLACK_USER_NAME", default='Logger:PROD')
+SLACK_USER_NAME = env("SLACK_USER_NAME", default="Logger:PROD")
 
 # Mezzanine
 # =====================================
 
 AWS_HEADERS = {
-    'Cache-Control': 'max-age=31536000',
+    "Cache-Control": "max-age=31536000",
 }
