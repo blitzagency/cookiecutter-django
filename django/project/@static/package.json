@@ -1,7 +1,7 @@
 {
   "scripts": {
     "test": "./node_modules/.bin/karma start",
-    "start": "./node_modules/.bin/webpack --config webpack.config.js --watch --display-error-details",
+    "start": "./node_modules/.bin/webpack --config webpack.config.js --watch",
     "build": "WEBPACK_ENV=production ./node_modules/.bin/webpack --config webpack.config.js",
     "dev": "./node_modules/.bin/webpack-dev-server --config webpack.config.js --port 9000 --host 0.0.0.0 --content-base dev/ --hot --inline --progress --colors"
   },
