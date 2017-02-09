@@ -13,6 +13,8 @@ DEBUG = True
 
 ALLOWED_HOSTS += ("docker.local", ".ngrok.io",)
 
+SECRET_KEY = env('DJANGO_SECRET_KEY', default='CHANGEME!!!')
+
 # Installed Apps
 # =====================================
 

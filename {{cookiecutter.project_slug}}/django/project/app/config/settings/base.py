@@ -52,8 +52,7 @@ SITE_ID = 1
 SITE_NAME = basename(DJANGO_ROOT)
 
 # NOTE: This key only used for development and testing!
-SECRET_KEY = env(
-    "SECRET_KEY", default=r"f2(!%hox^koxhw%%0a)@@!f5^7lu(1$@es*#1szh2q^@3der$")
+SECRET_KEY = env("SECRET_KEY")
 
 ADMINS = (
     ("app admin"),

@@ -54,6 +54,7 @@ test.js: ## Run Javascript test suite
 	open http://localhost:3000
 	cd django/project/\@static && npm test
 
+{% if cookiecutter.use_heroku.lower() == "y" %}
 .PHONY: heroku.prod.deploy
 heroku.prod.deploy: heroku.build.prod ## Deploy to heroku (prod)
 	docker run --rm -w /usr/app/django \
@@ -76,9 +77,12 @@ heroku.staging.deploy: heroku.build.prod ## Deploy to heroku (staging)
 		-it dinopetrone/heroku:latest \
 		fab staging.deploy -f /usr/fabfile
 
+
 .PHONY: heroku.build.prod
 heroku.build.prod:
 	cd django/project/@static && IS_HEROKU=1 VERSION=$$(git rev-parse HEAD) USE_HTTPS_FOR_ASSETS=$$(heroku config:get USE_HTTPS_FOR_ASSETS) AWS_BUCKET_NAME=$$(heroku config:get AWS_BUCKET_NAME) npm run build
+
+{% endif %}
 
 .PHONY: reqs.git
 reqs.git:
