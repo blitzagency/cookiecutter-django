@@ -3,6 +3,6 @@ def web_settings(request):
 
     return {
         "web_settings": {
-            # "foo": getattr(settings, FOO, None)
+            "auto_enable_i18n": getattr(settings, "AUTO_ENABLE_I18N", False)
         }
     }

@@ -49,6 +49,10 @@
         {% include "partials/footer.html" %}
     {% endblock footer %}
 
+    {% if web_settings.auto_enable_i18n %}
+        <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
+    {% endif %}
+
     {# Common Javascript #}
     {% render_bundle "js/common" %}
 

@@ -206,15 +206,25 @@ MEDIA_URL = "/media/"
 # Locale / I18N & L10N
 # =====================================
 
+# Set to True to automatically enable django's i81n
+# Note: This is a custom (i.e., non-native Django setting) but is used to
+#       branch in a few places to enable Django's I18N and L10N automatically.
+AUTO_ENABLE_I18N = True
+
 TIME_ZONE = "America/Los_Angeles"
 
 USE_TZ = True
 
-LANGUAGE_CODE = "en-us"
+USE_I18N = AUTO_ENABLE_I18N
+USE_L10N = AUTO_ENABLE_I18N
 
-USE_I18N = False
+LANGUAGE_CODE = "en"
 
-USE_L10N = False
+LANGUAGES = (
+    ("en", "English"),
+    # Add additional / change languages here
+    # ("de", "German")
+)
 
 # Authentication
 # =====================================

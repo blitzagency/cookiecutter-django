@@ -1,6 +1,8 @@
 from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.conf.urls.i18n import i18n_patterns
+from django.views.i18n import JavaScriptCatalog
 
 
 admin.autodiscover()
@@ -19,6 +21,15 @@ urlpatterns = [
     url(r'^', include('app.ui_kit.urls')),
     url(r'^', include("mezzanine.urls")),
 ]
+
+if settings.AUTO_ENABLE_I18N:
+    urlpatterns = i18n_patterns(*urlpatterns)
+
+    urlpatterns += [
+        url(r"^jsi18n/$",
+            JavaScriptCatalog.as_view(packages=["app.web"]),
+            name="javascript-catalog"),
+    ]
 
 # -------------------------------------
 # DEBUG URLS
