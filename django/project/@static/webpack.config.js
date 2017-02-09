@@ -45,11 +45,11 @@ var config = {
         chunkFilename: "[id].chunck.[ext]"
     },
     plugins: [
-        new ExtractTextPlugin({filename: "[name].css"}),
         new webpack.optimize.CommonsChunkPlugin({
           name:     "js/common",
           filename: "js/common.js"
         }),
+        new ExtractTextPlugin({filename: "[name].css"}),
         new BundleTracker({filename: "../../webpack-stats.json"}),
         new webpack.ProvidePlugin({
             "fetch":   "imports?this=>global!exports?global.fetch!whatwg-fetch",

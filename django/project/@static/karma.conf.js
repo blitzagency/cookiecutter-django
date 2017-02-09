@@ -17,9 +17,6 @@ module.exports = function(config) {
     // Remove commonChunk plugin for tests
     webpackConfig.plugins.shift();
 
-    // Add tests to modules conf
-    // webpackConfig.resolve.modules.push(path.resolve(__dirname, "@tests"));
-
     // Fix resolution error regarding "fs" in glob.js
     // Found here: https://github.com/pugjs/pug-loader/issues/8#issuecomment-55568520
     webpackConfig.node = {
