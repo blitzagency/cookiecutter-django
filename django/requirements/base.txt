@@ -1,5 +1,5 @@
 Mezzanine==4.2.2
-gunicorn==19.3.0
+gunicorn~=19.6.0
 Django~=1.10.0
 Pillow==2.8.1
 boto==2.38.0
