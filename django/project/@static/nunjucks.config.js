@@ -36,8 +36,5 @@ var nunjucks = require("nunjucks");
 
 module.exports = function(env) {
 
-    env.addFilter("truncate", function(str, count) {
-        var ellip = count < str.length ? "..." : "";
-        return str.slice(0, count) + ellip;
-    })
+    // Configure nunjucks here.
 }

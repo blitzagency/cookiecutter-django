@@ -7,9 +7,6 @@ import {on, Options} from "../utils/decorators";
 @Options({
     template: false,
     el: "body",
-    regions: {
-        "main": ".js-region-main"
-    }
 })
 export default class ViewController extends Marionette.View<Backbone.Model>{
     constructor() {
