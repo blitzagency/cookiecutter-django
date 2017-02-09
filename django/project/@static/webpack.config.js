@@ -10,6 +10,7 @@ var BundleTracker = require("webpack-bundle-tracker");
  * - https://webpack.js.org/guides/migrating/ (1.x -> 2.x)
  */
 
+
 var publicPath = '/static/';
 
 // HEROKU
@@ -97,8 +98,14 @@ var config = {
                 ]
             },
             {
-                test: /\.(hbs|handlebars)$/,
-                use: "handlebars-loader"
+                test: /\.(njk|nunjucks)$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: "nunjucks-loader",
+                    options: {
+                        config: path.resolve(__dirname, "nunjucks.config.js")
+                    }
+                }
             }
         ]
     },

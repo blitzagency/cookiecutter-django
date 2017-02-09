@@ -18,7 +18,8 @@
             "bootstrap",
             "jasmine",
             "jquery",
-            "underscore"
+            "underscore",
+            "nunjucks"
         ]
     },
     "exclude": [
