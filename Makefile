@@ -32,6 +32,15 @@ migrate: ## Runs Django makemigrations and migrate in a single command
 	docker exec -it ${NAME}_django_1 python manage.py makemigrations
 	docker exec -it ${NAME}_django_1 python manage.py migrate
 
+.PHONY: po
+po: ## Create / update po files
+	docker exec -it ${NAME}_django_1 mkdir -p project/app/web/locale
+	docker exec -it ${NAME}_django_1 python manage.py makemessages ${OPTS}
+
+.PHONY: mo
+mo: ## Compile all po -> mo files
+	docker exec -it ${NAME}_django_1 python manage.py compilemessages ${OPTS}
+
 .PHONY: shell
 shell: ## Run a bash session on a container
 	docker exec -it ${NAME}_django_1 /bin/bash
@@ -109,13 +118,17 @@ help-usage:
 	@echo "\nUsage:"
 	@echo "make <command> [Options...]"
 	@echo "make sh"
+	@echo "make po [OPTS=\"...\""]
+	@echo "make mo [OPTS=\"...\""]
 
 # Update this target to add additinoal examples
 .PHONY: help-examples
 help-examples:
 	@echo "\nExamples:"
 	@echo "make sh"
-	@echo "make sh CONTAINER_NAME=node"
+	@echo "make sh CONTAINER_NAME=postgres"
+	@echo "make po OPTS=\"-l de -l es\""
+	@echo "make po OPTS=\"-a\""
 	@echo ""
 
 # -------------------------------------
