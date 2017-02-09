@@ -1,3 +1,4 @@
+{% raw %}
 var nunjucks = require("nunjucks");
 
 /**
@@ -38,3 +39,5 @@ module.exports = function(env) {
 
     // Configure nunjucks here.
 }
+
+{% endraw %}

@@ -1,4 +1,4 @@
-NAME := $(shell basename $$PWD | sed -e s/[\\.-]//g)
+NAME := $(shell basename $$PWD | sed -e s/[\\.-_]//g)
 CONTAINER_NAME ?= "django"
 LOCATION := $(shell pwd -P)
 
@@ -82,7 +82,7 @@ heroku.build.prod:
 
 .PHONY: reqs.git
 reqs.git:
-	git submodule update --init --remote --recursive
+	-git submodule update --init --remote --recursive
 
 .PHONY: reqs.py
 reqs.py:
