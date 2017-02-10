@@ -1,11 +1,13 @@
 from django.conf.urls import url
-from django.conf import settings
 from . import views
 
 
-if settings.DEBUG:
-    urlpatterns = [
-        url(r"^ui-kit/$", views.UiIndexView.as_view(), name="ui-kit-index"),
-    ]
-else:
-    urlpatterns = []
+urlpatterns = [
+    url(r"^ui-kit/$",
+        views.DebugRedirectView.as_view(
+            template_name="ui_kit/index.html",
+            redirect_url_name="home"
+        ),
+        name="ui-kit-index"
+    ),
+]
