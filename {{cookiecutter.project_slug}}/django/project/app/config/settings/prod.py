@@ -143,7 +143,7 @@ LOGGING = {
 
 SLACK_USER_NAME = env("SLACK_USER_NAME", default="Logger:PROD")
 
-# Mezzanine
+# Storages
 # =====================================
 
 AWS_HEADERS = {

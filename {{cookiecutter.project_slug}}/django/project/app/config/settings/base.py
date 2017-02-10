@@ -60,10 +60,6 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-# Testing
-# =====================================
-
-TEST_RUNNER = "testing.PytestTestRunner"
 
 # TODO: Update to use env paths
 FIXTURE_DIRS = (
@@ -208,7 +204,7 @@ MEDIA_URL = "/media/"
 # Set to True to automatically enable django's i81n
 # Note: This is a custom (i.e., non-native Django setting) but is used to
 #       branch in a few places to enable Django's I18N and L10N automatically.
-AUTO_ENABLE_I18N = False
+AUTO_ENABLE_I18N = {% if cookiecutter.use_heroku.lower() == "y" %}True{% else %}False{% endif %}
 
 TIME_ZONE = "America/Los_Angeles"
 
@@ -237,7 +233,7 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 
 ACCOUNT_ALLOW_REGISTRATION = env.bool(
-    "ACCOUNT_ALLOW_REGISTRATION", True)
+    "ACCOUNT_ALLOW_REGISTRATION", False)
 
 # Cache
 # =====================================
@@ -272,7 +268,7 @@ WEBPACK_LOADER = {
 # Grapelli
 # =====================================
 
-GRAPPELLI_ADMIN_TITLE = "project_name"
+GRAPPELLI_ADMIN_TITLE = "{{cookiecutter.project_name}}"
 
 # Celery
 # =====================================

@@ -77,7 +77,7 @@ def remove_heroku_files():
     """
     Removes files needed for heroku if it isn't going to be used
     """
-    for filename in ["Procfile", "runtime.txt", "requirements.txt"]:
+    for filename in ["Procfile", "runtime.txt", "requirements.txt", "docs/DEPLOYMENT_NOTES.md"]:
         file_name = os.path.join(PROJECT_DIRECTORY, filename)
         remove_file(file_name)
 

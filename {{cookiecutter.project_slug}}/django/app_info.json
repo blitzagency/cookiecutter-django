@@ -1,18 +1,18 @@
 {
 	"dev": {
-		"heroku_app_name": "project-name-dev",
+		"heroku_app_name": "{{cookiecutter.project_slug}}-dev",
 		"heroku_remote_name": "dev",
 		"branch_name": "dev",
 		"DJANGO_SETTINGS_MODULE":"app.config.settings.prod"
 	},
 	"staging": {
-		"heroku_app_name": "project-name-staging",
+		"heroku_app_name": "{{cookiecutter.project_slug}}-staging",
 		"heroku_remote_name": "staging",
 		"branch_name": "staging",
 		"DJANGO_SETTINGS_MODULE":"app.config.settings.prod"
 	},
 	"prod": {
-		"heroku_app_name": "secret-thicket-35470",
+		"heroku_app_name": "{{cookiecutter.project_slug}}-prod",
 		"heroku_remote_name": "prod",
 		"branch_name": "master",
 		"DJANGO_SETTINGS_MODULE":"app.config.settings.prod"
