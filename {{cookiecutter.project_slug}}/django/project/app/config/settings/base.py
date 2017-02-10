@@ -312,6 +312,7 @@ SITE_TITLE = GRAPPELLI_ADMIN_TITLE
 
 RICHTEXT_WIDGET_CLASS = "redactor.widgets.RedactorEditor"
 
+{% if cookiecutter.use_uploadcare.lower() == "y" %}
 # UploadCare
 # =====================================
 
@@ -319,18 +320,21 @@ UPLOADCARE = {
     "pub_key": env("UPLOADCARE_PUB_KEY", default=""),
     "secret": env("UPLOADCARE_SECRET_KEY", default=""),
 }
+{% endif %}
 
 # Redactor
 # =====================================
 
 REDACTOR_OPTIONS = {
     "lang": "en",
+    {% if cookiecutter.use_uploadcare.lower() == "y" %}
     "plugins": ["uploadcare"],
     "uploadcare": {
         "publicKey": UPLOADCARE["pub_key"],
         "crop": "free",
         "tabs": "all",
     }
+    {% endif %}
 }
 
 REDACTOR_UPLOAD = "uploads/"
