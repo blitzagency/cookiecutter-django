@@ -51,8 +51,6 @@ SITE_ID = 1
 # TODO: This resolves to "config", probably not correct.
 SITE_NAME = basename(DJANGO_ROOT)
 
-# NOTE: This key only used for development and testing!
-SECRET_KEY = env("SECRET_KEY")
 
 ADMINS = (
     ("app admin"),
@@ -285,11 +283,11 @@ REDIS_HOST = env("REDIS_HOST", default="redis://localhost:6379")
 # Storages
 # =====================================
 
-AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID")
+AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID", default="")
 
-AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
+AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY", default="")
 
-AWS_BUCKET_NAME = AWS_STORAGE_BUCKET_NAME = env("AWS_BUCKET_NAME")
+AWS_BUCKET_NAME = AWS_STORAGE_BUCKET_NAME = env("AWS_BUCKET_NAME", default="")
 
 AWS_QUERYSTRING_AUTH = False
 
@@ -318,8 +316,8 @@ RICHTEXT_WIDGET_CLASS = "redactor.widgets.RedactorEditor"
 # =====================================
 
 UPLOADCARE = {
-    "pub_key": env("UPLOADCARE_PUB_KEY"),
-    "secret": env("UPLOADCARE_SECRET_KEY"),
+    "pub_key": env("UPLOADCARE_PUB_KEY", default=""),
+    "secret": env("UPLOADCARE_SECRET_KEY", default=""),
 }
 
 # Redactor
