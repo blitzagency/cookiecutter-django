@@ -23,8 +23,7 @@ __Do:__
 ## Git Commit Zen
 
 - Limit commit header lines to 80 characters
-- Always include a scope
-- Always include a subject
+- Always include a type, scope, & subject
 - Subjects should use the imperative tense; "Change, Fix, Remove" in lieu of "Changed, Fixed, Removed" or "Changes, Fixes, Removes".
 - Include body text if more information is helpful.
 
