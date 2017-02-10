@@ -12,7 +12,7 @@
 		"DJANGO_SETTINGS_MODULE":"app.config.settings.prod"
 	},
 	"prod": {
-		"heroku_app_name": "{{cookiecutter.project_slug}}-prod",
+		"heroku_app_name": "{{cookiecutter.project_slug}}",
 		"heroku_remote_name": "prod",
 		"branch_name": "master",
 		"DJANGO_SETTINGS_MODULE":"app.config.settings.prod"
