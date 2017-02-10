@@ -139,7 +139,6 @@ if (process.env.WEBPACK_ENV == 'production'){
         })
     ])
 
-    console.log(config.module)
     config.module.rules = config.module.rules.concat([
         {
             test: /\.(js|ts)$/,
