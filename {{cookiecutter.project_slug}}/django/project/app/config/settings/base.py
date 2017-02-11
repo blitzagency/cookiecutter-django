@@ -14,22 +14,38 @@ from os.path import abspath, basename, dirname, join, normpath
 
 # Paths
 # =====================================
+# Paths here the `environ.Path` which provides a special api around os paths.
+#
+# How to use:
+#
+#   # Get the path as a string
+#   PROJECT_PATH()
+#
+#   # Get a sub-directory or file path as a string
+#   # Note: This calls the path directly and not through .path
+#   PROJECT_PATH("static")
+#   PROJECT_PATH("foo.json")
+#
+#   # Get a path as an environ Path object
+#   PROJECT_PATH.path("static")
+#
+# Docs:
+#   - https://github.com/joke2k/django-environ
 
-# TODO: Update paths below to use env paths, e.g, ROOT_DIR =
-# environ.Path(__file__) - 3
+WORKING_PATH = environ.Path(__file__) - 1
 
-DJANGO_ROOT = dirname(dirname(abspath(__file__)))
+DJANGO_PATH = WORKING_PATH - 4
 
-SITE_ROOT = dirname(DJANGO_ROOT)
+PROJECT_PATH = DJANGO_PATH.path("project")
 
-PROJECT_ROOT = abspath(join(dirname(__file__), "../../../"))
+APP_PATH = PROJECT_PATH.path("app")
 
 # Env
 # =====================================
 
 # TODO: Path to env is clunky, see note in # Paths
 env = environ.Env()
-environ.Env.read_env(abspath(join(PROJECT_ROOT, "../.env")))
+environ.Env.read_env(DJANGO_PATH(".env"))
 
 # -------------------------------------
 # DJANGO CONFIGURATION
@@ -48,9 +64,7 @@ ALLOWED_HOSTS = ("localhost", "127.0.0.1",)
 
 SITE_ID = 1
 
-# TODO: This resolves to "config", probably not correct.
-SITE_NAME = basename(DJANGO_ROOT)
-
+SITE_NAME = "example.com"
 
 ADMINS = (
     ("app admin"),
@@ -58,10 +72,8 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-
-# TODO: Update to use env paths
 FIXTURE_DIRS = (
-    normpath(join(PROJECT_ROOT, "fixtures")),
+    PROJECT_PATH("fixtures"),
 )
 
 # Installed Apps
@@ -139,12 +151,12 @@ DATABASES = {
 # Templates
 # =====================================
 
-# TODO: Update to use env paths
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": (normpath(
-            join(PROJECT_ROOT, "app", "overrides", "templates")),),
+        "DIRS": (
+            APP_PATH("overrides/templates"),
+        ),
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": (
@@ -173,7 +185,7 @@ TEMPLATES = [
 
 # TODO: Update to use env paths
 
-STATIC_ROOT = join(PROJECT_ROOT, "collected-static")
+STATIC_ROOT = PROJECT_PATH("collected-static")
 
 STATIC_URL = "/static/"
 
@@ -182,7 +194,7 @@ STATIC_URL = "/static/"
 # See:
 # https://docs.djangoproject.com/en/1.10/ref/contrib/staticfiles/#collectstatic
 STATICFILES_DIRS = (
-    str(join(PROJECT_ROOT, "static")),
+    PROJECT_PATH("static"),
 )
 
 STATICFILES_FINDERS = (
@@ -192,7 +204,7 @@ STATICFILES_FINDERS = (
 
 SERVE_STATIC = False
 
-MEDIA_ROOT = normpath(join(SITE_ROOT, "media"))
+MEDIA_ROOT = PROJECT_PATH("media")
 
 MEDIA_URL = "/media/"
 
@@ -253,13 +265,13 @@ CACHES = {
 # =====================================
 
 WEBPACK_LOADER = {
-    'DEFAULT': {
-        'CACHE': not DEBUG,
-        'BUNDLE_DIR_NAME': 'webpack_bundles/',  # must end with slash
-        'STATS_FILE': join(PROJECT_ROOT, '../', 'webpack-stats.json'),
-        'POLL_INTERVAL': 0.1,
-        'TIMEOUT': None,
-        'IGNORE': ['.+\.hot-update.js', '.+\.map']
+    "DEFAULT": {
+        "CACHE": not DEBUG,
+        "BUNDLE_DIR_NAME": "webpack_bundles/",  # must end with slash
+        "STATS_FILE": DJANGO_PATH("webpack-stats.json"),
+        "POLL_INTERVAL": 0.1,
+        "TIMEOUT": None,
+        "IGNORE": [".+\.hot-update.js", ".+\.map"]
     }
 }
 

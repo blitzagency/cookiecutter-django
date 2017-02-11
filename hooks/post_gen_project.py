@@ -1,10 +1,11 @@
 from __future__ import print_function
 import os
 import random
-import shutil
+
 
 # Get the root project directory
 PROJECT_DIRECTORY = os.path.realpath(os.path.curdir)
+
 
 # Use the system PRNG if possible
 try:
@@ -18,7 +19,8 @@ def get_random_string(
         length=50,
         allowed_chars='abcdefghijklmnopqrstuvwxyz0123456789!@#%^&*(-_=+)'):
     """
-    Returns a securely generated random string.
+    Return a securely generated random string.
+
     The default length of 12 with the a-z, A-Z, 0-9 character set returns
     a 71-bit value. log_2((26+26+10)^12) =~ 71 bits
     """
@@ -49,7 +51,7 @@ def set_secret_key(setting_file_location):
 
 
 def make_secret_key(project_directory):
-    """Generates and saves random secret key"""
+    """Generate and save random secret key."""
     # Determine the local_setting_file_location
     local_setting = os.path.join(
         project_directory,
@@ -74,9 +76,7 @@ def remove_file(file_name):
 
 
 def remove_heroku_files():
-    """
-    Removes files needed for heroku if it isn't going to be used
-    """
+    """Remove files needed for heroku if it isn't going to be used."""
     for filename in ["Procfile", "runtime.txt", "requirements.txt", "docs/DEPLOYMENT_NOTES.md"]:
         file_name = os.path.join(PROJECT_DIRECTORY, filename)
         remove_file(file_name)
