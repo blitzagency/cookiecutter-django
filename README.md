@@ -19,12 +19,12 @@ cd path/to/your/projects
 cookiecutter https://github.com/blitzagency/cookiecutter-django
 ```
 
-## Development
+## Development & Contributing
 
 1. Clone this repository locally
 2. Make your changes
 3. Output a project based on the local template (see below)
-4. Commit changes, see: [CONTRIBUTING.md](./CONTRIBUTING.md)
+4. Commit changes, see: [CONTRIBUTING.md](.//{{cookiecutter.project_slug}}/CONTRIBUTING.md)
 
 __Output Local Copy__:
 
