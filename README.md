@@ -1,4 +1,4 @@
-# BLITZ CookieCutter Django
+# CookieCutter Django
 
 ## Docs
 
@@ -29,5 +29,5 @@ cookiecutter https://github.com/blitzagency/cookiecutter-django
 __Output Local Copy__:
 
 ```bash
-cookiecutter path/to/local/repository
+cookiecutter path/to/local/cookiecutter-django
 ```
