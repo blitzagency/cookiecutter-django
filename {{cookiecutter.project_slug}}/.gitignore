@@ -9,9 +9,7 @@ karma-*/
 *.css
 .env
 django/project/static
-{% if cookiecutter.use_heroku.lower() == "n" %}
 webpack-stats.json
-{% endif %}
 
 # UNIGNORE
 # =====================================

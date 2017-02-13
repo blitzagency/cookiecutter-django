@@ -9,18 +9,6 @@
         "sourceMap": true,
         "moduleResolution": "node",
         "experimentalDecorators": true,
-        "types": [
-            "node",
-            "backbone",
-            "backbone.marionette",
-            "backbone.radio",
-            "bluebird",
-            "bootstrap",
-            "jasmine",
-            "jquery",
-            "underscore",
-            "nunjucks"
-        ]
     },
     "exclude": [
         "node_modules"
