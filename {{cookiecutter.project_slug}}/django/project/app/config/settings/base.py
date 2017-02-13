@@ -214,7 +214,7 @@ MEDIA_URL = "/media/"
 # Set to True to automatically enable django's i81n
 # Note: This is a custom (i.e., non-native Django setting) but is used to
 #       branch in a few places to enable Django's I18N and L10N automatically.
-AUTO_ENABLE_I18N = {% if cookiecutter.use_heroku.lower() == "y" %}True{% else %}False{% endif %}
+AUTO_ENABLE_I18N = {% if cookiecutter.use_i18n.lower() == "y" %}True{% else %}False{% endif %}
 
 TIME_ZONE = "America/Los_Angeles"
 
