@@ -110,7 +110,6 @@ INSTALLED_APPS = (
     "mezzanine.galleries",
     "redactor",
     "adminsortable2",
-    "webpack_loader",
 )
 
 # Middleware
@@ -260,20 +259,6 @@ CACHES = {
 # -------------------------------------
 # THIRD-PARTY CONFIGURATION
 # -------------------------------------
-
-# Webpack
-# =====================================
-
-WEBPACK_LOADER = {
-    "DEFAULT": {
-        "CACHE": not DEBUG,
-        "BUNDLE_DIR_NAME": "webpack_bundles/",  # must end with slash
-        "STATS_FILE": DJANGO_PATH("webpack-stats.json"),
-        "POLL_INTERVAL": 0.1,
-        "TIMEOUT": None,
-        "IGNORE": [".+\.hot-update.js", ".+\.map"]
-    }
-}
 
 # Grapelli
 # =====================================
