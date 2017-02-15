@@ -1,6 +1,12 @@
-NAME := $(shell basename $$PWD | sed -e s/[\\.-_]//g)
+# Windows has a different way of grabbing basename and location
+ifeq ($(OS),Windows_NT)
+	NAME := $(notdir $(CURDIR))
+	LOCATION := $(CURDIR)
+else
+	NAME := $(shell basename $$PWD | sed -e s/[\\.-]//g)
+	LOCATION := $(shell pwd -P)
+endif
 CONTAINER_NAME ?= "django"
-LOCATION := $(shell pwd -P)
 
 # -------------------------------------
 # Project Commands
@@ -99,8 +105,8 @@ reqs.node:
 
 .PHONY: init.django
 init.django: resetdb
-	docker exec -it ${NAME}_django_1 ./manage.py migrate
-	docker exec -it ${NAME}_django_1 ./manage.py createsuperuser
+	docker exec -it ${NAME}_django_1 python manage.py migrate
+	docker exec -it ${NAME}_django_1 python manage.py createsuperuser
 
 # -------------------------------------
 # Makefile Documentation
