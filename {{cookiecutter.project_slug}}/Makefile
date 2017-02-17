@@ -1,11 +1,12 @@
-# Windows has a different way of grabbing basename and location
+# Parse docker container name prefix from working dir
 ifeq ($(OS),Windows_NT)
 	NAME := $(notdir $(CURDIR))
 	LOCATION := $(CURDIR)
 else
-	NAME := $(shell basename $$PWD | sed -e s/[\\.-]//g)
+	NAME := $(shell basename $$PWD | sed -e s/[\\.-_]//g
 	LOCATION := $(shell pwd -P)
 endif
+
 CONTAINER_NAME ?= "django"
 
 # -------------------------------------
@@ -127,7 +128,7 @@ help-commands:
 help-usage:
 	@echo "\nUsage:"
 	@echo "make <command> [Options...]"
-	@echo "make sh"
+	@echo "make shell"
 	@echo "make po [OPTS=\"...\""]
 	@echo "make mo [OPTS=\"...\""]
 
@@ -135,8 +136,8 @@ help-usage:
 .PHONY: help-examples
 help-examples:
 	@echo "\nExamples:"
-	@echo "make sh"
-	@echo "make sh CONTAINER_NAME=postgres"
+	@echo "make shell"
+	@echo "make shell CONTAINER_NAME=postgres"
 	@echo "make po OPTS=\"-l de -l es\""
 	@echo "make po OPTS=\"-a\""
 	@echo ""
