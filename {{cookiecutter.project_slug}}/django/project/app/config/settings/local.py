@@ -30,11 +30,6 @@ MIDDLEWARE += (
     "debug_toolbar.middleware.DebugToolbarMiddleware",
 )
 
-# Staticfiles
-# =====================================
-
-STATICFILES_STORAGE = "require.storage.OptimizedStaticFilesStorage"
-
 # Logging
 # =====================================
 
