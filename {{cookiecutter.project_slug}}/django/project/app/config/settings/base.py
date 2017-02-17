@@ -43,7 +43,6 @@ APP_PATH = PROJECT_PATH.path("app")
 # Env
 # =====================================
 
-# TODO: Path to env is clunky, see note in # Paths
 env = environ.Env()
 environ.Env.read_env(DJANGO_PATH(".env"))
 
@@ -80,6 +79,7 @@ FIXTURE_DIRS = (
 # =====================================
 
 INSTALLED_APPS = (
+    # Overrides
     # Apps that must come first (may include local apps)
     "app.utils",
     "grappelli_safe",
@@ -181,8 +181,6 @@ TEMPLATES = [
 
 # Staticfiles
 # =====================================
-
-# TODO: Update to use env paths
 
 STATIC_ROOT = PROJECT_PATH("collected-static")
 
