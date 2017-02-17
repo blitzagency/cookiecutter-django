@@ -3,7 +3,7 @@ ifeq ($(OS),Windows_NT)
 	NAME := $(notdir $(CURDIR))
 	LOCATION := $(CURDIR)
 else
-	NAME := $(shell basename $$PWD | sed -e s/[\\.-_]//g
+	NAME := $(shell basename $$PWD | sed -e s/[\\.-_]//g)
 	LOCATION := $(shell pwd -P)
 endif
 
