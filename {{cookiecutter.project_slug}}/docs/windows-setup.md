@@ -1,4 +1,4 @@
-[Docker for Windows]: http://example.com/  "Download Docker for Windows"
+[Docker for Windows]: https://docs.docker.com/docker-for-windows/install/ "Download Docker for Windows"
 
 # Windows Setup
 
