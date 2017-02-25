@@ -17,8 +17,8 @@ urlpatterns = [
     url(r'^grappelli/', include('grappelli.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^redactor/', include('redactor.urls')),
+    url(r'^ui-kit/', include('app.ui_kit.urls')),
     url(r'^', include('app.web.urls')),
-    url(r'^', include('app.ui_kit.urls')),
     url(r'^', include("mezzanine.urls")),
 ]
 
