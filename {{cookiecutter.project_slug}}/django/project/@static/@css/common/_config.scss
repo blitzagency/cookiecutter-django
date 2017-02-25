@@ -35,6 +35,15 @@ $easeDefault:        $ease-out-cubic;
 
 // Bootstrap Variables
 // ====================================
+// See: https://github.com/twbs/bootstrap-sass/blob/master/assets/stylesheets/bootstrap/_variables.scss
+
+// Base -------------------------------
+
+$default-border-radius: 0px;
+$border-radius-base:    $default-border-radius;
+$border-radius-large:   $default-border-radius;
+$border-radius-small:   $default-border-radius;
+$border-width:          1px;
 
 // Type -------------------------------
 
@@ -79,11 +88,3 @@ $headings-letter-spacing: -0.01em;
 $headings-font-family:    inherit;
 $headings-color:          inherit;
 
-
-// Components -------------------------
-
-$default-border-radius: 0px;
-$border-radius-base:    $default-border-radius;
-$border-radius-large:   $default-border-radius;
-$border-radius-small:   $default-border-radius;
-$border-width:          1px;
