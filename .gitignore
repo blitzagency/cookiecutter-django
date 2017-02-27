@@ -1,0 +1,82 @@
+# -------------------------------------
+# .GITIGNORE
+# -------------------------------------
+
+
+# PROJECT IGNORE
+# =====================================
+build/
+
+# ALWAYS IGNORE
+# =====================================
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+*.map
+*.diff
+*.err
+*.orig
+*.rej
+*~
+*.psd
+*.vi
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+*.egg
+*.egg-info
+*.log
+*.sql
+*.sqlite
+*.esproj
+*.mo
+*.log
+*.pot
+*.pyc
+*.swp
+*.db
+nohup.out
+*.sublime-project
+*.sublime-workspace
+._*
+.DS_Store
+.DS_Store?
+.Spotlight-V100
+.Trashes
+.cache
+.project
+.pydevproject
+.settings
+.tmproj
+.sass-cache/
+.coverage
+.tox
+.installed.cfg
+.vscode
+__pycache__
+dist
+build
+eggs
+parts
+var
+sdist
+develop-eggs
+pip-log.txt
+ehthumbs.db
+Thumbs.db
+nbproject
+local_settings.py
+collected-static/*
+uploads/*
+celerybeat-schedule
+celerybeat.pid
+node_modules
+npm-debug.log

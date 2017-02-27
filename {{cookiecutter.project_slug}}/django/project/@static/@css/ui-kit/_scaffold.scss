@@ -35,8 +35,8 @@
 
 // A base class to reverse ui kit elements
 .ui-reverse {
-    background-color: $black;
-    color: $white;
+    background-color: $ui-reverse-bg-color;
+    color: $ui-reverse-text-color;
 }
 
 // The reversed version of a ui-block
@@ -162,7 +162,7 @@
 // TIP: Combine with .ui-block and .ui-block-reverse
 //      to create a nicely spaced reversible block.
 .ui-fontset {
-    border: 1px solid $black;
+    border: 1px solid $ui-fontset-border-color;
     padding: 1em;
     overflow: scroll;
 
