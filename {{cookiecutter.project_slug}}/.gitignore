@@ -90,3 +90,4 @@ celerybeat-schedule
 celerybeat.pid
 node_modules
 npm-debug.log
+tags
