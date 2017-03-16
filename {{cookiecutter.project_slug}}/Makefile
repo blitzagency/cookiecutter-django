@@ -32,7 +32,7 @@ assets: ## Start static asset watch / compilation
 
 .PHONY: resetdb
 resetdb: ## Reset Django / Postgres database
-	@echo "resetdb"
+	docker exec -it ${NAME}_django_1 python manage.py reset_db --noinput
 
 .PHONY: migrate
 migrate: ## Runs Django makemigrations and migrate in a single command
