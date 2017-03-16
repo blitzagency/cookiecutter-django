@@ -179,6 +179,23 @@ TEMPLATES = [
     }
 ]
 
+# Storages
+# =====================================
+
+AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID", default="")
+
+AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY", default="")
+
+AWS_BUCKET_NAME = AWS_STORAGE_BUCKET_NAME = env("AWS_BUCKET_NAME", default="")
+
+AWS_QUERYSTRING_AUTH = False
+
+USE_HTTPS_FOR_ASSETS = env.bool("USE_HTTPS_FOR_ASSETS", False)
+
+AWS_IS_GZIPPED = True
+
+ASSET_VERSION = env("ASSET_VERSION", default=False)
+
 # Staticfiles
 # =====================================
 
@@ -274,23 +291,6 @@ CELERY_RESULT_SERIALIZER = "json"
 # =====================================
 
 REDIS_HOST = env("REDIS_HOST", default="redis://localhost:6379")
-
-# Storages
-# =====================================
-
-AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID", default="")
-
-AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY", default="")
-
-AWS_BUCKET_NAME = AWS_STORAGE_BUCKET_NAME = env("AWS_BUCKET_NAME", default="")
-
-AWS_QUERYSTRING_AUTH = False
-
-USE_HTTPS_FOR_ASSETS = env.bool("USE_HTTPS_FOR_ASSETS", False)
-
-AWS_IS_GZIPPED = True
-
-ASSET_VERSION = env("ASSET_VERSION", default=False)
 
 # Mezzanine
 # =====================================

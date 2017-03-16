@@ -2,32 +2,24 @@
 
 > _This project accepts changes from pull requests only!_
 
-## Docs:
+## Docs
 
 - [Fork A Repo, GitHub Documentation](https://help.github.com/articles/fork-a-repo/)
 
-## Making Changes
+## Zen
 
-__Don't:__
-
-- Commit changes to origin/dev or your local copy of dev
-
-__Do:__
-
+- Don't commit changes to origin/dev or your local copy of dev
 - Create topic branches
 - Commit often
 - Write high-quality commit messages
 - `git fetch --all` and `git rebase upstream/dev` before pr submission
 - Run tests before submission
-
-## Git Commit Zen
-
 - Limit commit header lines to 80 characters
 - Always include a type, scope, & subject
 - Subjects should use the imperative tense; "Change, Fix, Remove" in lieu of "Changed, Fixed, Removed" or "Changes, Fixes, Removes".
 - Include body text if more information is helpful.
 
-## Git Commit Style
+## Style
 
 Each commit message consists of a header (comprised of a type scope and subject) and a body (optional).
 
@@ -73,4 +65,3 @@ Scopes describe the area or feature the change affects. Deciding what to put her
 - Use concise scope values.
 - Try to use consistent scope values between commits.
 - If the change is related to a QA ticket (e.g., PROJ-123) use the ticket number as the scope or part of the scope.
-
