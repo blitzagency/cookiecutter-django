@@ -1,4 +1,4 @@
-Mezzanine==4.2.2
+Mezzanine==4.2.3
 gunicorn~=19.6.0
 Django~=1.10.0
 Pillow==2.8.1
