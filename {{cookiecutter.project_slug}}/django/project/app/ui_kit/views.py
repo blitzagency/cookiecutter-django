@@ -9,7 +9,7 @@ class DebugRedirectView(TemplateView):
 
     View Arguments:
     redirect_url_name -- The "reverse" url name to redirect to (default "index")
-    permanent         -- Perform a a 301 instead of a 302 (default True)
+    permanent         -- Perform a 301 instead of a 302 (default True)
 
     Usage:
     DebugRedirectView.as_view(
