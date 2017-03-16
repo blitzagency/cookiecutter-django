@@ -1,11 +1,19 @@
-[Docker for Mac]: http://example.com/  "Download Docker for Mac"
-[Docker for Windows]: http://example.com/  "Download Docker for Windows"
+[Docker for Mac]: https://docs.docker.com/docker-for-mac/install/  "Download Docker for Mac"
+[Docker for Windows]: https://docs.docker.com/docker-for-windows/install/  "Download Docker for Windows"
 [Docker Hub]: https://hub.docker.com/ "Docker Hub Homepage"
 [BLITZ DockerHub]: https://hub.docker.com/u/blitzagency/ "BLITZ DockerHub"
 [Node & Npm]: https://nodejs.org/en/download/ "Intsall Node"
 [Homebrew]: http://brew.sh/ "Homebrew Homepage"
 
 # {{ cookiecutter.project_name }}
+
+## Contribute
+
+- [See CONTRIBUTING.md](./CONTRIBUTING.md)
+
+## Learn
+
+- [Docs](./docs)
 
 ## Required
 
@@ -15,10 +23,6 @@
 - [Node & Npm]
     - Must be installed locally;
     - [OSX] `brew install node` (requires [Homebrew])
-
-## Contribute
-
-- [See CONTRIBUTING.md](./CONTRIBUTING.md)
 
 ## Setup
 
@@ -68,3 +72,12 @@ make test.js
 # To see latest help message run
 make help
 ```
+
+## Access
+
+> __Do not place private credentials in this file.__ Insted use a private shared location to store creds, like a password manager.
+
+Local Django Admin:
+
+- User: admin
+- Pass: pass
