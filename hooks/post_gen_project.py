@@ -19,7 +19,7 @@ except NotImplementedError:
 
 def get_random_string(
         length=50,
-        allowed_chars='abcdefghijklmnopqrstuvwxyz0123456789!@#%^&*(-_=+)'):
+        allowed_chars="abcdefghijklmnopqrstuvwxyz0123456789!@#%^&*(-_=+)"):
     """
     Return a securely generated random string.
 
@@ -27,7 +27,7 @@ def get_random_string(
     a 71-bit value. log_2((26+26+10)^12) =~ 71 bits
     """
     if using_sysrandom:
-        return ''.join(random.choice(allowed_chars) for i in range(length))
+        return "".join(random.choice(allowed_chars) for i in range(length))
     print(
         "Cookiecutter Django couldn't find a secure pseudo-random number generator on your system."
         " Please change change your SECRET_KEY variables in conf/settings/local.py and env.example"
@@ -45,10 +45,10 @@ def set_secret_key(setting_file_location):
     SECRET_KEY = get_random_string()
 
     # Replace "CHANGEME!!!" with SECRET_KEY
-    file_ = file_.replace('CHANGEME!!!', SECRET_KEY, 1)
+    file_ = file_.replace("CHANGEME!!!", SECRET_KEY, 1)
 
     # Write the results to the locals.py module
-    with open(setting_file_location, 'w') as f:
+    with open(setting_file_location, "w") as f:
         f.write(file_)
 
 
@@ -57,7 +57,7 @@ def make_secret_key(project_directory):
     # Determine the local_setting_file_location
     local_setting = os.path.join(
         project_directory,
-        'django/project/app/config/settings/local.py'
+        "django/project/app/config/settings/local.py"
     )
 
     # local.py settings file
@@ -65,7 +65,7 @@ def make_secret_key(project_directory):
 
     env_file = os.path.join(
         project_directory,
-        'django/env.dist'
+        "django/env.dist"
     )
 
     # env.example file
@@ -113,11 +113,11 @@ def is_git_repo(project_directory):
 
 
 def init_git_repo():
-    subprocess.run(["git", "init"], check=True, stdout=open(os.devnull, 'wb'))
-    subprocess.run(["git", "add", "-A"], check=True, stdout=open(os.devnull, 'wb'))
+    subprocess.run(["git", "init"], check=True, stdout=open(os.devnull, "wb"))
+    subprocess.run(["git", "add", "-A"], check=True, stdout=open(os.devnull, "wb"))
     subprocess.run(
         ["git", "commit", "-m", "'chore(project): Initial commit'"], check=True,
-        stdout=open(os.devnull, 'wb')
+        stdout=open(os.devnull, "wb")
     )
 
     print("Info: Initialized git repository")
@@ -130,7 +130,7 @@ def init_git_repo():
 make_secret_key(PROJECT_DIRECTORY)
 
 # 2. Removes all heroku files if it isn't going to be used
-if '{{ cookiecutter.use_heroku }}'.lower() != 'y':
+if "{{ cookiecutter.use_heroku }}".lower() != "y":
     remove_heroku_files()
 
 # 3. Ensure PROJECT_DIRECTORY is a git repository
