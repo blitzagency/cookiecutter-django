@@ -6,6 +6,7 @@
 
 {% block content %}
 <div class="container">
+    <div class="blitz-logo"><span class="text">–Django</span></div>
     <header>
         <h1>Congrats!</h1>
     </header>
@@ -23,6 +24,10 @@
 </div>
 
 {% endblock %}
+
+{% block extra_css %}
+    <script type="text/javascript" src="{% static 'css/home.css' %}" ></script>
+{% endblock extra_css %}
 
 {% block extra_js %}
     <script type="text/javascript" src="{% static 'js/home.js' %}" ></script>

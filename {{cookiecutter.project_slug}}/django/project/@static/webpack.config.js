@@ -86,13 +86,29 @@ var config = {
                 use: "ts-loader"
             },
             {
-                test: /\.(woff|woff2|eot|ttf|svg)(\?\S*)?$/,
+                test: /\.(png|gif|jpe?g|svg)$/i,
+                exclude: [
+                    path.resolve(__dirname, "node_modules")
+                ],
+                use: [
+                    {
+                        loader: "file-loader",
+                        options: {
+                            name: "imgs/[name].[ext]",
+                        }
+                    }
+                ]
+            },
+            {
+                test: /\.(woff2?|eot|ttf|svg)(\?\S*)?$/,
+                exclude: [
+                    path.resolve(__dirname, "@imgs")
+                ],
                 use: [
                     {
                         loader: "file-loader",
                         options: {
                             name: "fonts/[name].[ext]",
-                            limit: "100000"
                         }
                     }
                 ]
@@ -119,7 +135,7 @@ var config = {
             "breakpoint-styles": "breakpoint-sass/stylesheets",
             "bourbon-styles":    "bourbon/app/assets/stylesheets",
         },
-        modules: ["node_modules", "@modules", "@css", "@img", "@tests"]
+        modules: ["node_modules", "@modules", "@css", "@imgs", "@tests"]
     }
 
 }
