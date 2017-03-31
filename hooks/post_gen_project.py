@@ -1,9 +1,11 @@
 from __future__ import print_function
 import os
 import random
+import subprocess
 
 
 # Get the root project directory
+# Note: Resolves to path/to/<project_slug>
 PROJECT_DIRECTORY = os.path.realpath(os.path.curdir)
 
 
@@ -82,7 +84,47 @@ def remove_heroku_files():
         remove_file(file_name)
 
 
-# lets do some stuff!!!
+def ensure_git_repo(project_directory):
+    is_repo = is_git_repo(project_directory)
+    is_repo_root = is_git_repo_root(project_directory)
+
+    if is_repo and not is_repo_root:
+        print("Warning: Output dir is inside another git working tree!")
+        print("Info: If you are using the template `make build` command testing locally you can ignore this warning.")
+        init_git_repo()
+
+    elif not is_repo:
+        init_git_repo()
+
+    elif is_repo and is_repo_root:
+        raise Exception("{} is already a git repository!".format(project_directory))
+
+
+def is_git_repo_root(project_directory):
+    completed = subprocess.run(["git", "rev-parse", "--show-toplevel"], stdout=subprocess.PIPE)
+    result = str(completed.stdout.strip(), "utf-8")
+    return result == str(project_directory)
+
+
+def is_git_repo(project_directory):
+    completed = subprocess.run(["git", "rev-parse", "--is-inside-work-tree"], stdout=subprocess.PIPE)
+    result = str(completed.stdout.strip(), "utf-8")
+    return result == "true"
+
+
+def init_git_repo():
+    subprocess.run(["git", "init"], check=True, stdout=open(os.devnull, 'wb'))
+    subprocess.run(["git", "add", "-A"], check=True, stdout=open(os.devnull, 'wb'))
+    subprocess.run(
+        ["git", "commit", "-m", "'chore(project): Initial commit'"], check=True,
+        stdout=open(os.devnull, 'wb')
+    )
+
+    print("Info: Initialized git repository")
+
+
+# Lets do some stuff!!!
+# =====================================
 
 # 1. Generates and saves random secret key
 make_secret_key(PROJECT_DIRECTORY)
@@ -90,3 +132,6 @@ make_secret_key(PROJECT_DIRECTORY)
 # 2. Removes all heroku files if it isn't going to be used
 if '{{ cookiecutter.use_heroku }}'.lower() != 'y':
     remove_heroku_files()
+
+# 3. Ensure PROJECT_DIRECTORY is a git repository
+ensure_git_repo(PROJECT_DIRECTORY)
