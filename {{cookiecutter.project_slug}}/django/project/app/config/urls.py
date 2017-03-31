@@ -14,12 +14,12 @@ admin.autodiscover()
 # See: https://docs.djangoproject.com/en/dev/topics/http/urls/#example
 
 urlpatterns = [
-    url(r'^grappelli/', include('grappelli.urls')),
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^redactor/', include('redactor.urls')),
-    url(r'^ui-kit/', include('app.ui_kit.urls')),
-    url(r'^', include('app.web.urls')),
-    url(r'^', include("mezzanine.urls")),
+    url(r"^grappelli/", include("grappelli.urls")),
+    url(r"^admin/", include(admin.site.urls)),
+    url(r"^redactor/", include("redactor.urls")),
+    url(r"^ui-kit/", include("app.ui_kit.urls")),
+    url(r"^", include("app.web.urls")),
+    url(r"^", include("mezzanine.urls")),
 ]
 
 if settings.AUTO_ENABLE_I18N:
@@ -42,16 +42,16 @@ if settings.DEBUG:
     import debug_toolbar
 
     urlpatterns += [
-        url(r'^__debug__/', include(debug_toolbar.urls)),
+        url(r"^__debug__/", include(debug_toolbar.urls)),
 
     ]
 
-if getattr(settings, 'SERVE_STATIC', False) and settings.SERVE_STATIC:
+if getattr(settings, "SERVE_STATIC", False) and settings.SERVE_STATIC:
     urlpatterns += [
-        url(r'^static/(?P<path>.*)$',
-            'django.views.static.serve',
-            {'document_root': settings.STATIC_ROOT, 'show_indexes': False}),
-        url(r'^uploads/(?P<path>.*)$',
-            'django.views.static.serve',
-            {'document_root': settings.MEDIA_ROOT, 'show_indexes': False}),
+        url(r"^static/(?P<path>.*)$",
+            "django.views.static.serve",
+            {"document_root": settings.STATIC_ROOT, "show_indexes": False}),
+        url(r"^uploads/(?P<path>.*)$",
+            "django.views.static.serve",
+            {"document_root": settings.MEDIA_ROOT, "show_indexes": False}),
     ]
