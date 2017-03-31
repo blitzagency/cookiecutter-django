@@ -9,7 +9,8 @@ karma-*/
 *.css
 .env
 django/project/static
-webpack-stats.json
+django/project/media
+django/project/uploads
 
 # UNIGNORE
 # =====================================
@@ -85,7 +86,6 @@ Thumbs.db
 nbproject
 local_settings.py
 collected-static/*
-uploads/*
 celerybeat-schedule
 celerybeat.pid
 node_modules
