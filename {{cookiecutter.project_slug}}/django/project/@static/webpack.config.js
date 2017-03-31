@@ -39,7 +39,7 @@ var config = {
         "css/home":   "home/index.scss",
     },
     output: {
-        path:          "../static",
+        path:          path.resolve(__dirname, "../static"),
         filename:      "[name].js",
         publicPath:    publicPath,
         chunkFilename: "[id].chunck.[ext]"
