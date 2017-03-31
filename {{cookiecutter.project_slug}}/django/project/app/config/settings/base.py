@@ -6,7 +6,6 @@ See:
     - https://docs.djangoproject.com/en/dev/ref/settings/
 """
 import environ
-from os.path import abspath, basename, dirname, join, normpath
 
 # -------------------------------------
 # GENERAL SETUP
