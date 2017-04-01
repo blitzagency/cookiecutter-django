@@ -11,6 +11,7 @@ karma-*/
 django/project/static
 django/project/media
 django/project/uploads
+webpack-stats.json
 
 # UNIGNORE
 # =====================================
