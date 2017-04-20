@@ -31,6 +31,8 @@ if(process.env.IS_HEROKU){
 var config = {
     context: path.resolve(__dirname),
     entry: {
+        // necessary to copy image files to /static, see README.md
+        "imgs":       "./@imgs/index.js",
         "js/common":  "common/index.js",
         "css/common": "common/index.scss",
         "js/ui-kit":  "ui-kit/index.js",

@@ -81,3 +81,19 @@ Local Django Admin:
 
 - User: admin
 - Pass: pass
+
+## Notes
+
+### Images in HTML 
+> This setup isn't ideal, we are looking for alternatives. 😞
+
+Images in HTML and other files that do not use a `require` statement (except for .scss) will not be picked up / watched by Webpack. A workaround has been added to __@static/@imgs__.
+
+This workaround forces webpack to copy all image files under __@static/@imgs__ into the path specified in the loader configured to load images in __webpack.config.js__.
+
+There are a couple of gotchas:
+
+
+1. Any subdirs in __@imgs__ are discarded, so simply reference image paths like so: `{% raw %}{% static "imgs/path-to-file-no-subdir.png" %}{% endraw %}`.
+2. All image files _must have unique names_.
+3. If webpack isn't picking up new image files in __@imgs__ restart the `make assets` process.
