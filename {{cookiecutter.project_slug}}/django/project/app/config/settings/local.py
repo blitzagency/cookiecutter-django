@@ -33,15 +33,7 @@ MIDDLEWARE += (
 
 LOGGING = {
     "version": 1,
-    "disable_existing_loggers": True,
-    "filters": {
-        "require_debug_false": {
-            "()": "django.utils.log.RequireDebugFalse"
-        },
-        "ratelimit": {
-            "()": "app.utils.error_ratelimit_filter.RateLimitFilter",
-        }
-    },
+    "disable_existing_loggers": False,
     "formatters": {
         "verbose": {
             "format": "%(name)s %(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s"
@@ -54,34 +46,30 @@ LOGGING = {
         "stream": {
             "level": "DEBUG",
             "class": "logging.StreamHandler",
-            "formatter": "simple",
-        },
-        "slack": {
-            "level": "ERROR",
-            "class": "app.utils.log.SlackHandler",
             "formatter": "verbose",
         },
     },
+
     "loggers": {
         "": {
-            "handlers": ["stream"],
-            "level": "WARNING",
-            "propagate": False,
+            "handlers": ["stream", ],
+            "level": LOG_LEVEL,
+            # "propagate": False,
         },
         "django.db": {
-            "handlers": ["stream"],
-            "level": "WARNING",
-            "propagate": False,
-        },
-        "django": {
-            "handlers": ["stream"],
-            "level": "WARNING",
-            "propagate": False,
+            "handlers": ["stream", ],
+            "level": LOG_LEVEL,
+            # "propagate": False,
         },
         "z.pool": {
-            "handlers": ["stream"],
-            "level": "WARNING",
-            "propagate": False,
+            "handlers": ["stream", ],
+            "level": LOG_LEVEL,
+            # "propagate": False,
+        },
+        "django": {
+            "handlers": ["stream", ],
+            "level": LOG_LEVEL,
+            # "propagate": False,
         },
     }
 }

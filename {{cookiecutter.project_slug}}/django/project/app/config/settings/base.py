@@ -146,6 +146,11 @@ DATABASES = {
                       default="postgres://vagrant:vagrant@postgres/vagrant"),
 }
 
+# Logging
+# =====================================
+
+LOG_LEVEL = env("LOG_LEVEL", default="ERROR")
+
 # Templates
 # =====================================
 
