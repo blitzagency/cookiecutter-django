@@ -55,3 +55,68 @@
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
 }
 
+// Grid -------------------------------
+
+.demo-col {
+    background: $ui-silver-sand;
+    color: white;
+    padding: 5px 0;
+    text-align: center;
+    -webkit-font-smoothing: antialiased;
+}
+
+.code-block {
+    display: block;
+}
+
+
+.demo-breakpoint-mixin {
+    background: $ui-chesnut-rose;
+    padding:0.3em;
+    code {
+        background: none;
+        color: white;
+        -webkit-font-smoothing: antialiased;
+    }
+}
+
+.do-xs {
+    background: $ui-nephritis;
+}
+
+.do-sm {
+    @include breakpoint-sm {
+        background: $ui-nephritis;
+    }
+}
+
+.do-md {
+    @include breakpoint-md {
+        background: $ui-nephritis;
+    }
+}
+
+.do-lg {
+    @include breakpoint-lg {
+        background: $ui-nephritis;
+    }
+}
+
+.do-xs-max {
+    @include breakpoint-xs-max {
+        background: $ui-nephritis;
+    }
+}
+
+.do-sm-max {
+    @include breakpoint-sm-max {
+        background: $ui-nephritis;
+    }
+}
+
+.do-md-max {
+    @include breakpoint-md-max {
+        background: $ui-nephritis;
+    }
+}
+
