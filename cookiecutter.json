@@ -1,7 +1,7 @@
 {
     "project_name": "Project Name",
     "project_slug": "{{ cookiecutter.project_name.lower()|replace(' ', '_')|replace('-', '_') }}",
-    "use_heroku": "n",
+    "use_heroku": "y",
     "use_i18n":"n",
     "use_uploadcare": "y"
 }
