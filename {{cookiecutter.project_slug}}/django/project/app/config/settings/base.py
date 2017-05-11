@@ -98,7 +98,7 @@ INSTALLED_APPS = (
     "app.web",
     "app.ui_kit",
 
-    # Third-party Apps
+    # Vendor Apps
     "django_extensions",
     "mezzanine.boot",
     "mezzanine.conf",
@@ -271,7 +271,7 @@ CACHES = {
 }
 
 # -------------------------------------
-# THIRD-PARTY CONFIGURATION
+# VENDOR CONFIGURATION
 # -------------------------------------
 
 # Grapelli

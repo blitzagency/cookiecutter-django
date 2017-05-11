@@ -89,7 +89,7 @@ LOGGING = {
 }
 
 # -------------------------------------
-# THIRD-PARTY CONFIGURATION
+# VENDOR CONFIGURATION
 # -------------------------------------
 
 # Django Debug Toolbar

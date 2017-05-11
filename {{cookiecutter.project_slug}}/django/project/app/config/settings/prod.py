@@ -140,7 +140,7 @@ LOGGING = {
 }
 
 # -------------------------------------
-# THIRD-PARTY CONFIGURATION
+# VENDOR CONFIGURATION
 # -------------------------------------
 
 # Utils
