@@ -23,7 +23,7 @@
 {% if cookiecutter.use_heroku.lower() == "y" %}- BLITZ [Heroku] Access (or a valid Heroku account added as a collaborator){% endif %}
 - [Docker for Mac] __or__ [Docker for Windows]
 - [Node & Npm]
-    - Must be installed locally;
+    - Must be installed locally
     - [OSX] `brew install node` (requires [Homebrew])
 
 ## Setup
