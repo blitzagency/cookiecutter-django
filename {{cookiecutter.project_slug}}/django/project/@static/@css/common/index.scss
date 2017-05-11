@@ -58,5 +58,4 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 @import "~bootstrap-styles/bootstrap/responsive-utilities";
 
 @import "./resets";
-
-// there is a var injected call $staticUrl
+@import "./helpers";
