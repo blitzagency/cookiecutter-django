@@ -174,7 +174,6 @@ help-examples:
 	@echo "make po OPTS=\"-l de -l es\""
 	@echo "make po OPTS=\"-a\""
 	@echo "make heroku.deploy ENV_NAME=dev"
-	@echo "make heroku.deploy ENV_NAME=preview"
 	@echo ""
 
 # -------------------------------------
