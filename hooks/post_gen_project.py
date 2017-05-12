@@ -79,7 +79,12 @@ def remove_file(file_name):
 
 def remove_heroku_files():
     """Remove files needed for heroku if it isn't going to be used."""
-    for filename in ["Procfile", "runtime.txt", "requirements.txt", "docs/DEPLOYMENT_NOTES.md"]:
+    HEROKU_FILES = [
+        "Procfile", "runtime.txt", "requirements.txt", "docs/heroku-setup.md",
+        "django/app_info.json"
+    ]
+
+    for filename in HEROKU_FILES:
         file_name = os.path.join(PROJECT_DIRECTORY, filename)
         remove_file(file_name)
 

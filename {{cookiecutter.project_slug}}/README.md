@@ -4,6 +4,7 @@
 [BLITZ DockerHub]: https://hub.docker.com/u/blitzagency/ "BLITZ DockerHub"
 [Node & Npm]: https://nodejs.org/en/download/ "Intsall Node"
 [Homebrew]: http://brew.sh/ "Homebrew Homepage"
+[Heroku]: https://www.heroku.com/ "Heroku Homepage"
 
 # {{ cookiecutter.project_name }}
 
@@ -19,9 +20,10 @@
 
 - [Docker Hub] account
 - [BLITZ DockerHub] Access
+{% if cookiecutter.use_heroku.lower() == "y" %}- BLITZ [Heroku] Access (or a valid Heroku account added as a collaborator){% endif %}
 - [Docker for Mac] __or__ [Docker for Windows]
 - [Node & Npm]
-    - Must be installed locally;
+    - Must be installed locally
     - [OSX] `brew install node` (requires [Homebrew])
 
 ## Setup
@@ -73,18 +75,42 @@ make test.js
 make help
 ```
 
-## Access
+## Deploy
+{% if cookiecutter.use_heroku.lower() == "y" %}
+> TODO: Update this table as env's become available
 
-> __Do not place private credentials in this file.__ Insted use a private shared location to store creds, like a password manager.
+| Env Name | Description | Available |
+|:-        | :-          | :-        | 
+| Dev      | This is a raw testing environment, least stable | no
+| Staging  | This is a client preview enviornment, more stable than dev | no
+| Prod     | This is the live enviornment, stable | no
 
-Local Django Admin:
+### Setup
 
-- User: admin
-- Pass: pass
+```bash
+git remote add dev https://git.heroku.com/{{ cookiecutter.heroku_slug }}-dev.git
+git remote add preview https://git.heroku.com/{{ cookiecutter.heroku_slug }}-staging.git
+git remote add preview https://git.heroku.com/{{ cookiecutter.heroku_slug }}-staging.git
+```
+
+### Push
+
+```bash
+# Valid env-names are:
+# dev
+# staging
+# prod
+make heroku.deploy ENV_NAME=<env-name>
+```
+
+{% else %}
+> TODO: Write
+
+{% endif %}
 
 ## Notes
 
-### Images in HTML 
+### Images in HTML
 > This setup isn't ideal, we are looking for alternatives. 😞
 
 Images in HTML and other files that do not use a `require` statement (except for .scss) will not be picked up / watched by Webpack. A workaround has been added to __@static/@imgs__.

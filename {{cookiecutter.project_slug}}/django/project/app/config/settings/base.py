@@ -98,7 +98,7 @@ INSTALLED_APPS = (
     "app.web",
     "app.ui_kit",
 
-    # Third-party Apps
+    # Vendor Apps
     "django_extensions",
     "mezzanine.boot",
     "mezzanine.conf",
@@ -145,6 +145,11 @@ DATABASES = {
     "default": env.db("DATABASE_URL",
                       default="postgres://vagrant:vagrant@postgres/vagrant"),
 }
+
+# Logging
+# =====================================
+
+LOG_LEVEL = env("LOG_LEVEL", default="ERROR")
 
 # Templates
 # =====================================
@@ -271,7 +276,7 @@ CACHES = {
 }
 
 # -------------------------------------
-# THIRD-PARTY CONFIGURATION
+# VENDOR CONFIGURATION
 # -------------------------------------
 
 # Grapelli

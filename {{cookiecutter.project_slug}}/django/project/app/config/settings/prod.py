@@ -81,7 +81,7 @@ SERVER_EMAIL = EMAIL_HOST_USER
 
 LOGGING = {
     "version": 1,
-    "disable_existing_loggers": True,
+    "disable_existing_loggers": False,
     "filters": {
         "require_debug_false": {
             "()": "django.utils.log.RequireDebugFalse"
@@ -118,29 +118,29 @@ LOGGING = {
 
     "loggers": {
         "": {
-            "handlers": ["slack", "stream"],
-            "level": "WARNING",
+            "handlers": ["slack", "stream", ],
+            "level": LOG_LEVEL,
             "propagate": False,
         },
         "django.db": {
-            "handlers": ["slack", "stream"],
-            "level": "WARNING",
+            "handlers": ["slack", "stream", ],
+            "level": LOG_LEVEL,
             "propagate": False,
         },
         "z.pool": {
-            "handlers": ["slack", "stream"],
-            "level": "WARNING",
+            "handlers": ["slack", "stream", ],
+            "level": LOG_LEVEL,
             "propagate": False,
         },
         "django": {
-            "handlers": ["slack", "stream"],
+            "handlers": ["slack", "stream", ],
             "propagate": False,
         },
     }
 }
 
 # -------------------------------------
-# THIRD-PARTY CONFIGURATION
+# VENDOR CONFIGURATION
 # -------------------------------------
 
 # Utils

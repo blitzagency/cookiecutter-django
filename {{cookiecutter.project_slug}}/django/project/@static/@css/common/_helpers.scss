@@ -1,0 +1,67 @@
+// ------------------------------------
+// HELPERS
+// ------------------------------------
+
+// Bootstrap Helpers
+// ====================================
+
+.text-thin {
+    font-weight: 100;
+}
+
+.text-heavy {
+    font-weight: 800;
+}
+
+// Alt to .img-responsive
+.img-fluid {
+    width: 100% !important;
+}
+
+// Spacing Utilities
+// Adapted from BS4 "spacing" utilities
+// See: https://v4-alpha.getbootstrap.com/utilities/spacing/
+
+.m-0 {
+    margin: 0 !important;
+}
+
+.mb-0 {
+    margin-bottom: 0 !important;
+}
+
+.mt-0 {
+    margin-top: 0 !important;
+}
+
+.mx-0 {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+.my-0 {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+.p-0 {
+    padding: 0 !important;
+}
+
+.pb-0 {
+    padding-bottom: 0 !important;
+}
+
+.pt-0 {
+    padding-top: 0 !important;
+}
+
+.px-0 {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+.py-0 {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}

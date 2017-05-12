@@ -2,6 +2,7 @@ var webpack = require("webpack");
 var path = require("path");
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var BundleTracker = require("webpack-bundle-tracker");
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 
 /**
@@ -59,6 +60,10 @@ var config = {
             "$":       "jquery",    // bootstrap.js support
             "jQuery":  "jquery",    // bootstrap.js support
         }),
+        // SEE: https://github.com/kevlened/copy-webpack-plugin
+        new CopyWebpackPlugin([
+            // { "from": "@copy/path/to/file.ext", "to": "path/to/file.ext"},
+        ]),
     ],
     module: {
         rules: [
