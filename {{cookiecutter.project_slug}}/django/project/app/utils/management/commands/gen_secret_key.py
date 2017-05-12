@@ -13,8 +13,16 @@ except NotImplementedError:
 class Command(BaseCommand):
     help = "Create a secret key suitable for the Django SECRET_KEY setting."
 
+    def add_arguments(self, parser):
+        parser.add_argument(
+            "-b", "--bash-compat", action="store_true",
+            dest="bash_compat", help="Only allow characters compatible with copy/pasting into bash",
+        )
+
     def handle(self, *args, **options):
-        self.stdout.write(self.get_key())
+        self.stdout.write(
+            self.get_key(bash_compat=options.get(
+                "bash_compat")))
 
     def get_key(
         self, length=50,
@@ -34,7 +42,8 @@ class Command(BaseCommand):
         bash_compat - remove characters that cause problems in bash
         """
         if bash_compat:
-            allowed_chars.replace("!", "")
+            # ! caused problems when pasting into terminal
+            allowed_chars = allowed_chars.replace("!", "")
 
         if using_sysrandom:
             return "".join(random.choice(allowed_chars) for i in range(length))
