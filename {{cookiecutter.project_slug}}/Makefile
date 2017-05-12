@@ -101,6 +101,8 @@ heroku.deploy: heroku.checkenv heroku.assets ## Deploy to Heroku (takes ENV_NAME
 		-e "PYTHONPATH=/usr/app/django/project:/usr/app/django/project/vendor" \
 		-e "DEBUG=True" \
 		-e "AWS_BUCKET_NAME=$$(heroku config:get AWS_BUCKET_NAME -r ${ENV_NAME})" \
+		-e "AWS_ACCESS_KEY_ID=$$(heroku config:get AWS_ACCESS_KEY_ID -r ${ENV_NAME})" \
+		-e "AWS_SECRET_ACCESS_KEY=$$(heroku config:get AWS_SECRET_ACCESS_KEY -r ${ENV_NAME})" \
 		-it dinopetrone/heroku:latest \
 		$(FAB_CMD_$(ENV_NAME))
 
@@ -132,8 +134,11 @@ heroku.shell: ## Get a session on the heroku container (takes ENV_NAME=<env-name
 		-e "PYTHONPATH=/usr/app/django/project:/usr/app/django/project/vendor" \
 		-e "DEBUG=True" \
 		-e "AWS_BUCKET_NAME=$$(heroku config:get AWS_BUCKET_NAME -r ${ENV_NAME})" \
+		-e "AWS_ACCESS_KEY_ID=$$(heroku config:get AWS_ACCESS_KEY_ID -r ${ENV_NAME})" \
+		-e "AWS_SECRET_ACCESS_KEY=$$(heroku config:get AWS_SECRET_ACCESS_KEY -r ${ENV_NAME})" \
 		-it dinopetrone/heroku:latest \
 		/bin/bash
+
 {% endif %}
 
 # -------------------------------------
