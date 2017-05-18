@@ -89,8 +89,8 @@ make help
 
 ```bash
 git remote add dev https://git.heroku.com/{{ cookiecutter.heroku_slug }}-dev.git
-git remote add preview https://git.heroku.com/{{ cookiecutter.heroku_slug }}-staging.git
-git remote add preview https://git.heroku.com/{{ cookiecutter.heroku_slug }}-staging.git
+git remote add staging https://git.heroku.com/{{ cookiecutter.heroku_slug }}-staging.git
+git remote add prod https://git.heroku.com/{{ cookiecutter.heroku_slug }}-prod.git
 ```
 
 ### Push
