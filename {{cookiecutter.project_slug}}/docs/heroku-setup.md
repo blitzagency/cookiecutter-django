@@ -138,7 +138,7 @@ make heroku.deploy ENV_NAME=<prod|staging|deploy>
 
 > __Note:__ Grab your heroku email / password and wait for the Heroku login prompt.
 
-After the deploy completes successfully, type `heroku go` to open the app in your default browser.
+After the deploy completes successfully, type `heroku open` to open the app in your default browser.
 
 ## Troubleshooting
 
