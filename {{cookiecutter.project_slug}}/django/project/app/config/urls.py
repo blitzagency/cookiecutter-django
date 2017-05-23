@@ -3,6 +3,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.conf.urls.i18n import i18n_patterns
 from django.views.i18n import JavaScriptCatalog
+from django.views.static import serve
 
 
 admin.autodiscover()
@@ -48,10 +49,11 @@ if settings.DEBUG:
 
 if getattr(settings, "SERVE_STATIC", False) and settings.SERVE_STATIC:
     urlpatterns += [
-        url(r"^static/(?P<path>.*)$",
-            "django.views.static.serve",
-            {"document_root": settings.STATIC_ROOT, "show_indexes": False}),
-        url(r"^uploads/(?P<path>.*)$",
-            "django.views.static.serve",
-            {"document_root": settings.MEDIA_ROOT, "show_indexes": False}),
+        url(r'^static/(?P<path>.*)$', serve, {
+            'document_root': settings.STATIC_ROOT,
+        }),
+        url(r'^uploads/(?P<path>.*)$', serve, {
+            'document_root': settings.MEDIA_ROOT,
+        }),
     ]
+    
