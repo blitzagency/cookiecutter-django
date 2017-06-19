@@ -135,7 +135,7 @@ heroku.deploy: heroku.assets ## Deploy active git branch to a Heroku remote (see
 
 # Build assets for the heroku deploy
 # NOTE: You should cancel any active local asset watches
-# 		and re-run them once the deploy is complete.
+# 	and re-run them once the deploy is complete.
 .PHONY: heroku.assets
 heroku.assets:
 	cd django/project/@static && \
