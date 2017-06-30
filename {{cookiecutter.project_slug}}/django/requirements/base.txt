@@ -48,9 +48,8 @@ djangocms-snippet>=1.9
 djangocms-video>=2.0
 djangocms-column>=1.6
 
-# DjangoCMS Blog Reqs
+# DjangoCMS Extra Reqs
 # ====================================
-djangocms-blog==0.8.12
 
 # Update django-taggit for django 1.10.x support
 django-taggit==0.22.1

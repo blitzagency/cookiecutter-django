@@ -5,7 +5,7 @@ from . import apps
 
 
 class UIKitAppHook(CMSApp):
-    name = _("Hair Club UI-Kit")
+    name = _("UI-Kit")
     app_name = apps.Config.label
 
     def get_urls(self, page=None, language=None, **kwargs):

@@ -1,1 +1,11 @@
-<header></header>
+{% raw %}
+{% load cms_tags menu_tags %}
+
+<nav class="navbar navbar-inverse" role="navigation">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+            {% show_menu 0 100 100 100 %}
+        </div>
+    </div>
+</nav>
+{% endraw %}

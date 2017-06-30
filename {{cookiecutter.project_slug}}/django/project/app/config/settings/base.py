@@ -7,8 +7,7 @@ See:
 """
 import re
 import environ
-from os.path import abspath, basename, dirname, join, normpath
-from app.web.utils.djangocms_blog import fieldset_filter_function
+from os.path import join
 
 # -------------------------------------
 # GENERAL SETUP
@@ -117,18 +116,19 @@ INSTALLED_APPS = (
     "djangocms_snippet",
     "djangocms_googlemap",
     "djangocms_video",
+    "meta",
 
     # Local apps
     "app.web",
 
     # Third-party Apps
     "django_extensions",
-    {% if cookiecutter.use_uploadcare.lower() == "y" % }
-    "pyuploadcare.dj",
-    {% endif % }
     "crispy_forms",
     "rest_framework",
     "rest_framework.authtoken",
+    {% if cookiecutter.use_uploadcare.lower() == "y" %}
+    "pyuploadcare.dj",
+    {% endif %}
 )
 
 # Middleware
@@ -144,7 +144,6 @@ MIDDLEWARE = (
     "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
-    "django.middleware.gzip.GZipMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
@@ -153,7 +152,7 @@ MIDDLEWARE = (
     "cms.middleware.user.CurrentUserMiddleware",
     "cms.middleware.page.CurrentPageMiddleware",
     "cms.middleware.toolbar.ToolbarMiddleware",
-    "cms.middleware.language.LanguageCookieMiddleware"
+    "cms.middleware.language.LanguageCookieMiddleware",
 )
 
 # Databases
@@ -161,8 +160,9 @@ MIDDLEWARE = (
 
 DATABASES = {
     # Raises ImproperlyConfigured exception if DATABASE_URL not in os.environ
-    "default": env.db("DATABASE_URL",
-                      default="postgres://djangodb:djangodb@postgres/djangodb"),
+    "default": env.db(
+        "DATABASE_URL",
+        default="postgres://djangodb:djangodb@postgres/djangodb"),
 }
 
 # DATABASES["default"]["ENGINE"] = "django.contrib.gis.db.backends.postgis"
@@ -254,7 +254,7 @@ MEDIA_URL = "/uploads/"
 # Set to True to automatically enable django's i81n
 # Note: This is a custom (i.e., non-native Django setting) but is used to
 #       branch in a few places to enable Django's I18N and L10N automatically.
-AUTO_ENABLE_I18N = {% if cookiecutter.use_i18n.lower() == "y" % }True{ % else % }False{ % endif % }
+AUTO_ENABLE_I18N = {% if cookiecutter.use_i18n.lower() == "y" %}True{% else %}False{% endif %}
 
 TIME_ZONE = "America/Los_Angeles"
 
@@ -323,7 +323,7 @@ CELERY_RESULT_SERIALIZER = "json"
 REDIS_HOST = env("REDIS_HOST", default="redis://localhost:6379")
 
 
-{% if cookiecutter.use_uploadcare.lower() == "y" % }
+{% if cookiecutter.use_uploadcare.lower() == "y" %}
 # UploadCare
 # =====================================
 
@@ -331,7 +331,7 @@ UPLOADCARE = {
     "pub_key": env("UPLOADCARE_PUB_KEY", default=""),
     "secret": env("UPLOADCARE_SECRET_KEY", default=""),
 }
-{% endif % }
+{% endif %}
 
 # Redactor
 # =====================================
@@ -363,7 +363,7 @@ CMS_LANGUAGES = {
 
 CMS_TEMPLATES = (
     # Customize this
-    ('fullwidth.html', 'Fullwidth'),
+    ('web/fullwidth.html', 'Fullwidth'),
 )
 
 CMS_PERMISSION = True
@@ -391,13 +391,13 @@ META_FB_TYPE = "Article"
 
 META_FB_APPID = ""
 
-META_FB_PROFILE_ID = "{{project_slug}}"
+META_FB_PROFILE_ID = "{{cookiecutter.project_slug}}"
 
-META_FB_PUBLISHER = "https://www.facebook.com/{{project_slug}}/"
+META_FB_PUBLISHER = "https://www.facebook.com/{{cookiecutter.project_slug}}/"
 
 META_TWITTER_TYPE = "summary"
 
-META_TWITTER_SITE = "https://twitter.com/{{project_slug}}"
+META_TWITTER_SITE = "https://twitter.com/{{cookiecutter.project_slug}}"
 
 META_GPLUS_TYPE = "Blog"
 
@@ -422,7 +422,7 @@ SLACK_INCOMING_WEB_HOOK = env(
     default="https://hooks.slack.com/services/xxxxx/xxxxx/"
     "xxxxx")
 
-SLACK_CHANNEL = env("SLACK_CHANNEL", default="{{project_slug}}-logs")
+SLACK_CHANNEL = env("SLACK_CHANNEL", default="{{cookiecutter.project_slug}}-logs")
 
 SLACK_USER_NAME = env("SLACK_USER_NAME", default="Logger:DEV")
 

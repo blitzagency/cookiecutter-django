@@ -38,7 +38,6 @@ if settings.AUTO_ENABLE_I18N:
 # =====================================
 
 urlpatterns += [
-    url(r"^api/", include("app.api.urls")),
     url(r"^sitemap\.xml$", sitemap, {"sitemaps": {"cmspages": CMSSitemap}}),
     url(r"^sitemap/", sitemap, {
         "sitemaps": {"cmspages": CMSSitemap},
@@ -59,9 +58,9 @@ if settings.DEBUG:
     # http://django-debug-toolbar.readthedocs.io/en/stable/installation.html
     import debug_toolbar
 
-    urlpatterns += [
-        url(r"^__debug__/", include(debug_toolbar.urls)),
-    ]
+    urlpatterns = [
+        url(r'^__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns
 
     # Serve media files when DEBUG=True
     urlpatterns = [

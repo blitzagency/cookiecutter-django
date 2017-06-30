@@ -1,26 +1,23 @@
 {% raw %}
-{% load staticfiles i18n mezzanine_tags %}
+{% load staticfiles i18n cms_tags sekizai_tags menu_tags meta %}
 {% get_current_language as LANGUAGE_CODE %}
 <!doctype html>
-<html class="no-js" lang="{{LANGUAGE_CODE}}">
+<html class="no-js" lang="{{LANGUAGE_CODE}}" {% meta_namespaces %} {% meta_namespaces_gplus %}>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta property="og:title" content="{% block og_title %}Default Title{% endblock og_title %}">
-    <meta property="og:description" content="{% block og_description %}{% endblock og_description %}">
-    <meta property="og:image" content="{% block og_image %}{% static 'img/og_image.jpg' %}{% endblock og_image %}">
 
     {% block extra_meta %}{% endblock extra_meta %}
 
     <title>{% block title %}{% endblock title %}</title>
 
-    <link rel="apple-touch-icon" href="{% static "img/apple-touch-icon.png" %}">
-    <!-- Place favicon.ico in the root directory -->
-
-    {# Common Styles #}
-    <link rel="stylesheet" media="all" href="{% static 'css/common.css' %}"/>
+    {% addtoblock "css" %}
+        <link rel="stylesheet" media="all" href="{% static 'css/common.css' %}"/>
+    {% endaddtoblock %}
 
     {% block extra_head %}{% endblock extra_head %}
+
+    {% render_block "css" %}
 
     <script>
         // Create JS namespace
@@ -38,6 +35,7 @@
     </script>
 
 <body class="{% block body_class %}{% endblock body_class %}">
+    {% cms_toolbar %}
 
     {% block header %}
         {% include "partials/header.html" %}
@@ -51,15 +49,22 @@
     {% endblock footer %}
 
     {% if web_settings.auto_enable_i18n %}
-        <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
+        {% addtoblock "js" %}
+            <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
+        {% endaddtoblock %}
     {% endif %}
 
-    {# Common Javascript #}
-    <script type="text/javascript" src="{% static 'js/common.js' %}" ></script>
+    {% addtoblock "js" %}
+        {% include "partials/analytics.html" %}
+    {% endaddtoblock %}
+
+    {% addtoblock "js" %}
+        <script type="text/javascript" src="{% static 'js/common.js' %}" ></script>
+    {% endaddtoblock %}
 
     {% block extra_js %}{% endblock extra_js %}
 
-    {% include "partials/analytics.html" %}
+    {% render_block "js" %}
 </body>
 </html>
 

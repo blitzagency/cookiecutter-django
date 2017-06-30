@@ -1,0 +1,20 @@
+{% raw %}
+{% comment %}
+    Included by header.html through show_tag:
+    * See: https://github.com/divio/django-cms/blob/release/3.4.x/menus/templates/menu/menu.html
+    * See: http://docs.django-cms.org/en/release-3.4.x/reference/navigation.html#show-menu
+{% endcomment %}
+<ul class="nav navbar-nav" role="menubar">
+    {% for child in children %}
+    <li
+        aria-selected="{% if child.selected %}true{% else %}false{% endif %}"
+        class="nav-item
+        {% if child.ancestor   %} nav-item-ancestor   {% endif %}
+        {% if child.sibling    %} nav-item-sibling    {% endif %}
+        {% if child.descendant %} nav-item-descendant {% endif %}"
+        >
+        <a class="nav-item-link" href="{{ child.attr.redirect_url|default:child.get_absolute_url }}">{{ child.get_menu_title }}</a>
+    </li>
+    {% endfor %}
+</ul>
+{% endraw %}

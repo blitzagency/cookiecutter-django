@@ -11,7 +11,8 @@ from .base import *
 
 ALLOWED_HOSTS += ("docker.local", ".ngrok.io",)
 
-SECRET_KEY = env("SECRET_KEY", default="CHANGEME!!!")
+SECRET_KEY = env(
+    "SECRET_KEY", default="ao3*fxyl(&(9#rpjr2stfi5n5m^@vtz_p9c6rk&m+nx8v+aa)y")
 
 # Installed Apps
 # =====================================

@@ -1,6 +1,7 @@
+
 {% raw %}
 {% extends 'base.html' %}
-{% load staticfiles %}
+{% load staticfiles cms_tags %}
 
 {% block body_class %}home-page{% endblock body_class %}
 
@@ -14,12 +15,15 @@
     <hr>
     <p><strong>What's next?</strong></p>
     <ul>
-        <li>Modify this page by editing <code>web/templates/index.html</code></li>
+        <li>Modify this page by editing <code>overrides/templates/fullwidth.html</code></li>
         <li>Static assets are in <code>project/@static/</code></li>
         {% if web_settings.debug %}
             {# UI Kit is not available when settings.DEBUG = False #}
             <li><a href="{% url "ui-kit-index" %}">Check Out The UI-Kit</a></li>
         {% endif %}
+        {% placeholder "feature" %}
+        {% placeholder "content" %}
+        {% placeholder "splashbox" %}
     </ul>
 </div>
 
