@@ -17,10 +17,6 @@
     <ul>
         <li>Modify this page by editing <code>overrides/templates/fullwidth.html</code></li>
         <li>Static assets are in <code>project/@static/</code></li>
-        {% if web_settings.debug %}
-            {# UI Kit is not available when settings.DEBUG = False #}
-            <li><a href="{% url "ui-kit-index" %}">Check Out The UI-Kit</a></li>
-        {% endif %}
         {% placeholder "feature" %}
         {% placeholder "content" %}
         {% placeholder "splashbox" %}

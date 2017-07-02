@@ -120,6 +120,7 @@ INSTALLED_APPS = (
 
     # Local apps
     "app.web",
+    "app.ui_kit",
 
     # Third-party Apps
     "django_extensions",

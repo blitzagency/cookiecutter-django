@@ -1,5 +1,21 @@
 {% raw %}
-{% extends "ui_kit/base.html" %}
+{% extends "base.html" %}
+{% load staticfiles sekizai_tags %}
+
+{% block extra_head %}
+    {% addtoblock "css" %}
+        <link rel="stylesheet" href="{% static "css/ui-kit.css" %}">
+    {% endaddtoblock %}
+{% endblock extra_head %}
+
+
+{% block extra_js %}
+    {% addtoblock "js" %}
+        <script type="text/javascript" src="{% static 'js/ui-kit.js' %}" ></script>
+    {% endaddtoblock %}
+{% endblock extra_js %}
+
+{% block body_class %}ui-kit{% endblock body_class %}
 
 {% block content %}
 <main class="ui-main" role="main">
