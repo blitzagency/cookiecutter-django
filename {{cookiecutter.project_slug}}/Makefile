@@ -23,7 +23,7 @@ up: ## Bring up all containers
 	docker-compose -p ${NAME} up -d
 
 .PHONY: init
-init: reqs.git reqs.py reqs.node init.django ## Initialize this project
+init: envfile reqs.git reqs.py reqs.node init.django ## Initialize this project
 
 .PHONY: serve
 serve: ## Start development web server
@@ -32,6 +32,9 @@ serve: ## Start development web server
 .PHONY: assets
 assets: ## Start static asset watch / compilation
 	cd django/project/@static && npm start
+
+.PHONY: envfile ## copy over the .env file if it doesn't exist
+	cp -n django/env.dist django/.env
 
 .PHONY: resetdb
 resetdb: ## Reset Django / Postgres database
