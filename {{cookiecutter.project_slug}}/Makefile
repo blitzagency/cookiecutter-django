@@ -33,7 +33,8 @@ serve: ## Start development web server
 assets: ## Start static asset watch / compilation
 	cd django/project/@static && npm start
 
-.PHONY: envfile ## copy over the .env file if it doesn't exist
+.PHONY: envfile
+envfile: ## copy over the .env file if it doesn't exist
 	cp -n django/env.dist django/.env
 
 .PHONY: resetdb
