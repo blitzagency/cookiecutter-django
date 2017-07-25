@@ -35,7 +35,7 @@ assets: ## Start static asset watch / compilation
 
 .PHONY: envfile
 envfile: ## copy over the .env file if it doesn't exist
-	cp -n django/env.dist django/.env
+	-cp -n django/env.dist django/.env
 
 .PHONY: resetdb
 resetdb: ## Reset Django / Postgres database
