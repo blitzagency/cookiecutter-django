@@ -4,6 +4,9 @@ from django.contrib import admin
 from django.conf.urls.i18n import i18n_patterns
 from django.views.i18n import JavaScriptCatalog
 from django.views.static import serve
+from django.contrib.sitemaps.views import sitemap
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from cms.sitemaps import CMSSitemap
 
 
 admin.autodiscover()
@@ -15,12 +18,9 @@ admin.autodiscover()
 # See: https://docs.djangoproject.com/en/dev/topics/http/urls/#example
 
 urlpatterns = [
-    url(r"^grappelli/", include("grappelli.urls")),
     url(r"^admin/", include(admin.site.urls)),
-    url(r"^redactor/", include("redactor.urls")),
-    url(r"^ui-kit/", include("app.ui_kit.urls")),
-    url(r"^", include("app.web.urls")),
-    url(r"^", include("mezzanine.urls")),
+    url(r'^taggit_autosuggest/', include("taggit_autosuggest.urls")),
+    url(r"^", include("cms.urls")),
 ]
 
 if settings.AUTO_ENABLE_I18N:
@@ -32,6 +32,21 @@ if settings.AUTO_ENABLE_I18N:
             name="javascript-catalog"),
     ]
 
+
+# Non-Localized Urls
+# =====================================
+
+urlpatterns += [
+    url(r"^sitemap\.xml$", sitemap, {"sitemaps": {"cmspages": CMSSitemap}}),
+    url(r"^sitemap/", sitemap, {
+        "sitemaps": {"cmspages": CMSSitemap},
+        "template_name": "web/sitemap.html",
+        "content_type": "text/html"
+    },
+        name="sitemap"
+    ),
+]
+
 # -------------------------------------
 # DEBUG URLS
 # -------------------------------------
@@ -42,18 +57,14 @@ if settings.DEBUG:
     # http://django-debug-toolbar.readthedocs.io/en/stable/installation.html
     import debug_toolbar
 
-    urlpatterns += [
-        url(r"^__debug__/", include(debug_toolbar.urls)),
+    urlpatterns = [
+        url(r'^__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns
 
-    ]
-
-if getattr(settings, "SERVE_STATIC", False) and settings.SERVE_STATIC:
-    urlpatterns += [
-        url(r'^static/(?P<path>.*)$', serve, {
-            'document_root': settings.STATIC_ROOT,
-        }),
-        url(r'^uploads/(?P<path>.*)$', serve, {
-            'document_root': settings.MEDIA_ROOT,
-        }),
-    ]
-    
+    # Serve media files when DEBUG=True
+    urlpatterns = [
+        url(
+            r"^media/(?P<path>.*)$", serve,
+            {"document_root": settings.MEDIA_ROOT, "show_indexes": True}
+        ),
+    ] + staticfiles_urlpatterns() + urlpatterns

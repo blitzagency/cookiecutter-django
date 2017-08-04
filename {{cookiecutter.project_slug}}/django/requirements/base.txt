@@ -1,26 +1,78 @@
-Mezzanine==4.2.3
-gunicorn~=19.6.0
+# -------------------------------------
+# BASE REQUIREMENTS
+# -------------------------------------
+
+# Django Reqs
+# =====================================
+
+psycopg2~=2.6
+mimeparse==0.1.3
+pytz~=2016.1
 Django~=1.10.0
-Pillow==2.8.1
-boto==2.38.0
-dj-database-url==0.3.0
+
+# Django Apps
+# ======================================
+
+django-robots==2.0
 django-environ==0.4.0
 django-extensions==1.7.6
-django-grappelli==2.8.1
 django-storages==1.5.2
 django-model-utils==2.5
-django-taggit==0.18.1
-django-taggit-autosuggest==0.2.8
-djangorestframework==3.1.3
-django-admin-sortable2==0.6.8
-mimeparse==0.1.3
-celery==3.1.18
-psycopg2==2.6
-pytz==2015.4
-{% if cookiecutter.use_uploadcare.lower() == "y" %}
-pyuploadcare==2.0.1
-{% endif %}
-django-wysiwyg-redactor==0.4.9.1
-django-robots==2.0
+djangorestframework==3.6.2
+django-ipware==1.1.6
+django-crispy-forms==1.6.1
+
+# DjangoCMS Reqs
+# =====================================
+
+six
+Pillow>=3.0
+html5lib>=0.999999,<0.99999999
+easy_thumbnails
+django-filer>=1.2
+django-cms==3.4.3
+djangocms-admin-style>=1.2,<1.3
+django-treebeard>=4.0,<5.0
+django-classy-tags>=0.7
+django-sekizai>=0.9
+
+# DjangoCMS plugins
+# =====================================
+
+cmsplugin-filer>=1.1
+djangocms-text-ckeditor~=3.5.0
+djangocms-link>=1.8
+djangocms-style>=1.7
+djangocms-googlemap>=0.5
+djangocms-snippet>=1.9
+djangocms-video>=2.0
+djangocms-column>=1.6
+
+# DjangoCMS Extra Reqs
+# ====================================
+
+# Update django-taggit for django 1.10.x support
+django-taggit==0.22.1
+django-taggit-autosuggest==0.3.0
+django-taggit-templatetags==0.2.5
+django-meta==1.3.2
+
+
+# Project Reqs
+# =====================================
+
 pytest-django==3.1.2
 pytest-pythonpath==0.7.1
+boto~=2.38.0
+gunicorn~=19.6.0
+celery~=4.0.2
+requests~=2.13.0
+beautifulsoup4==4.5.3
+dicttoxml==1.7.4
+geoip2==2.4.2
+geopy==1.11.0
+{% if cookiecutter.use_uploadcare.lower() == "y" %}
+pyuploadcare==2.2.1
+{% endif %}
+
+

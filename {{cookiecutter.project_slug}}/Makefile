@@ -1,3 +1,7 @@
+# -------------------------------------
+# MAKEFILE
+# -------------------------------------
+
 # Parse docker container name prefix from working dir
 ifeq ($(OS),Windows_NT)
 	NAME := $(notdir $(CURDIR))
@@ -9,9 +13,8 @@ endif
 
 CONTAINER_NAME ?= "django"
 
-# -------------------------------------
 # Project Commands
-# -------------------------------------
+# =====================================
 
 .DEFAULT_GOAL := help
 
@@ -20,7 +23,7 @@ up: ## Bring up all containers
 	docker-compose -p ${NAME} up -d
 
 .PHONY: init
-init: reqs.git reqs.py reqs.node init.django ## Initialize this project
+init: envfile reqs.git reqs.py reqs.node init.django ## Initialize this project
 
 .PHONY: serve
 serve: ## Start development web server
@@ -29,6 +32,10 @@ serve: ## Start development web server
 .PHONY: assets
 assets: ## Start static asset watch / compilation
 	cd django/project/@static && npm start
+
+.PHONY: envfile
+envfile: ## copy over the .env file if it doesn't exist
+	-cp -n django/env.dist django/.env
 
 .PHONY: resetdb
 resetdb: ## Reset Django / Postgres database
@@ -80,70 +87,70 @@ init.django: resetdb
 	docker exec -it ${NAME}_django_1 python manage.py createsuperuser
 
 {% if cookiecutter.use_heroku.lower() == "y" %}
-# Heroku
+# Heroku Commands
 # =====================================
 
-# FAB_CMD_ suffix are lowercase on purpose to ease passing ENV option
-FAB_CMD_dev := fab dev.deploy -f /usr/fabfile
-FAB_CMD_staging := fab staging.deploy -f /usr/fabfile
-FAB_CMD_prod := fab prod.deploy -f /usr/fabfile
-ENV_NAME := dev
+HEROKU_REMOTE := dev
+HEROKU_SLUG := {{cookiecutter.heroku_slug}}-$(HEROKU_REMOTE)
 
-# Deploy to Heroku (takes ENV_NAME=<env-name>, see help)
-# AWS_BUCKET_NAME is required for the `collectstatic` run
-# (each env requires it's own s3 buicket, see docs/heroku-setup.md)
+.PHONY: heroku.up
+heroku.up: heroku.create heroku.s3 heroku.configure ## Create a Heroku app / remote for this project (see Usage)
+
+# Create our Heroku app
+.PHONY: heroku.create
+heroku.create:
+	heroku create ${HEROKU_SLUG} -r ${HEROKU_REMOTE}
+	heroku addons:create heroku-postgresql:hobby-dev
+
+# Set some boilerplate Heroku app configuration
+.PHONY: heroku.configure
+heroku.configure:
+	heroku config:set DJANGO_SETINGS_MODULE=app.config.settings.prod
+	heroku config:set SECRET_KEY=$$(docker exec -it ${NAME}_django_1 python manage.py gen_secret_key)
+	heroku config:set USE_HTTPS_FOR_ASSETS=1
+	heroku config:set AWS_BUCKET_NAME=${HEROKU_SLUG}
+	@echo "NOTE: Be sure to set private credentials manually!"
+	@echo "For example:"
+	@echo "     - AWS_ACCESS_KEY_ID"
+	@echo "     - AWS_SECRET_ACCESS_KEY"
+
+# Create an S3 bucket for Heroku app static assets
+# NOTE: Requires that the python aws cli is installed
+# 	See: http://docs.aws.amazon.com/cli/latest/userguide/installing.html
+.PHONY: heroku.s3
+heroku.s3:
+	wget -O cors.json http://bit.ly/blitzherokus3cors
+	aws s3api create-bucket --bucket ${HEROKU_SLUG}
+	aws s3api put-bucket-cors  --bucket ${HEROKU_SLUG} --cors-configuration file://cors.json
+	-rm -rf cors.json
+
+# There's a lot going on here:
+# 1. Generate a file called env.build for use during `docker build`
+# 2. Build the new image based on docker/heroku/Dockerfile
+# 3. Push the image to the heroku registry
+# 4. Run migrate on the newly deployed / active container
 .PHONY: heroku.deploy
-heroku.deploy: heroku.checkenv heroku.assets ## Deploy to Heroku (takes ENV_NAME=<env-name>, see help)
-	docker run --rm -w /usr/app/django \
-		-v ${LOCATION}:/usr/app \
-		--net ${NAME}_default \
-		-e "DJANGO_SETTINGS_MODULE=app.config.settings.prod" \
-		-e "PYTHONPATH=/usr/app/django/project:/usr/app/django/project/vendor" \
-		-e "DEBUG=True" \
-		-e "AWS_BUCKET_NAME=$$(heroku config:get AWS_BUCKET_NAME -r ${ENV_NAME})" \
-		-e "AWS_ACCESS_KEY_ID=$$(heroku config:get AWS_ACCESS_KEY_ID -r ${ENV_NAME})" \
-		-e "AWS_SECRET_ACCESS_KEY=$$(heroku config:get AWS_SECRET_ACCESS_KEY -r ${ENV_NAME})" \
-		-it dinopetrone/heroku:latest \
-		$(FAB_CMD_$(ENV_NAME))
+heroku.deploy: heroku.assets ## Deploy active git branch to a Heroku remote (see Usage)
+	bin/generate_build_env.sh heroku ${HEROKU_REMOTE}
+	docker build --build-arg ASSET_VERSION=$$(git rev-parse HEAD) \
+	. -f docker/heroku/Dockerfile -t registry.heroku.com/${HEROKU_SLUG}/web:latest
+	docker push registry.heroku.com/${HEROKU_SLUG}/web
+	heroku run python manage.py migrate
 
-# Exit if ENV_NAME does not match expected value
-.PHONY: heroku.checkenv
-heroku.checkenv:
-	@if [[ ! $$ENV_NAME == "dev" ]]; then \
-	if [[ ! $$ENV_NAME == "staging" ]]; then \
-	if [[ ! $$ENV_NAME == "prod" ]]; then \
-		echo "Invalid ENV_NAME=${ENV_NAME}, exiting..."; exit 1; \
-	fi \
-	fi \
-	fi
-
+# Build assets for the heroku deploy
+# NOTE: You should cancel any active local asset watches
+# 	and re-run them once the deploy is complete.
 .PHONY: heroku.assets
-heroku.assets:  ## Build Heroku assets (takes ENV_NAME=<env-name>, see help)
+heroku.assets:
 	cd django/project/@static && \
 		IS_HEROKU=1 VERSION=$$(git rev-parse HEAD) \
-		USE_HTTPS_FOR_ASSETS=$$(heroku config:get USE_HTTPS_FOR_ASSETS -r ${ENV_NAME}) \
-		AWS_BUCKET_NAME=$$(heroku config:get AWS_BUCKET_NAME -r ${ENV_NAME}) \
+		USE_HTTPS_FOR_ASSETS=$$(heroku config:get USE_HTTPS_FOR_ASSETS -r ${HEROKU_REMOTE}) \
+		AWS_BUCKET_NAME=$$(heroku config:get AWS_BUCKET_NAME -r ${HEROKU_REMOTE}) \
 		npm run build
-
-.PHONY: heroku.shell
-heroku.shell: ## Get a session on the heroku container (takes ENV_NAME=<env-name>, see help)
-	docker run --rm -w /usr/app/django \
-		-v ${LOCATION}:/usr/app \
-		--net ${NAME}_default \
-		-e "DJANGO_SETTINGS_MODULE=app.config.settings.prod" \
-		-e "PYTHONPATH=/usr/app/django/project:/usr/app/django/project/vendor" \
-		-e "DEBUG=True" \
-		-e "AWS_BUCKET_NAME=$$(heroku config:get AWS_BUCKET_NAME -r ${ENV_NAME})" \
-		-e "AWS_ACCESS_KEY_ID=$$(heroku config:get AWS_ACCESS_KEY_ID -r ${ENV_NAME})" \
-		-e "AWS_SECRET_ACCESS_KEY=$$(heroku config:get AWS_SECRET_ACCESS_KEY -r ${ENV_NAME})" \
-		-it dinopetrone/heroku:latest \
-		/bin/bash
-
 {% endif %}
 
-# -------------------------------------
 # Makefile Documentation
-# -------------------------------------
+# =====================================
 # See: http://marmelab.com/blog/2016/02/29/auto-documented-makefile.html
 
 .PHONY: help
@@ -164,6 +171,8 @@ help-usage:
 	@echo "make po [OPTS=\"...\""]
 	@echo "make mo [OPTS=\"...\""]
 	@echo "make heroku.deploy ENV_NAME=<env-name>"
+	@echo "make heroku.up HEROKU_REMOTE=<dev|staging|prod>"
+	@echo "make heroku.deploy HEROKU_REMOTE=<dev|staging|prod>"
 
 # Update this target to add additinoal examples
 .PHONY: help-examples
@@ -174,11 +183,12 @@ help-examples:
 	@echo "make po OPTS=\"-l de -l es\""
 	@echo "make po OPTS=\"-a\""
 	@echo "make heroku.deploy ENV_NAME=dev"
+	@echo "make heroku.up HEROKU_REMOTE=dev"
+	@echo "make heroku.deploy HEROKU_REMOTE=dev"
 	@echo ""
 
-# -------------------------------------
-# Prompts
-# -------------------------------------
+# Prompts Commands
+# =====================================
 # See: http://stackoverflow.com/a/14316012 (user confirmation snippet)
 
 # Usage Example:

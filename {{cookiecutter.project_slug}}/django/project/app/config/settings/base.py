@@ -5,7 +5,9 @@ See:
     - https://docs.djangoproject.com/en/dev/topics/settings/
     - https://docs.djangoproject.com/en/dev/ref/settings/
 """
+import re
 import environ
+from os.path import join
 
 # -------------------------------------
 # GENERAL SETUP
@@ -62,7 +64,7 @@ ALLOWED_HOSTS = ("localhost", "127.0.0.1",)
 
 SITE_ID = 1
 
-SITE_NAME = "example.com"
+SITE_NAME = env("SITE_NAME", default="example.com")
 
 ADMINS = (
     ("app admin"),
@@ -80,61 +82,78 @@ FIXTURE_DIRS = (
 INSTALLED_APPS = (
     # Overrides
     # Apps that must come first (may include local apps)
+    "djangocms_admin_style",
     "app.utils",
-    "grappelli_safe",
-    "filebrowser_safe",
 
     # Django apps
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.sites",
+    "django.contrib.sitemaps",
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.redirects",
     "django.contrib.admin",
+    "django.contrib.gis",
+    "django.contrib.gis.geoip",
+
+    # DjangoCMS Apps
+    "cms",
+    "menus",
+    "sekizai",
+    "treebeard",
+    "djangocms_text_ckeditor",
+    "filer",
+    "easy_thumbnails",
+    "djangocms_column",
+    "djangocms_link",
+    "cmsplugin_filer_file",
+    "cmsplugin_filer_folder",
+    "cmsplugin_filer_image",
+    "cmsplugin_filer_utils",
+    "djangocms_style",
+    "djangocms_snippet",
+    "djangocms_googlemap",
+    "djangocms_video",
+    "meta",
 
     # Local apps
     "app.web",
     "app.ui_kit",
 
-    # Vendor Apps
+    # Third-party Apps
     "django_extensions",
-    "mezzanine.boot",
-    "mezzanine.conf",
-    "mezzanine.core",
-    "mezzanine.generic",
-    "mezzanine.pages",
-    "mezzanine.forms",
-    "mezzanine.galleries",
-    "redactor",
-    "adminsortable2",
+    "crispy_forms",
+    "rest_framework",
+    "rest_framework.authtoken",
+    {% if cookiecutter.use_uploadcare.lower() == "y" %}
+    "pyuploadcare.dj",
+    {% endif %}
 )
 
 # Middleware
 # =====================================
 
 MIDDLEWARE = (
+    # Must come first
+    "cms.middleware.utils.ApphookReloadMiddleware",
+
     # Default Django middleware.
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
-    "django.middleware.gzip.GZipMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 
-    # Mezzanine
-    "mezzanine.core.request.CurrentRequestMiddleware",
-    "mezzanine.core.middleware.RedirectFallbackMiddleware",
-    "mezzanine.core.middleware.TemplateForDeviceMiddleware",
-    "mezzanine.core.middleware.TemplateForHostMiddleware",
-    "mezzanine.core.middleware.AdminLoginInterfaceSelectorMiddleware",
-    "mezzanine.core.middleware.SitePermissionMiddleware",
-    "mezzanine.pages.middleware.PageMiddleware",
-    "mezzanine.core.middleware.FetchFromCacheMiddleware",
+    # DjangoCMS
+    "cms.middleware.user.CurrentUserMiddleware",
+    "cms.middleware.page.CurrentPageMiddleware",
+    "cms.middleware.toolbar.ToolbarMiddleware",
+    "cms.middleware.language.LanguageCookieMiddleware",
 )
 
 # Databases
@@ -142,9 +161,12 @@ MIDDLEWARE = (
 
 DATABASES = {
     # Raises ImproperlyConfigured exception if DATABASE_URL not in os.environ
-    "default": env.db("DATABASE_URL",
-                      default="postgres://vagrant:vagrant@postgres/vagrant"),
+    "default": env.db(
+        "DATABASE_URL",
+        default="postgres://djangodb:djangodb@postgres/djangodb"),
 }
+
+# DATABASES["default"]["ENGINE"] = "django.contrib.gis.db.backends.postgis"
 
 # Logging
 # =====================================
@@ -158,7 +180,7 @@ TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": (
-            APP_PATH("overrides/templates"),
+            APP_PATH("overrides/templates"), "templates",
         ),
         "APP_DIRS": True,
         "OPTIONS": {
@@ -171,14 +193,15 @@ TEMPLATES = [
                 "django.template.context_processors.tz",
                 "django.contrib.messages.context_processors.messages",
                 "django.template.context_processors.request",
+
+                # DjangoCMS
+                "sekizai.context_processors.sekizai",
+                "cms.context_processors.cms_settings",
+
+                # Local
                 "app.utils.context_processors.global_variables",
                 "app.web.context_processors.web_settings",
-                "mezzanine.conf.context_processors.settings",
-                "mezzanine.pages.context_processors.page",
             ),
-            "builtins": [
-                "mezzanine.template.loader_tags",
-            ],
         },
     }
 ]
@@ -222,9 +245,9 @@ STATICFILES_FINDERS = (
 
 SERVE_STATIC = False
 
-MEDIA_ROOT = PROJECT_PATH("media")
+MEDIA_ROOT = PROJECT_PATH("uploads")
 
-MEDIA_URL = "/media/"
+MEDIA_URL = "/uploads/"
 
 # Locale / I18N & L10N
 # =====================================
@@ -239,6 +262,7 @@ TIME_ZONE = "America/Los_Angeles"
 USE_TZ = True
 
 USE_I18N = AUTO_ENABLE_I18N
+
 USE_L10N = AUTO_ENABLE_I18N
 
 LANGUAGE_CODE = "en"
@@ -249,10 +273,12 @@ LANGUAGES = (
     # ("de", "German")
 )
 
+LOCALE_PATHS = (
+    PROJECT_PATH("app/web/locale"),
+)
+
 # Authentication
 # =====================================
-
-AUTHENTICATION_BACKENDS = ("mezzanine.core.auth_backends.MezzanineBackend",)
 
 ACCOUNT_AUTHENTICATION_METHOD = "username"
 
@@ -275,14 +301,15 @@ CACHES = {
     }
 }
 
+# GEO IP
+# =====================================
+
+GEOIP_PATH = join(PROJECT_PATH(), "data", "GeoLite2-City.mmdb")
+
 # -------------------------------------
 # VENDOR CONFIGURATION
 # -------------------------------------
 
-# Grapelli
-# =====================================
-
-GRAPPELLI_ADMIN_TITLE = "{{cookiecutter.project_name}}"
 
 # Celery
 # =====================================
@@ -296,20 +323,6 @@ CELERY_RESULT_SERIALIZER = "json"
 
 REDIS_HOST = env("REDIS_HOST", default="redis://localhost:6379")
 
-# Mezzanine
-# =====================================
-
-USE_MODELTRANSLATION = False
-
-PACKAGE_NAME_FILEBROWSER = "filebrowser_safe"
-
-PACKAGE_NAME_GRAPPELLI = "grappelli_safe"
-
-INLINE_EDITING_ENABLED = True
-
-SITE_TITLE = GRAPPELLI_ADMIN_TITLE
-
-RICHTEXT_WIDGET_CLASS = "redactor.widgets.RedactorEditor"
 
 {% if cookiecutter.use_uploadcare.lower() == "y" %}
 # UploadCare
@@ -324,30 +337,128 @@ UPLOADCARE = {
 # Redactor
 # =====================================
 
-REDACTOR_OPTIONS = {
-    "lang": "en",
-    {% if cookiecutter.use_uploadcare.lower() == "y" %}
-    "plugins": ["uploadcare"],
-    "uploadcare": {
-        "publicKey": UPLOADCARE["pub_key"],
-        "crop": "free",
-        "tabs": "all",
+
+# Thumbnails
+# =====================================
+
+THUMBNAIL_PROCESSORS = (
+    "easy_thumbnails.processors.colorspace",
+    "easy_thumbnails.processors.autocrop",
+    "filer.thumbnail_processors.scale_and_crop_with_subject_location",
+    "easy_thumbnails.processors.filters"
+)
+
+
+# DjangoCMS
+# =====================================
+# See: https://docs.django-cms.org/en/release-3.4.x/
+
+CMS_LANGUAGES = {
+    "default": {
+        "fallbacks": ["en", "es", "fr"],
+        "redirect_on_fallback": True,
+        "public": True,
+        "hide_untranslated": False,
     }
-    {% endif %}
 }
 
-REDACTOR_UPLOAD = "uploads/"
+CMS_TEMPLATES = (
+    # Customize this
+    ('web/fullwidth.html', 'Fullwidth'),
+)
+
+CMS_PERMISSION = True
+
+CMS_PLACEHOLDER_CONF = {}
+
+
+# DjangoCMS Meta
+# =====================================
+# See: https://django-meta.readthedocs.io/en/latest/index.html
+
+META_SITE_PROTOCOL = env("META_SITE_PROTOCOL", default="http")
+
+META_USE_SITES = True
+
+META_USE_OG_PROPERTIES = True
+
+META_USE_TWITTER_PROPERTIES = True
+
+META_USE_GOOGLEPLUS_PROPERTIES = True
+
+META_DEFAULT_TYPE = "Article"
+
+META_FB_TYPE = "Article"
+
+META_FB_APPID = ""
+
+META_FB_PROFILE_ID = "{{cookiecutter.project_slug}}"
+
+META_FB_PUBLISHER = "https://www.facebook.com/{{cookiecutter.project_slug}}/"
+
+META_TWITTER_TYPE = "summary"
+
+META_TWITTER_SITE = "https://twitter.com/{{cookiecutter.project_slug}}"
+
+META_GPLUS_TYPE = "Blog"
+
+# Taggit / Taggit Autosuggest
+# =====================================
+
+
+def trim_trailing_slash(s):
+    return re.sub("/$", "", s)
+
+
+TAGGIT_AUTOSUGGEST_CSS_FILENAME = "taggit-autosuggest.css"
+
+TAGGIT_AUTOSUGGEST_STATIC_BASE_URL = trim_trailing_slash(STATIC_URL)
+
+
+# Slack
+# =====================================
+
+SLACK_INCOMING_WEB_HOOK = env(
+    "SLACK_INCOMING_WEB_HOOK",
+    default="https://hooks.slack.com/services/xxxxx/xxxxx/"
+    "xxxxx")
+
+SLACK_CHANNEL = env("SLACK_CHANNEL", default="{{cookiecutter.project_slug}}-logs")
+
+SLACK_USER_NAME = env("SLACK_USER_NAME", default="Logger:DEV")
+
+
+# Crispy Forms
+# =====================================
+
+CRISPY_TEMPLATE_PACK = "bootstrap3"
+
+# Rest Framework
+# =====================================
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.TokenAuthentication",
+    ),
+    "DEFAULT_PERMISSION_CLASSES": (
+        "rest_framework.permissions.IsAuthenticated",
+    )
+}
 
 # -------------------------------------
-# DYNAMIC SETTINGS
+# PROJECT SETTINGS
 # -------------------------------------
 
-# Calling set_dynamic_settings() will rewrite globals
-# based on what has been defined so far,
-# in order to provide some better defaults.
-try:
-    from mezzanine.utils.conf import set_dynamic_settings
-except ImportError:
-    pass
-else:
-    set_dynamic_settings(globals())
+
+# Analytics
+# =====================================
+
+GTM_CODE = env("GTM_CODE", default="")
+
+OPTIMIZELY_ID = env("OPTIMIZELY_ID", default="")
+
+# Misc
+# =====================================
+
+GOOGLE_API_KEY = env("GOOGLE_API_KEY", default="")
+LIVECHAT_LICENSE = env("LIVECHAT_LICENSE", default="")

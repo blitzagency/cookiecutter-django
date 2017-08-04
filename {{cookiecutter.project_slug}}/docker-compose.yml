@@ -26,7 +26,7 @@ services:
       - /usr/lib/postgresql
       - .:/usr/app/django
     environment:
-     POSTGRES_USER: vagrant
-     POSTGRES_PASSWORD: vagrant
+     POSTGRES_USER: djangodb
+     POSTGRES_PASSWORD: djangodb
     logging:
       driver: none

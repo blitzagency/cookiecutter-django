@@ -1,5 +1,21 @@
 {% raw %}
-{% extends "ui_kit/base.html" %}
+{% extends "base.html" %}
+{% load staticfiles sekizai_tags %}
+
+{% block extra_head %}
+    {% addtoblock "css" %}
+        <link rel="stylesheet" href="{% static "css/ui-kit.css" %}">
+    {% endaddtoblock %}
+{% endblock extra_head %}
+
+
+{% block extra_js %}
+    {% addtoblock "js" %}
+        <script type="text/javascript" src="{% static 'js/ui-kit.js' %}" ></script>
+    {% endaddtoblock %}
+{% endblock extra_js %}
+
+{% block body_class %}ui-kit{% endblock body_class %}
 
 {% block content %}
 <main class="ui-main" role="main">
@@ -152,16 +168,6 @@
         <h1 class="ui-h1">Components</h1>
     </header>
     <hr class="ui-hr" />
-    <header class="container">
-        <h2 class="ui-h2">Grid</h2>
-        <p class="ui-body">Our grid is based off the <a href="http://getbootstrap.com/css/#grid">Bootstrap Grid</a> and we have included some convenient mixins using <a href="http://breakpoint-sass.com/">Breakpoint Sass</a>.</p>
-        <br>
-    </header>
-    <div class="ui-block">
-        <div class="container">
-            {% include "ui_kit/includes/grid.html" %}
-        </div>
-    </div>
     <header class="container">
         <h2 class="ui-h2">Buttons</h2>
         <p class="ui-body"><a href="http://getbootstrap.com/css/#buttons">Bootstrap Buttons</a> are great for live wires but are cumbersome to override in practice. Once the design is underway it's best to reset the <code>.btn</code> base class with a simpler default and / or create custom button classes that do not conflict with existing bootstrap <code>.btn-*</code> option classes.</p>
