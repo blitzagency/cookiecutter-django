@@ -142,7 +142,7 @@ heroku.deploy: heroku.assets ## Deploy active git branch to a Heroku remote (see
 # 	and re-run them once the deploy is complete.
 .PHONY: heroku.assets
 heroku.assets:
-	cd django/project/@static && \
+	-cd django/project/@static && \
 		IS_HEROKU=1 VERSION=$$(git rev-parse HEAD) \
 		USE_HTTPS_FOR_ASSETS=$$(heroku config:get USE_HTTPS_FOR_ASSETS -r ${HEROKU_REMOTE}) \
 		AWS_BUCKET_NAME=$$(heroku config:get AWS_BUCKET_NAME -r ${HEROKU_REMOTE}) \
