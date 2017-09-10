@@ -52,8 +52,8 @@ COPY ./django/ ./
 
 # Copy env.build to .env temporarily for collect static
 # NOTE: This overwrites any .env that may have been added from COPY above
-RUN [ -f ./env.build ] || echo "Could not fine env.build"
-RUN cp env.build .env
+RUN [ -f ./.build/.env ] || echo "Could not find ./.build/.env"
+COPY ./django/.build/.env .env
 
 # Run Collect Static
 # =====================================
@@ -85,4 +85,4 @@ USER heroku
 # CMD is required to run on Heroku
 # $PORT is set by Heroku
 
-CMD gunicorn app.config.wsgi --bind 0.0.0.0:$PORT -w 3 -k gevent
+CMD newrelic-admin run-program gunicorn app.config.wsgi --bind 0.0.0.0:$PORT -w 2 -k gevent
