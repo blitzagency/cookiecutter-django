@@ -15,6 +15,7 @@ services:
     environment:
       DJANGO_SETTINGS_MODULE: app.config.settings.local
       PYTHONPATH: /usr/app/django/project:/usr/app/django/project/vendor
+      PIPENV_VENV_IN_PROJECT: 1
       DEBUG: "true"
     logging:
       driver: none
