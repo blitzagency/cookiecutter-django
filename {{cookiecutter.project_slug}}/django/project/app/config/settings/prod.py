@@ -35,25 +35,25 @@ DATABASE_POOL_ARGS = {
 # Staticfiles
 # =====================================
 
-STATICFILES_STORAGE = "app.utils.storage.OptimizedS3BotoStorage"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-DEFAULT_FILE_STORAGE = "app.utils.storage.MediaRootS3BotoStorage"
+# DEFAULT_FILE_STORAGE = "app.utils.storage.MediaRootS3BotoStorage"
 
-ASSET_PROTOCOL = "https" if USE_HTTPS_FOR_ASSETS else "http"
+# ASSET_PROTOCOL = "https" if USE_HTTPS_FOR_ASSETS else "http"
 
-# THIS IS VERY IMPORTANT TO MAKE COMPRESSOR WORK!!!!!!
-ASSET_PORT = ":443" if USE_HTTPS_FOR_ASSETS else ""
+# # THIS IS VERY IMPORTANT TO MAKE COMPRESSOR WORK!!!!!!
+# ASSET_PORT = ":443" if USE_HTTPS_FOR_ASSETS else ""
 
-STATIC_URL = "{}://{}.s3.amazonaws.com{}/".format(
-    ASSET_PROTOCOL, AWS_STORAGE_BUCKET_NAME, ASSET_PORT)
+# STATIC_URL = "{}://{}.s3.amazonaws.com{}/".format(
+#     ASSET_PROTOCOL, AWS_STORAGE_BUCKET_NAME, ASSET_PORT)
 
-MEDIA_URL = "{}://{}.s3.amazonaws.com/uploads/".format(
-    ASSET_PROTOCOL, AWS_STORAGE_BUCKET_NAME)
+# MEDIA_URL = "{}://{}.s3.amazonaws.com/uploads/".format(
+#     ASSET_PROTOCOL, AWS_STORAGE_BUCKET_NAME)
 
-if ASSET_VERSION:
-    # set path of assets in s3 bucket, note this is '' by default
-    AWS_LOCATION = "%s/" % ASSET_VERSION
-    STATIC_URL += AWS_LOCATION
+# if ASSET_VERSION:
+#     # set path of assets in s3 bucket, note this is '' by default
+#     AWS_LOCATION = "%s/" % ASSET_VERSION
+#     STATIC_URL += AWS_LOCATION
 
 # Email / SMTP
 # =====================================

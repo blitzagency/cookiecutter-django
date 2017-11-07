@@ -148,6 +148,9 @@ MIDDLEWARE = (
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 
+    # Others
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+
     # DjangoCMS
     "cms.middleware.user.CurrentUserMiddleware",
     "cms.middleware.page.CurrentPageMiddleware",
@@ -422,7 +425,8 @@ SLACK_INCOMING_WEB_HOOK = env(
     default="https://hooks.slack.com/services/xxxxx/xxxxx/"
     "xxxxx")
 
-SLACK_CHANNEL = env("SLACK_CHANNEL", default="{{cookiecutter.project_slug}}-logs")
+SLACK_CHANNEL = env(
+    "SLACK_CHANNEL", default="{{cookiecutter.project_slug}}-logs")
 
 SLACK_USER_NAME = env("SLACK_USER_NAME", default="Logger:DEV")
 

@@ -1,67 +1,49 @@
 var webpackConfig = require("./webpack.config.js");
 var path = require('path');
 
-
-module.exports = function(config) {
-    // Setup Webpack Conf -------------
-
-    // The test files will act as the entry points.
-    // imports there will deal with entries.
-    var common = path.resolve(
-        webpackConfig.context, '@modules', webpackConfig.entry["js/common"]);
-
-    webpackConfig.entry = {
-        "js/common": common
-    };
-
-    // Remove commonChunk plugin for tests
-    webpackConfig.plugins.shift();
-
-    // Fix resolution error regarding "fs" in glob.js
-    // Found here: https://github.com/pugjs/pug-loader/issues/8#issuecomment-55568520
-    webpackConfig.node = {
-        fs: "empty",
-    };
-
-    // Karma Config -------------------
+module.exports = function (config) {
 
     config.set({
-        frameworks: ["jasmine"],
-        browsers: ["PhantomJS"],
+        basePath: '',
+        frameworks: ["mocha"],
+        browsers: ["Chrome + Debugging"],
         reporters: ["dots"],
         autoWatch: true,
         logLevel: config.LOG_INFO,
         port: 3000,
-
+        mime: {
+            'text/x-typescript': ['ts', 'tsx']
+        },
         files: [
-            // all files ending in "_test"
-            "@tests/*_test.js",
-            "@tests/**/*_test.js",
-            "@tests/*_test.ts",
-            "@tests/**/*_test.ts"
-            // each file acts as entry point for the webpack configuration
+            '@tests/**/*.ts'
         ],
 
         preprocessors: {
-            // add webpack as preprocessor
-            common: ["webpack", "sourcemap"],
-            "@tests/*_test.js": ["webpack", "sourcemap"],
-            "@tests/**/*_test.js": ["webpack", "sourcemap"],
-            "@tests/*_test.ts": ["webpack", "sourcemap"],
-            "@tests/**/*_test.ts": ["webpack", "sourcemap"]
+            "@tests/*_test.ts": ['webpack', 'sourcemap'],
+            "@tests/**/*_test.ts": ['webpack', 'sourcemap']
         },
-
-        webpack: webpackConfig,
-
-        webpackMiddleware: {
-            noInfo: true,
+        customLaunchers: {
+            "Chrome + Debugging": {
+                base: 'Chrome',
+                flags: ['--remote-debugging-port=9222'],
+            }
+        },
+        webpack: {
+            devtool: 'eval-source-map',
+            resolve: {
+                extensions: [".webpack.js", "web.js", ".ts", ".tsx", ".js"],
+            },
+            module: {
+                loaders: [
+                    { test: /\.tsx?$/, loader: 'ts-loader' }
+                ]
+            },
             stats: {
                 colors: true,
-                version: true,
-                noInfo: true,
-                debug: true,
+                modules: true,
+                reasons: true,
                 errorDetails: true
-            }
+            },
         }
     });
 };

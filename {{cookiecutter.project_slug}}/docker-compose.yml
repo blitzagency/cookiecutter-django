@@ -1,7 +1,7 @@
 version: "2"
 services:
   django:
-    image: blitzagency/python-web:3
+    image: python:3
     ports:
       - "8000:8000"
     volumes:
