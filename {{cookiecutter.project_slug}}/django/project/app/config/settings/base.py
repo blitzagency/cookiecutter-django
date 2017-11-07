@@ -95,8 +95,8 @@ INSTALLED_APPS = (
     "django.contrib.staticfiles",
     "django.contrib.redirects",
     "django.contrib.admin",
-    "django.contrib.gis",
-    "django.contrib.gis.geoip",
+    # "django.contrib.gis",
+    # "django.contrib.gis.geoip",
 
     # DjangoCMS Apps
     "cms",
@@ -306,7 +306,7 @@ CACHES = {
 # GEO IP
 # =====================================
 
-GEOIP_PATH = join(PROJECT_PATH(), "data", "GeoLite2-City.mmdb")
+# GEOIP_PATH = join(PROJECT_PATH(), "data", "GeoLite2-City.mmdb")
 
 # -------------------------------------
 # VENDOR CONFIGURATION
