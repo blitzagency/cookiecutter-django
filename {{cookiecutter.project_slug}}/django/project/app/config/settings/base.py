@@ -126,9 +126,9 @@ INSTALLED_APPS = (
     "crispy_forms",
     "rest_framework",
     "rest_framework.authtoken",
-    { % if cookiecutter.use_uploadcare.lower() == "y" % }
+    {% if cookiecutter.use_uploadcare.lower() == "y" %}
     "pyuploadcare.dj",
-    { % endif % }
+    {% endif %}
 )
 
 # Middleware
@@ -255,7 +255,7 @@ MEDIA_URL = "/uploads/"
 # Set to True to automatically enable django's i81n
 # Note: This is a custom (i.e., non-native Django setting) but is used to
 #       branch in a few places to enable Django's I18N and L10N automatically.
-AUTO_ENABLE_I18N = { % if cookiecutter.use_i18n.lower() == "y" % }True{ % else % }False{ % endif % }
+AUTO_ENABLE_I18N = {% if cookiecutter.use_i18n.lower() == "y" %}True{% else %}False{% endif %}
 
 TIME_ZONE = "America/Los_Angeles"
 
@@ -324,7 +324,7 @@ CELERY_RESULT_SERIALIZER = "json"
 REDIS_HOST = env("REDIS_HOST", default="redis://localhost:6379")
 
 
-{ % if cookiecutter.use_uploadcare.lower() == "y" % }
+{% if cookiecutter.use_uploadcare.lower() == "y" %}
 # UploadCare
 # =====================================
 
@@ -332,7 +332,7 @@ UPLOADCARE = {
     "pub_key": env("UPLOADCARE_PUB_KEY", default=""),
     "secret": env("UPLOADCARE_SECRET_KEY", default=""),
 }
-{ % endif % }
+{% endif %}
 
 # Redactor
 # =====================================
