@@ -87,6 +87,29 @@ init.django: resetdb
 	docker exec -it ${NAME}_django_1 python manage.py createsuperuser
 
 {% if cookiecutter.use_heroku.lower() == "y" %}
+
+# Deployment Commands
+# =====================================
+
+.PHONY: deploy.dev
+deploy.dev: ENV_NAME=dev
+deploy.dev: APP_NAME=laphil-dev
+deploy.dev: heroku.deploy
+
+.PHONY: deploy.staging
+deploy.staging: ENV_NAME=staging
+deploy.staging: APP_NAME=laphil-staging
+deploy.staging: heroku.deploy
+
+.PHONY: deploy.prod
+deploy.prod: ENV_NAME=prod
+deploy.prod: APP_NAME=laphil-prod
+deploy.prod: heroku.deploy
+
+.PHONY: deploy
+deploy: deploy.dev
+
+
 # Heroku Commands
 # =====================================
 
