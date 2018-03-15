@@ -110,6 +110,25 @@ deploy.prod: heroku.deploy
 deploy: deploy.dev
 
 
+# Shell Commands
+# =====================================
+
+.PHONY: shell.dev
+shell.dev: ENV_NAME=dev
+shell.dev: APP_NAME=laphil-dev
+shell.dev: heroku.shell
+
+.PHONY: deploy.staging
+shell.staging: ENV_NAME=staging
+shell.staging: APP_NAME=laphil-staging
+shell.staging: heroku.shell
+
+.PHONY: deploy.prod
+shell.prod: ENV_NAME=prod
+shell.prod: APP_NAME=laphil-prod
+shell.prod: heroku.shell
+
+
 # Heroku Commands
 # =====================================
 
