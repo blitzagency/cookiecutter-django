@@ -22,6 +22,17 @@ CONTAINER_NAME ?= "django"
 up: ## Bring up all containers
 	docker-compose -p ${NAME} up -d
 
+.PHONY: start
+start: up
+
+.PHONY: stop
+stop:
+	docker-compose -p ${NAME} stop
+
+.PHONY: down
+down:
+	docker-compose -p ${NAME} down
+
 .PHONY: init
 init: envfile reqs.git reqs.py reqs.node init.django ## Initialize this project
 
