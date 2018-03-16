@@ -1,6 +1,6 @@
-"""Development settings and globals."""
+'''Development settings and globals.'''
 
-from .base import *
+from .base import *  # noqa F402
 
 # -------------------------------------
 # DJANGO CONFIGURATION
@@ -9,86 +9,73 @@ from .base import *
 # Django Setup
 # =====================================
 
-ALLOWED_HOSTS += ("docker.local", ".ngrok.io",)
+ALLOWED_HOSTS += ('docker.local', '.ngrok.io',)  # noqa F405
+SECRET_KEY = env('SECRET_KEY', default='abcdefghijklmnopqrstuvwxyz')  # noqa F405
 
-SECRET_KEY = env(
-    "SECRET_KEY", default="ao3*fxyl(&(9#rpjr2stfi5n5m^@vtz_p9c6rk&m+nx8v+aa)y")
-
-# Installed Apps
-# =====================================
-
-INSTALLED_APPS += (
-    "debug_toolbar",
-    "storages",
+INSTALLED_APPS += (  # noqa F405
+    'debug_toolbar',
+    'storages',
 )
 
-# Middleware
-# =====================================
-
-MIDDLEWARE += (
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
+MIDDLEWARE += (  # noqa F405
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
-
-# Logging
-# =====================================
 
 LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "formatters": {
-        "verbose": {
-            "format": "%(name)s %(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s"
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '%(name)s %(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
         },
-        "simple": {
-            "format": "%(levelname)s %(asctime)s %(message)s"
+        'simple': {
+            'format': '%(levelname)s %(asctime)s %(message)s'
         },
     },
-    "handlers": {
-        "stream": {
-            "level": "DEBUG",
-            "class": "logging.StreamHandler",
-            "formatter": "verbose",
+    'handlers': {
+        'stream': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose',
         },
     },
 
-    "loggers": {
-        "": {
-            "handlers": ["stream", ],
-            "level": LOG_LEVEL,
-            # "propagate": False,
+    'loggers': {
+        '': {
+            'handlers': ['stream', ],
+            'level': LOG_LEVEL,  # noqa F405
+            # 'propagate': False,
         },
-        "django.db": {
-            "handlers": ["stream", ],
-            "level": LOG_LEVEL,
-            # "propagate": False,
+        'django.db': {
+            'handlers': ['stream', ],
+            'level': LOG_LEVEL,  # noqa F405
+            # 'propagate': False,
         },
-        "z.pool": {
-            "handlers": ["stream", ],
-            "level": LOG_LEVEL,
-            # "propagate": False,
+        'z.pool': {
+            'handlers': ['stream', ],
+            'level': LOG_LEVEL,  # noqa F405
+            # 'propagate': False,
         },
-        "django": {
-            "handlers": ["stream", ],
-            "level": LOG_LEVEL,
-            # "propagate": False,
+        'django': {
+            'handlers': ['stream', ],
+            'level': LOG_LEVEL,  # noqa F405
+            # 'propagate': False,
         },
     }
 }
 
-# -------------------------------------
-# VENDOR CONFIGURATION
-# -------------------------------------
-
-# Django Debug Toolbar
-# =====================================
+INTERNAL_IPS = ('127.0.0.1',)
 
 
 def show_toolbar(request):
     return True
 
 
-INTERNAL_IPS = ("127.0.0.1",)
-
 DEBUG_TOOLBAR_CONFIG = {
-    "SHOW_TOOLBAR_CALLBACK": show_toolbar,
+    'SHOW_TOOLBAR_CALLBACK': show_toolbar,
 }
+
+
+# -------------------------------------
+# VENDOR CONFIGURATION
+# -------------------------------------
