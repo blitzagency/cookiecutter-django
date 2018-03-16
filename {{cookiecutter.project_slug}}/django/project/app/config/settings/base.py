@@ -45,6 +45,8 @@ APP_PATH = PROJECT_PATH.path('app')
 env = environ.Env()
 environ.Env.read_env(DJANGO_PATH('.env'))
 
+IS_PRODUCTION = not env.bool('IS_LOWER_ENVIRONMENT', False)
+
 
 # -------------------------------------
 # DJANGO CONFIGURATION
@@ -52,7 +54,7 @@ environ.Env.read_env(DJANGO_PATH('.env'))
 
 WSGI_APPLICATION = 'app.config.wsgi.application'
 ROOT_URLCONF = 'app.config.urls'
-DEBUG = env.bool('DEBUG', False)
+DEBUG = False if IS_PRODUCTION else env.bool('DEBUG', False)
 ALLOWED_HOSTS = ('localhost', '127.0.0.1',)
 SITE_ID = 1
 SITE_NAME = env('SITE_NAME', default='example.com')
