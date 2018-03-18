@@ -11,6 +11,8 @@ else
 	LOCATION := $(shell pwd -P)
 endif
 
+PROJECT := {{cookiecutter.heroku_slug}}
+
 CONTAINER_NAME ?= "django"
 
 # Project Commands
@@ -104,17 +106,17 @@ init.django: resetdb
 
 .PHONY: deploy.dev
 deploy.dev: ENV_NAME=dev
-deploy.dev: APP_NAME=laphil-dev
+deploy.dev: APP_NAME=${PROJECT}-dev
 deploy.dev: heroku.deploy
 
 .PHONY: deploy.staging
 deploy.staging: ENV_NAME=staging
-deploy.staging: APP_NAME=laphil-staging
+deploy.staging: APP_NAME=${PROJECT}-staging
 deploy.staging: heroku.deploy
 
 .PHONY: deploy.prod
 deploy.prod: ENV_NAME=prod
-deploy.prod: APP_NAME=laphil-prod
+deploy.prod: APP_NAME=${PROJECT}-prod
 deploy.prod: heroku.deploy
 
 .PHONY: deploy
@@ -126,17 +128,17 @@ deploy: deploy.dev
 
 .PHONY: shell.dev
 shell.dev: ENV_NAME=dev
-shell.dev: APP_NAME=laphil-dev
+shell.dev: APP_NAME=${PROJECT}-dev
 shell.dev: heroku.shell
 
 .PHONY: deploy.staging
 shell.staging: ENV_NAME=staging
-shell.staging: APP_NAME=laphil-staging
+shell.staging: APP_NAME=${PROJECT}-staging
 shell.staging: heroku.shell
 
 .PHONY: deploy.prod
 shell.prod: ENV_NAME=prod
-shell.prod: APP_NAME=laphil-prod
+shell.prod: APP_NAME=${PROJECT}-prod
 shell.prod: heroku.shell
 
 
@@ -144,7 +146,7 @@ shell.prod: heroku.shell
 # =====================================
 
 ENV_NAME := dev
-APP_NAME := {{cookiecutter.heroku_slug}}-$(ENV_NAME)
+APP_NAME := ${PROJECT}-${ENV_NAME}
 
 .PHONY: heroku.up
 heroku.up: heroku.create heroku.s3 heroku.configure ## Create a Heroku app / remote for this project (see Usage)
@@ -158,10 +160,10 @@ heroku.create:
 # Set some boilerplate Heroku app configuration
 .PHONY: heroku.configure
 heroku.configure:
-	heroku config:set DJANGO_SETINGS_MODULE=app.config.settings.prod
-	heroku config:set SECRET_KEY=$$(docker exec -it ${NAME}_django_1 python manage.py gen_secret_key)
-	heroku config:set USE_HTTPS_FOR_ASSETS=1
-	heroku config:set AWS_BUCKET_NAME=${APP_NAME}
+	heroku config:set DJANGO_SETINGS_MODULE=app.config.settings.prod -a ${APP_NAME}
+	heroku config:set SECRET_KEY=$$(docker exec -it ${NAME}_django_1 python manage.py gen_secret_key) -a ${APP_NAME}
+	heroku config:set USE_HTTPS_FOR_ASSETS=1 -a ${APP_NAME}
+	heroku config:set AWS_BUCKET_NAME=${APP_NAME} -a ${APP_NAME}
 	@echo "NOTE: Be sure to set private credentials manually!"
 	@echo "For example:"
 	@echo "     - AWS_ACCESS_KEY_ID"
