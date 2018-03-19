@@ -3,7 +3,7 @@ var path = require("path");
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var BundleTracker = require("webpack-bundle-tracker");
 var CopyWebpackPlugin = require('copy-webpack-plugin');
-
+var publicPath = '/static/';
 
 /**
  * Webpack Docs:
@@ -11,8 +11,7 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
  * - https://webpack.js.org/guides/migrating/ (1.x -> 2.x)
  */
 
-
-var publicPath = '/static/';
+{% if cookiecutter.use_aws.lower() == "y" %}
 
 // HEROKU
 if(process.env.IS_HEROKU){
@@ -28,6 +27,7 @@ if(process.env.IS_HEROKU){
     publicPath = staticUrlBase + '/';
 }
 
+{% endif %}
 
 var config = {
     context: path.resolve(__dirname),

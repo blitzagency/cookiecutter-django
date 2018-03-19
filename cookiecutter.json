@@ -4,5 +4,6 @@
     "use_heroku": "y",
     "heroku_slug": "{% if cookiecutter.use_heroku == 'y' %}{{ cookiecutter.project_name.lower()|replace('_', '-') }}{% else %}ignored{% endif %}",
     "use_i18n":"n",
-    "use_uploadcare": "y"
+    "use_uploadcare": "y",
+    "use_aws": "n"
 }

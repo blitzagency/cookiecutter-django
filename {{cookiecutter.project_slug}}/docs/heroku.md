@@ -1,27 +1,40 @@
 [Heroku CLI]: https://devcenter.heroku.com/articles/heroku-cli "Heroku CLI Homepage"
+{% if cookiecutter.use_aws.lower() == "y" %}
 [AWS CLI]: http://docs.aws.amazon.com/cli/latest/userguide/installing.html "AWS CLI Install"
+{% endif %}
 
 # Heroku
+
 
 ## Learn
 
 - [Heroku Dev Center](https://devcenter.heroku.com/)
+{% if cookiecutter.use_aws.lower() == "y" %}
 - [AWS CLI Docs](http://docs.aws.amazon.com/cli/)
+{% endif %}
+
 
 ## Required
 
 - Requirements from [README.md](../README.md)
 - A Heroku Account & the [Heroku CLI]
+{% if cookiecutter.use_aws.lower() == "y" %}
 - Access to BLITZ AWS & the [AWS CLI] 
+{% endif %}
+
 
 > __See:__
 > 
 > - [Install Heroku CLI](#install-heroku-cli)
+{% if cookiecutter.use_aws.lower() == "y" %}
 > - [Install AWS CLI](#install-aws-cli)
+{% endif %}
+
 
 ## Preamble
 
 Our boilerplate automates both the creation of a Heroku app / remote and deployments to that remote via Docker containers. This document covers the full workflow from start to finish. 
+
 
 ### How the deploy works
 
@@ -31,10 +44,12 @@ The project __Makefile__ documents much of what's happening around creating a He
 2. Push new image to the Heroku regisry
 3. Finally, run `manage.py migrate` on newly deploy container.
 
+
 ### Some gotchas
 
 * You may see `UserWarning: not reading /app/django/.env - it doesn't exist.` during the deploy, you can safely ignore this warning.
 * Managing multiple Heroku apps for one project doesn't seem straight forward at first. For some help see: [Managing Multiple Remotes](#managing-multiple-remotes)
+
 
 ## Setup
 
@@ -45,6 +60,7 @@ The project __Makefile__ documents much of what's happening around creating a He
 3. [Configure private values](#3-configure-private-values)
 4. [Preflight](#4-preflight)
 5. [Deploy](#5-deploy)
+
 
 ### 1. Setup Heroku for Docker
 
@@ -60,6 +76,7 @@ heroku plugins:install heroku-container-registry
 heroku container:login
 ```
 
+
 ### 2. Create app
 
 This step is _only necessary when your desired Heroku app does not already exist_.
@@ -73,28 +90,36 @@ This step is _only necessary when your desired Heroku app does not already exist
 make heroku.up GIT_REMOTE=dev
 ```
 
+
 ### 3. Configure private values
 
 This step is _only necessary when your desired Heroku app is not already configured_. Type `heroku config` to check.
 
 ```bash
 # If you do not have these ask a tech lead
+{% if cookiecutter.use_aws.lower() == "y" %}
 heroku config:set AWS_ACCESS_KEY_ID="<key>"
 heroku config:set AWS_SECRET_ACCESS_KEY="<key>"
+{% else %}
+# note: no variables currently necessary
+{% endif %}
 ```
+
 
 ### 4. Preflight
 
 Before we hit the button:
 
+{% if cookiecutter.use_aws.lower() == "y" %}
 1. Login / Open AWS Console → S3:
     + Verify your bucket exists
     + Verify the CORS config is set 
         - "Permissions" → "CORS Configuration" (tab)
-
-2. Double check Heroku
+{% endif %}
+1. Double check Heroku
     + `heroku info` to print info about the app
     + `heroku config` to print set config values
+
 
 ### 5. Deploy
 
@@ -106,6 +131,7 @@ make heroku.deploy GIT_REMOTE=dev
 ```
 
 > After the deploy completes successfully, type `heroku open` to open the app in your default browser.
+
 
 ## Troubleshooting
 
@@ -143,10 +169,13 @@ heroku open [-r, --remote <REMOTE_NAME>]
 
 ## Appendix
 
+
 ### Install Heroku CLI
 
 1. [Install Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)
 2. `heroku login`
+
+{% if cookiecutter.use_aws.lower() == "y" %}
 
 ### Install AWS CLI
 
@@ -155,6 +184,8 @@ heroku open [-r, --remote <REMOTE_NAME>]
     + You'll need your `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`
     + Our default region is `us-west-2`
     + Set default output to `json`
+
+{% endif %}
 
 ### Managing multiple Remotes
 

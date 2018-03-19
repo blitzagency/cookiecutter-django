@@ -6,8 +6,12 @@ See:
     - https://docs.djangoproject.com/en/dev/ref/settings/
 '''
 import re
-import environ
+{% if cookiecutter.use_aws.lower() == "y" %}
 from os.path import join
+{% endif %}
+
+import environ
+
 
 # -------------------------------------
 # GENERAL SETUP
@@ -193,13 +197,15 @@ TEMPLATES = [
 # Storages
 # =====================================
 
+USE_HTTPS_FOR_ASSETS = env.bool('USE_HTTPS_FOR_ASSETS', False)
+ASSET_VERSION = env('ASSET_VERSION', default=False)
+{% if cookiecutter.use_aws.lower() == "y" %}
 AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID', default='')
 AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY', default='')
 AWS_BUCKET_NAME = AWS_STORAGE_BUCKET_NAME = env('AWS_BUCKET_NAME', default='')
 AWS_QUERYSTRING_AUTH = False
-USE_HTTPS_FOR_ASSETS = env.bool('USE_HTTPS_FOR_ASSETS', False)
 AWS_IS_GZIPPED = True
-ASSET_VERSION = env('ASSET_VERSION', default=False)
+{% endif %}
 
 
 # Staticfiles
