@@ -11,7 +11,7 @@ var publicPath = '/static/';
  * - https://webpack.js.org/guides/migrating/ (1.x -> 2.x)
  */
 
-{% if cookiecutter.use_aws.lower() == "y" %}
+{% if cookiecutter.use_aws.lower() == "y" -%}
 
 // HEROKU
 if(process.env.IS_HEROKU){
@@ -27,7 +27,7 @@ if(process.env.IS_HEROKU){
     publicPath = staticUrlBase + '/';
 }
 
-{% endif %}
+{% endif -%}
 
 var config = {
     context: path.resolve(__dirname),

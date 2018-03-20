@@ -15,10 +15,11 @@ PROJECT := {{cookiecutter.heroku_slug}}
 
 CONTAINER_NAME ?= "django"
 
+.DEFAULT_GOAL := help
+
+
 # Project Commands
 # =====================================
-
-.DEFAULT_GOAL := help
 
 .PHONY: up
 up: ## Bring up all containers
@@ -99,8 +100,8 @@ init.django: resetdb
 	docker exec -it ${NAME}_django_1 python manage.py migrate
 	docker exec -it ${NAME}_django_1 python manage.py createsuperuser
 
-{% if cookiecutter.use_heroku.lower() == "y" %}
 
+{% if cookiecutter.use_heroku.lower() == "y" -%}
 # Deployment Commands
 # =====================================
 
@@ -149,11 +150,11 @@ ENV_NAME := dev
 APP_NAME := ${PROJECT}-${ENV_NAME}
 
 .PHONY: heroku.up
-{% if cookiecutter.use_aws.lower() == "y" %}
+{%- if cookiecutter.use_aws.lower() == "y" %}
 heroku.up: heroku.create heroku.s3 heroku.configure ## Create a Heroku app / remote for this project (see Usage)
-{% else %}
+{%- else %}
 heroku.up: heroku.create heroku.configure ## Create a Heroku app / remote for this project (see Usage)
-{% endif %}
+{%- endif %}
 
 # Create our Heroku app
 .PHONY: heroku.create
@@ -167,15 +168,16 @@ heroku.configure:
 	heroku config:set DJANGO_SETINGS_MODULE=app.config.settings.prod -a ${APP_NAME}
 	heroku config:set SECRET_KEY=$$(docker exec -it ${NAME}_django_1 python manage.py gen_secret_key) -a ${APP_NAME}
 	heroku config:set USE_HTTPS_FOR_ASSETS=1 -a ${APP_NAME}
-{% if cookiecutter.use_aws.lower() == "y" %}
+{%- if cookiecutter.use_aws.lower() == "y" %}
 	heroku config:set AWS_BUCKET_NAME=${APP_NAME} -a ${APP_NAME}
 	@echo "NOTE: Be sure to set private credentials manually!"
 	@echo "For example:"
 	@echo "     - AWS_ACCESS_KEY_ID"
 	@echo "     - AWS_SECRET_ACCESS_KEY"
-{% endif %}
+{%- endif %}
 
-{% if cookiecutter.use_aws.lower() == "y" %}
+{%- if cookiecutter.use_aws.lower() == "y" %}
+
 # Create an S3 bucket for Heroku app static assets
 # NOTE: Requires that the python aws cli is installed and that you're
 # using the client's profile for the correct environment
@@ -186,7 +188,7 @@ heroku.s3:
 	aws s3api create-bucket --bucket ${APP_NAME}
 	aws s3api put-bucket-cors  --bucket ${APP_NAME} --cors-configuration file://cors.json
 	-rm -rf cors.json
-{% endif %}
+{%- endif %}
 
 .PHONY: buildclean
 buildclean:
@@ -197,11 +199,11 @@ buildenv: buildclean
 	mkdir django/.build
 	touch django/.build/.env
 	echo "SECRET_KEY=$$(heroku config:get SECRET_KEY -a ${APP_NAME})" >>  django/.build/.env
-{% if cookiecutter.use_aws.lower() == "y" %}
+{%- if cookiecutter.use_aws.lower() == "y" %}
 	echo "AWS_BUCKET_NAME=$$(heroku config:get AWS_BUCKET_NAME -a ${APP_NAME})" >>  django/.build/.env
 	echo "AWS_ACCESS_KEY_ID=$$(heroku config:get AWS_ACCESS_KEY_ID -a ${APP_NAME})" >>  django/.build/.env
 	echo "AWS_SECRET_ACCESS_KEY=$$(heroku config:get AWS_SECRET_ACCESS_KEY -a ${APP_NAME})" >>  django/.build/.env
-{% endif %}
+{%- endif %}
 	# this is only here for reciept purposes
 	echo "ASSET_VERSION=$$(git rev-parse HEAD)" >> django/.build/.env
 
@@ -239,9 +241,9 @@ heroku.assets:  ## Build Heroku assets (takes ENV_NAME=<env-name>, see help)
 	-cd django/project/@static && \
 		IS_HEROKU=1 VERSION=$$(git rev-parse HEAD) \
 		USE_HTTPS_FOR_ASSETS=$$(heroku config:get USE_HTTPS_FOR_ASSETS -a ${APP_NAME}) \
-{% if cookiecutter.use_aws.lower() == "y" %}
+{%- if cookiecutter.use_aws.lower() == "y" %}
 		AWS_BUCKET_NAME=$$(heroku config:get AWS_BUCKET_NAME -a ${APP_NAME}) \
-{% endif %}
+{%- endif %}
 		npm run build
 
 .PHONY: heroku.shell
@@ -252,14 +254,15 @@ heroku.shell: ## Get a session on the heroku container (takes ENV_NAME=<env-name
 		-e "DJANGO_SETTINGS_MODULE=app.config.settings.prod" \
 		-e "PYTHONPATH=/usr/app/django/project:/usr/app/django/project/vendor" \
 		-e "DEBUG=True" \
-{% if cookiecutter.use_aws.lower() == "y" %}
+{%- if cookiecutter.use_aws.lower() == "y" %}
 		-e "AWS_BUCKET_NAME=$$(heroku config:get AWS_BUCKET_NAME -a ${APP_NAME})" \
 		-e "AWS_ACCESS_KEY_ID=$$(heroku config:get AWS_ACCESS_KEY_ID -a ${APP_NAME})" \
 		-e "AWS_SECRET_ACCESS_KEY=$$(heroku config:get AWS_SECRET_ACCESS_KEY -a ${APP_NAME})" \
-{% endif %}
+{%- endif %}
 		-it dinopetrone/heroku:latest \
 		/bin/bash
-{% endif %}
+{%- endif %}
+
 
 # Makefile Documentation
 # =====================================
@@ -272,7 +275,6 @@ help: help-commands help-usage help-examples ## This help dialog
 help-commands:
 	@echo "\nCommands:"
 	@grep -E '^[a-zA-Z._-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
-
 
 # Update this target to add additional usage
 .PHONY: help-usage
@@ -298,6 +300,7 @@ help-examples:
 	@echo "make heroku.up HEROKU_REMOTE=dev"
 	@echo "make heroku.deploy HEROKU_REMOTE=dev"
 	@echo ""
+
 
 # Prompts Commands
 # =====================================

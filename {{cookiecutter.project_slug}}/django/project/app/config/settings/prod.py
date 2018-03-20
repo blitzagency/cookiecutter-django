@@ -2,6 +2,7 @@
 
 from .base import *  # noqa F402
 
+
 # -------------------------------------
 # DJANGO CONFIGURATION
 # -------------------------------------
@@ -24,26 +25,27 @@ DATABASE_POOL_ARGS = {
     'recycle': 300,
 }
 
+
 # Staticfiles
 # =====================================
 
-{% if cookiecutter.use_aws.lower() == "y" %}
+{% if cookiecutter.use_aws.lower() == "y" -%}
 DEFAULT_FILE_STORAGE = 'app.utils.storage.MediaRootS3BotoStorage'
-ASSET_PROTOCOL = 'https' if USE_HTTPS_FOR_ASSETS else 'http'
+ASSET_PROTOCOL = 'https' if USE_HTTPS_FOR_ASSETS else 'http'  # noqa F405
 
 # THIS IS VERY IMPORTANT TO MAKE COMPRESSOR WORK!!!!!!
-ASSET_PORT = ':443' if USE_HTTPS_FOR_ASSETS else ''
+ASSET_PORT = ':443' if USE_HTTPS_FOR_ASSETS else ''  # noqa F405
 
-STATIC_URL = '{}://{}.s3.amazonaws.com{}/'.format(ASSET_PROTOCOL, AWS_STORAGE_BUCKET_NAME, ASSET_PORT)
-MEDIA_URL = '{}://{}.s3.amazonaws.com/uploads/'.format(ASSET_PROTOCOL, AWS_STORAGE_BUCKET_NAME)
+STATIC_URL = '{}://{}.s3.amazonaws.com{}/'.format(ASSET_PROTOCOL, AWS_STORAGE_BUCKET_NAME, ASSET_PORT)  # noqa F405
+MEDIA_URL = '{}://{}.s3.amazonaws.com/uploads/'.format(ASSET_PROTOCOL, AWS_STORAGE_BUCKET_NAME)  # noqa F405
 
-if ASSET_VERSION:
+if ASSET_VERSION:  # noqa F405
     # set path of assets in s3 bucket, note this is '' by default
-    AWS_LOCATION = '%s/' % ASSET_VERSION
+    AWS_LOCATION = '%s/' % ASSET_VERSION  # noqa F405
     STATIC_URL += AWS_LOCATION
-{% else %}
+{%- else -%}
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-{% endif %}
+{%- endif %}
 
 EMAIL_BACKEND = env('EMAIL_BACKEND', default='django.core.mail.backends.smtp.EmailBackend')  # noqa F405
 EMAIL_HOST = env('EMAIL_HOST', default='smtp.gmail.com')  # noqa F405

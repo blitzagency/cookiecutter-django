@@ -1,35 +1,32 @@
 [Heroku CLI]: https://devcenter.heroku.com/articles/heroku-cli "Heroku CLI Homepage"
-{% if cookiecutter.use_aws.lower() == "y" %}
+{%- if cookiecutter.use_aws.lower() == "y" %}
 [AWS CLI]: http://docs.aws.amazon.com/cli/latest/userguide/installing.html "AWS CLI Install"
-{% endif %}
+{%- endif %}
 
 # Heroku
-
 
 ## Learn
 
 - [Heroku Dev Center](https://devcenter.heroku.com/)
-{% if cookiecutter.use_aws.lower() == "y" %}
+{% if cookiecutter.use_aws.lower() == "y" -%}
 - [AWS CLI Docs](http://docs.aws.amazon.com/cli/)
-{% endif %}
 
+{%- endif %}
 
 ## Required
 
 - Requirements from [README.md](../README.md)
 - A Heroku Account & the [Heroku CLI]
-{% if cookiecutter.use_aws.lower() == "y" %}
+{% if cookiecutter.use_aws.lower() == "y" -%}
 - Access to BLITZ AWS & the [AWS CLI] 
-{% endif %}
-
+{%- endif %}
 
 > __See:__
 > 
 > - [Install Heroku CLI](#install-heroku-cli)
-{% if cookiecutter.use_aws.lower() == "y" %}
+{% if cookiecutter.use_aws.lower() == "y" -%}
 > - [Install AWS CLI](#install-aws-cli)
-{% endif %}
-
+{%- endif %}
 
 ## Preamble
 
@@ -97,12 +94,12 @@ This step is _only necessary when your desired Heroku app is not already configu
 
 ```bash
 # If you do not have these ask a tech lead
-{% if cookiecutter.use_aws.lower() == "y" %}
+{% if cookiecutter.use_aws.lower() == "y" -%}
 heroku config:set AWS_ACCESS_KEY_ID="<key>"
 heroku config:set AWS_SECRET_ACCESS_KEY="<key>"
-{% else %}
+{%- else %}
 # note: no variables currently necessary
-{% endif %}
+{%- endif %}
 ```
 
 
@@ -110,12 +107,12 @@ heroku config:set AWS_SECRET_ACCESS_KEY="<key>"
 
 Before we hit the button:
 
-{% if cookiecutter.use_aws.lower() == "y" %}
+{% if cookiecutter.use_aws.lower() == "y" -%}
 1. Login / Open AWS Console → S3:
     + Verify your bucket exists
     + Verify the CORS config is set 
         - "Permissions" → "CORS Configuration" (tab)
-{% endif %}
+{%- endif %}
 1. Double check Heroku
     + `heroku info` to print info about the app
     + `heroku config` to print set config values
@@ -169,23 +166,20 @@ heroku open [-r, --remote <REMOTE_NAME>]
 
 ## Appendix
 
-
 ### Install Heroku CLI
 
 1. [Install Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)
-2. `heroku login`
+1. `heroku login`
 
 {% if cookiecutter.use_aws.lower() == "y" %}
-
 ### Install AWS CLI
 
 1. [Install AWS CLI](http://docs.aws.amazon.com/cli/latest/userguide/installing.html)
-2. [Configure AWS CLI](http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html#cli-quick-configuration)
+1. [Configure AWS CLI](http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html#cli-quick-configuration)
     + You'll need your `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`
     + Our default region is `us-west-2`
     + Set default output to `json`
-
-{% endif %}
+{%- endif %}
 
 ### Managing multiple Remotes
 
