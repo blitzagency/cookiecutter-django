@@ -22,7 +22,7 @@ services:
 
   postgres:
     image: postgres:latest
-    restart: always
+    restart: unless-stopped
     volumes:
       - /usr/lib/postgresql
       - .:/usr/app/django
