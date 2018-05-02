@@ -15,8 +15,8 @@ ARG ASSET_VERSION
 # =====================================
 
 # Single line form is preferred for caching
-ENV PYTHONPATH=/usr/app/project:/usr/app/project/vendor \
-    DJANGO_SETTINGS_MODULE=app.config.settings.prod
+ENV PYTHONPATH=/usr/app/site/apps:/usr/app/site/vendor \
+    DJANGO_SETTINGS_MODULE=apps.config.settings.prod
 
 # Working Dir Setup
 # =====================================
@@ -35,9 +35,9 @@ WORKDIR /usr/app
 # NOTE: Avoiding ./requirements/local.txt so we don't invalidate the cache for
 # a local only update to reqs.
 
-COPY ./django/requirements/base.txt ./requirements/base.txt
-COPY ./django/requirements/production.txt ./requirements/production.txt
-COPY ./django/requirements.txt ./
+COPY ./site/requirements/base.txt ./requirements/base.txt
+COPY ./site/requirements/production.txt ./requirements/production.txt
+COPY ./site/requirements.txt ./
 
 RUN pip install -r ./requirements.txt
 
@@ -48,12 +48,12 @@ RUN pip install -r ./requirements.txt
 # Copy is (usually) preferred over Add, see:
 #   https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/#add-or-copy
 
-COPY ./django/ ./
+COPY ./site/ ./
 
 # Copy env.build to .env temporarily for collect static
 # NOTE: This overwrites any .env that may have been added from COPY above
 RUN [ -f ./.build/.env ] || echo "Could not find ./.build/.env"
-COPY ./django/.build/.env .env
+COPY ./site/.build/.env .env
 
 # Run Collect Static
 # =====================================
@@ -85,4 +85,4 @@ USER heroku
 # CMD is required to run on Heroku
 # $PORT is set by Heroku
 
-CMD newrelic-admin run-program gunicorn app.config.wsgi --bind 0.0.0.0:$PORT -w 2 -k gevent
+CMD newrelic-admin run-program gunicorn apps.config.wsgi --bind 0.0.0.0:$PORT -w 3 -k gevent

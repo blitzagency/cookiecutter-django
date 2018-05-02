@@ -216,9 +216,8 @@ buildenv: buildclean
 heroku.deploy: heroku.assets buildenv
 	docker build \
     --build-arg ASSET_VERSION=$$(git rev-parse HEAD) \
-    . -f docker/heroku/Dockerfile -t registry.heroku.com/${APP_NAME}/web:latest
+    . -f docker/Dockerfile -t registry.heroku.com/${APP_NAME}/web:latest
 	docker push registry.heroku.com/${APP_NAME}/web
-	# heroku run ./manage.py makemigrations -a ${APP_NAME}
 	heroku run ./manage.py migrate -a ${APP_NAME}
 	heroku run ./manage.py clear_cache -a ${APP_NAME}
 
