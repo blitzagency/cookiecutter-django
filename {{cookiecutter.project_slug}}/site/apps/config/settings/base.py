@@ -213,14 +213,14 @@ AWS_IS_GZIPPED = True
 # Staticfiles
 # =====================================
 
-STATIC_ROOT = PROJECT_PATH('collected-static')
+STATIC_ROOT = BASE_PATH('collected-static')
 STATIC_URL = '/static/'
 
 # Add project/static to staticfile resolution
 # Entries here are eligible for `collectstatic` as well
 # See:
 # https://docs.djangoproject.com/en/1.10/ref/contrib/staticfiles/#collectstatic
-STATICFILES_DIRS = (PROJECT_PATH('static'),)
+STATICFILES_DIRS = (BASE_PATH('static'),)
 
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
