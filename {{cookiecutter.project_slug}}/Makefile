@@ -45,11 +45,11 @@ serve: ## Start development web server
 
 .PHONY: assets
 assets: ## Start static asset watch / compilation
-	cd django/project/@static && npm start
+	cd site/@static && npm start
 
 .PHONY: envfile
 envfile: ## copy over the .env file if it doesn't exist
-	-cp -n django/env.dist django/.env
+	-cp -n site/env.dist site/.env
 
 .PHONY: resetdb
 resetdb: ## Reset Django / Postgres database
@@ -80,7 +80,7 @@ test.py: ## Run Python / Django test suite
 .PHONY: test.js
 test.js: ## Run Javascript test suite
 	open http://localhost:3000
-	cd django/project/\@static && npm test
+	cd site/\@static && npm test
 
 .PHONY: reqs.git
 reqs.git:
@@ -93,7 +93,7 @@ reqs.py:
 
 .PHONY: reqs.node
 reqs.node:
-	cd django/project/\@static && npm install
+	cd site/\@static && npm install
 
 .PHONY: init.django
 init.django: resetdb
@@ -165,7 +165,7 @@ heroku.create:
 # Set some boilerplate Heroku app configuration
 .PHONY: heroku.configure
 heroku.configure:
-	heroku config:set DJANGO_SETINGS_MODULE=app.config.settings.prod -a ${APP_NAME}
+	heroku config:set DJANGO_SETINGS_MODULE=apps.config.settings.prod -a ${APP_NAME}
 	heroku config:set SECRET_KEY=$$(docker exec -it ${NAME}_django_1 python manage.py gen_secret_key) -a ${APP_NAME}
 	heroku config:set USE_HTTPS_FOR_ASSETS=1 -a ${APP_NAME}
 {%- if cookiecutter.use_aws.lower() == "y" %}
@@ -192,20 +192,20 @@ heroku.s3:
 
 .PHONY: buildclean
 buildclean:
-	rm -rf django/.build
+	rm -rf site/.build
 
 .PHONY: buildenv
 buildenv: buildclean
-	mkdir django/.build
-	touch django/.build/.env
-	echo "SECRET_KEY=$$(heroku config:get SECRET_KEY -a ${APP_NAME})" >>  django/.build/.env
+	mkdir site/.build
+	touch site/.build/.env
+	echo "SECRET_KEY=$$(heroku config:get SECRET_KEY -a ${APP_NAME})" >>  site/.build/.env
 {%- if cookiecutter.use_aws.lower() == "y" %}
-	echo "AWS_BUCKET_NAME=$$(heroku config:get AWS_BUCKET_NAME -a ${APP_NAME})" >>  django/.build/.env
-	echo "AWS_ACCESS_KEY_ID=$$(heroku config:get AWS_ACCESS_KEY_ID -a ${APP_NAME})" >>  django/.build/.env
-	echo "AWS_SECRET_ACCESS_KEY=$$(heroku config:get AWS_SECRET_ACCESS_KEY -a ${APP_NAME})" >>  django/.build/.env
+	echo "AWS_BUCKET_NAME=$$(heroku config:get AWS_BUCKET_NAME -a ${APP_NAME})" >>  site/.build/.env
+	echo "AWS_ACCESS_KEY_ID=$$(heroku config:get AWS_ACCESS_KEY_ID -a ${APP_NAME})" >>  site/.build/.env
+	echo "AWS_SECRET_ACCESS_KEY=$$(heroku config:get AWS_SECRET_ACCESS_KEY -a ${APP_NAME})" >>  site/.build/.env
 {%- endif %}
 	# this is only here for reciept purposes
-	echo "ASSET_VERSION=$$(git rev-parse HEAD)" >> django/.build/.env
+	echo "ASSET_VERSION=$$(git rev-parse HEAD)" >> site/.build/.env
 
 # There's a lot going on here:
 # 1. Generate a file called env.build for use during `docker build`
@@ -238,7 +238,7 @@ heroku.checkenv:
 # 	and re-run them once the deploy is complete.
 .PHONY: heroku.assets
 heroku.assets:  ## Build Heroku assets (takes ENV_NAME=<env-name>, see help)
-	-cd django/project/@static && \
+	-cd site/@static && \
 		IS_HEROKU=1 VERSION=$$(git rev-parse HEAD) \
 		USE_HTTPS_FOR_ASSETS=$$(heroku config:get USE_HTTPS_FOR_ASSETS -a ${APP_NAME}) \
 {%- if cookiecutter.use_aws.lower() == "y" %}
@@ -248,11 +248,11 @@ heroku.assets:  ## Build Heroku assets (takes ENV_NAME=<env-name>, see help)
 
 .PHONY: heroku.shell
 heroku.shell: ## Get a session on the heroku container (takes ENV_NAME=<env-name>, see help)
-	docker run --rm -w /usr/app/django \
+	docker run --rm -w /usr/app/site \
 		-v ${LOCATION}:/usr/app \
 		--net ${NAME}_default \
-		-e "DJANGO_SETTINGS_MODULE=app.config.settings.prod" \
-		-e "PYTHONPATH=/usr/app/django/project:/usr/app/django/project/vendor" \
+		-e "DJANGO_SETTINGS_MODULE=apps.config.settings.prod" \
+		-e "PYTHONPATH=/usr/app/site:/usr/app/site/vendor" \
 		-e "DEBUG=True" \
 {%- if cookiecutter.use_aws.lower() == "y" %}
 		-e "AWS_BUCKET_NAME=$$(heroku config:get AWS_BUCKET_NAME -a ${APP_NAME})" \

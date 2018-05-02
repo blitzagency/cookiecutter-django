@@ -18,18 +18,18 @@ admin.autodiscover()
 # See: https://docs.djangoproject.com/en/dev/topics/http/urls/#example
 
 urlpatterns = [
-    url(r"^admin/", include(admin.site.urls)),
-    url(r'^taggit_autosuggest/', include("taggit_autosuggest.urls")),
-    url(r"^", include("cms.urls")),
+    url(r'^admin/', include(admin.site.urls)),
+    url(r'^taggit_autosuggest/', include('taggit_autosuggest.urls')),
+    url(r'^', include('cms.urls')),
 ]
 
 if settings.AUTO_ENABLE_I18N:
     urlpatterns = i18n_patterns(*urlpatterns)
 
     urlpatterns += [
-        url(r"^jsi18n/$",
-            JavaScriptCatalog.as_view(packages=["app.web"]),
-            name="javascript-catalog"),
+        url(r'^jsi18n/$',
+            JavaScriptCatalog.as_view(packages=['app.web']),
+            name='javascript-catalog'),
     ]
 
 
@@ -37,13 +37,13 @@ if settings.AUTO_ENABLE_I18N:
 # =====================================
 
 urlpatterns += [
-    url(r"^sitemap\.xml$", sitemap, {"sitemaps": {"cmspages": CMSSitemap}}),
-    url(r"^sitemap/", sitemap, {
-        "sitemaps": {"cmspages": CMSSitemap},
-        "template_name": "web/sitemap.html",
-        "content_type": "text/html"
+    url(r'^sitemap\.xml$', sitemap, {'sitemaps': {'cmspages': CMSSitemap}}),
+    url(r'^sitemap/', sitemap, {
+        'sitemaps': {'cmspages': CMSSitemap},
+        'template_name': 'web/sitemap.html',
+        'content_type': 'text/html'
     },
-        name="sitemap"
+        name='sitemap'
     ),
 ]
 
@@ -64,7 +64,7 @@ if settings.DEBUG:
     # Serve media files when DEBUG=True
     urlpatterns = [
         url(
-            r"^media/(?P<path>.*)$", serve,
-            {"document_root": settings.MEDIA_ROOT, "show_indexes": True}
+            r'^media/(?P<path>.*)$', serve,
+            {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}
         ),
     ] + staticfiles_urlpatterns() + urlpatterns

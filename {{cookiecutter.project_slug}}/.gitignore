@@ -9,9 +9,9 @@ karma-*/
 *.css
 .env
 env.build
-django/project/static
-django/project/media
-django/project/uploads
+site/static
+site/media
+site/uploads
 webpack-stats.json
 cors.json
 

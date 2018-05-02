@@ -29,7 +29,7 @@ DATABASE_POOL_ARGS = {
 # Staticfiles
 # =====================================
 
-{% if cookiecutter.use_aws.lower() == "y" -%}
+{% if cookiecutter.use_aws.lower() == 'y' -%}
 DEFAULT_FILE_STORAGE = 'app.utils.storage.MediaRootS3BotoStorage'
 ASSET_PROTOCOL = 'https' if USE_HTTPS_FOR_ASSETS else 'http'  # noqa F405
 
