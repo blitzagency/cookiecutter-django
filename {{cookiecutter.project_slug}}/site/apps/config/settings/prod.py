@@ -30,7 +30,7 @@ DATABASE_POOL_ARGS = {
 # =====================================
 
 {% if cookiecutter.use_aws.lower() == 'y' -%}
-DEFAULT_FILE_STORAGE = 'app.utils.storage.MediaRootS3BotoStorage'
+DEFAULT_FILE_STORAGE = 'apps.utils.storage.MediaRootS3BotoStorage'
 ASSET_PROTOCOL = 'https' if USE_HTTPS_FOR_ASSETS else 'http'  # noqa F405
 
 # THIS IS VERY IMPORTANT TO MAKE COMPRESSOR WORK!!!!!!
@@ -64,7 +64,7 @@ LOGGING = {
             '()': 'django.utils.log.RequireDebugFalse'
         },
         'ratelimit': {
-            '()': 'app.utils.error_ratelimit_filter.RateLimitFilter',
+            '()': 'apps.utils.error_ratelimit_filter.RateLimitFilter',
         }
     },
     'formatters': {
@@ -88,7 +88,7 @@ LOGGING = {
         },
         'slack': {
             'level': 'ERROR',
-            'class': 'app.utils.log.SlackHandler',
+            'class': 'apps.utils.log.SlackHandler',
             'formatter': 'verbose',
         },
     },
