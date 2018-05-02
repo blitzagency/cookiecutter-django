@@ -28,7 +28,7 @@ if settings.AUTO_ENABLE_I18N:
 
     urlpatterns += [
         url(r'^jsi18n/$',
-            JavaScriptCatalog.as_view(packages=['app.web']),
+            JavaScriptCatalog.as_view(packages=['apps.web']),
             name='javascript-catalog'),
     ]
 

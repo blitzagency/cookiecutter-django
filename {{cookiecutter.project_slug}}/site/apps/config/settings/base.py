@@ -38,16 +38,15 @@ import environ
 #   - https://github.com/joke2k/django-environ
 
 WORKING_PATH = environ.Path(__file__) - 1
-DJANGO_PATH = WORKING_PATH - 4
-PROJECT_PATH = DJANGO_PATH.path('project')
-APP_PATH = PROJECT_PATH.path('app')
+BASE_PATH = WORKING_PATH - 3
+PROJECT_PATH = BASE_PATH.path('apps')
 
 
 # Env
 # =====================================
 
 env = environ.Env()
-environ.Env.read_env(DJANGO_PATH('.env'))
+environ.Env.read_env(BASE_PATH('.env'))
 
 IS_PRODUCTION = not env.bool('IS_LOWER_ENVIRONMENT', False)
 
@@ -56,8 +55,8 @@ IS_PRODUCTION = not env.bool('IS_LOWER_ENVIRONMENT', False)
 # DJANGO CONFIGURATION
 # -------------------------------------
 
-WSGI_APPLICATION = 'app.config.wsgi.application'
-ROOT_URLCONF = 'app.config.urls'
+WSGI_APPLICATION = 'apps.config.wsgi.application'
+ROOT_URLCONF = 'apps.config.urls'
 DEBUG = False if IS_PRODUCTION else env.bool('DEBUG', False)
 ALLOWED_HOSTS = ('localhost', '127.0.0.1',)
 SITE_ID = 1
@@ -73,7 +72,7 @@ INSTALLED_APPS = (
     # Overrides
     # Apps that must come first (may include local apps)
     'djangocms_admin_style',
-    'app.utils',
+    'apps.utils',
 
     # Django apps
     'django.contrib.auth',
@@ -108,8 +107,8 @@ INSTALLED_APPS = (
     'meta',
 
     # Local apps
-    'app.web',
-    'app.ui_kit',
+    'apps.web',
+    'apps.ui_kit',
 
     # Third-party Apps
     'django_extensions',
@@ -169,7 +168,8 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': (
-            APP_PATH('overrides/templates'), 'templates',
+            PROJECT_PATH.path('overrides', 'templates').__str__(),
+            'templates',
         ),
         'APP_DIRS': True,
         'OPTIONS': {
@@ -188,8 +188,8 @@ TEMPLATES = [
                 'cms.context_processors.cms_settings',
 
                 # Local
-                'app.utils.context_processors.global_variables',
-                'app.web.context_processors.web_settings',
+                'apps.utils.context_processors.global_variables',
+                'apps.web.context_processors.web_settings',
             ),
         },
     }
@@ -255,7 +255,7 @@ LANGUAGES = (
 )
 
 LOCALE_PATHS = (
-    PROJECT_PATH('app/web/locale'),
+    PROJECT_PATH('apps/web/locale'),
 )
 
 

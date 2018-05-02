@@ -9,7 +9,7 @@ class UIKitAppHook(CMSApp):
     app_name = apps.Config.label
 
     def get_urls(self, page=None, language=None, **kwargs):
-        return ["app.ui_kit.urls", ]
+        return ["apps.ui_kit.urls", ]
 
 
 apphook_pool.register(UIKitAppHook)
