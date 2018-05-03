@@ -38,11 +38,10 @@ if settings.AUTO_ENABLE_I18N:
 
 urlpatterns += [
     url(r'^sitemap\.xml$', sitemap, {'sitemaps': {'cmspages': CMSSitemap}}),
-    url(r'^sitemap/', sitemap, {
-        'sitemaps': {'cmspages': CMSSitemap},
-        'template_name': 'web/sitemap.html',
-        'content_type': 'text/html'
-    },
+    url(
+        r'^sitemap/',
+        sitemap,
+        {'sitemaps': {'cmspages': CMSSitemap}, 'template_name': 'web/sitemap.html', 'content_type': 'text/html'},
         name='sitemap'
     ),
 ]
