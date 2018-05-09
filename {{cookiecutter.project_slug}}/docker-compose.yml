@@ -7,14 +7,14 @@ services:
     volumes:
       - .:/usr/app
     stdin_open: true
-    working_dir: /usr/app/django
+    working_dir: /usr/app/site
     tty: true
     command: "/bin/bash"
     links:
       - postgres:postgres
     environment:
-      DJANGO_SETTINGS_MODULE: app.config.settings.local
-      PYTHONPATH: /usr/app/django/project:/usr/app/django/project/vendor
+      DJANGO_SETTINGS_MODULE: apps.config.settings.local
+      PYTHONPATH: /usr/app/site/apps:/usr/app/site/vendor
       PIPENV_VENV_IN_PROJECT: 1
       DEBUG: "true"
     logging:

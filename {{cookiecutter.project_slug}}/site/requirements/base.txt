@@ -1,0 +1,77 @@
+# -------------------------------------
+# BASE REQUIREMENTS
+# -------------------------------------
+
+# Django Reqs
+# =====================================
+
+Django~=1.11
+psycopg2-binary~=2.7
+mimeparse
+pytz
+
+# Django Apps
+# ======================================
+
+django-robots
+django-environ
+django-extensions
+django-storages
+django-model-utils
+djangorestframework
+django-ipware
+django-crispy-forms
+
+# DjangoCMS Reqs
+# =====================================
+
+six
+Pillow
+html5lib>=0.999999,<0.99999999
+easy_thumbnails
+django-filer
+django-cms
+djangocms-admin-style
+django-treebeard
+django-classy-tags
+django-sekizai
+
+# DjangoCMS plugins
+# =====================================
+
+cmsplugin-filer
+djangocms-text-ckeditor>=3.5,<3.5.99
+djangocms-link
+djangocms-style
+djangocms-googlemap
+djangocms-snippet
+djangocms-video
+
+# DjangoCMS Extra Reqs
+# ====================================
+
+django-taggit
+django-taggit-autosuggest
+django-taggit-templatetags
+django-meta
+
+
+# Project Reqs
+# =====================================
+
+pytest-django
+pytest-mock
+pytest-pythonpath
+{% if cookiecutter.use_aws.lower() == "y" -%}
+boto
+{% endif -%}
+whitenoise
+celery
+requests
+beautifulsoup4
+dicttoxml
+geoip2
+geopy
+{% if cookiecutter.use_uploadcare.lower() == "y" %}
+pyuploadcare
+{% endif %}

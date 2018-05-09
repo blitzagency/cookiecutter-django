@@ -33,7 +33,7 @@
 ```bash
 # From a terminal run
 # After running this, you may need to fill out required settings
-cp django/env.dist django/.env
+cp site/env.dist site/.env
 
 make up
 make init
