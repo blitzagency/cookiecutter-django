@@ -19,7 +19,8 @@ except NotImplementedError:
 
 def get_random_string(
         length=50,
-        allowed_chars='abcdefghijklmnopqrstuvwxyz0123456789!@#%^&*(-_=+)'):
+        allowed_chars='abcdefghijklmnopqrstuvwxyz0123456789!@#%^&*(-_=+)',
+        ):
     '''
     Return a securely generated random string.
 
@@ -57,7 +58,7 @@ def make_secret_key(project_directory):
     # Determine the local_setting_file_location
     local_setting = os.path.join(
         project_directory,
-        'site/apps/config/settings/local.py'
+        'site/apps/config/settings/local.py',
     )
 
     # local.py settings file
@@ -65,7 +66,7 @@ def make_secret_key(project_directory):
 
     env_file = os.path.join(
         project_directory,
-        'site/env.dist'
+        'site/env.dist',
     )
 
     # env.example file
@@ -79,10 +80,13 @@ def remove_file(file_name):
 
 def remove_heroku_files():
     '''Remove files needed for heroku if it isn't going to be used.'''
-    HEROKU_FILES = [
-        'Procfile', 'runtime.txt', 'requirements.txt', 'docs/heroku-setup.md',
-        'site/app_info.json'
-    ]
+    HEROKU_FILES = (
+        'Procfile',
+        'runtime.txt',
+        'requirements.txt',
+        'docs/heroku-setup.md',
+        'site/app_info.json',
+    )
 
     for filename in HEROKU_FILES:
         file_name = os.path.join(PROJECT_DIRECTORY, filename)
@@ -113,7 +117,7 @@ def is_git_repo_root(project_directory):
 
 def is_git_repo(project_directory):
     completed = subprocess.run(
-        ['git', 'rev-parse', '--is-inside-work-tree'],
+        ('git', 'rev-parse', '--is-inside-work-tree'),
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
     )

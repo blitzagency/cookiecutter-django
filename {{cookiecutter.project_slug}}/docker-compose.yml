@@ -14,7 +14,7 @@ services:
       - postgres:postgres
     environment:
       DJANGO_SETTINGS_MODULE: apps.config.settings.local
-      PYTHONPATH: /usr/app/site:/usr/app/site/vendor
+      PYTHONPATH: /usr/app/site/apps:/usr/app/site/vendor
       PIPENV_VENV_IN_PROJECT: 1
       DEBUG: "true"
     logging:

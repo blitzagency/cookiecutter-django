@@ -62,7 +62,7 @@ migrate: ## Runs Django makemigrations and migrate in a single command
 
 .PHONY: po
 po: ## Create / update po files
-	docker exec -it ${NAME}_django_1 mkdir -p project/app/web/locale
+	docker exec -it ${NAME}_django_1 mkdir -p apps/web/locale
 	docker exec -it ${NAME}_django_1 python manage.py makemessages ${OPTS}
 
 .PHONY: mo
@@ -251,7 +251,7 @@ heroku.shell: ## Get a session on the heroku container (takes ENV_NAME=<env-name
 		-v ${LOCATION}:/usr/app \
 		--net ${NAME}_default \
 		-e "DJANGO_SETTINGS_MODULE=apps.config.settings.prod" \
-		-e "PYTHONPATH=/usr/app/site:/usr/app/site/vendor" \
+		-e "PYTHONPATH=/usr/app/site/apps:/usr/app/site/vendor" \
 		-e "DEBUG=True" \
 {%- if cookiecutter.use_aws.lower() == "y" %}
 		-e "AWS_BUCKET_NAME=$$(heroku config:get AWS_BUCKET_NAME -a ${APP_NAME})" \
