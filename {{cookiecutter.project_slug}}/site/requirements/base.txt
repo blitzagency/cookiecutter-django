@@ -40,7 +40,7 @@ django-sekizai
 # =====================================
 
 cmsplugin-filer
-djangocms-text-ckeditor
+djangocms-text-ckeditor>=3.5,<3.5.99
 djangocms-link
 djangocms-style
 djangocms-googlemap
