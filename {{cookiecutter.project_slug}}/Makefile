@@ -218,6 +218,7 @@ heroku.deploy: heroku.assets buildenv
     --build-arg ASSET_VERSION=$$(git rev-parse HEAD) \
     . -f docker/Dockerfile -t registry.heroku.com/${APP_NAME}/web:latest
 	docker push registry.heroku.com/${APP_NAME}/web
+	heroku container:release web  -a ${APP_NAME}
 	heroku run ./manage.py migrate -a ${APP_NAME}
 	heroku run ./manage.py clear_cache -a ${APP_NAME}
 
