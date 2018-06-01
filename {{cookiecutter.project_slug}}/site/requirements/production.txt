@@ -2,6 +2,6 @@
 
 gunicorn
 django-postgrespool
-gevent
+gevent<=1.2.99
 newrelic
 

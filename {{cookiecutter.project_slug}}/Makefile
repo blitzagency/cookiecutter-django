@@ -166,7 +166,7 @@ heroku.create:
 .PHONY: heroku.configure
 heroku.configure:
 	heroku config:set DJANGO_SETINGS_MODULE=apps.config.settings.prod -a ${APP_NAME}
-	heroku config:set SECRET_KEY=$$(docker exec -it ${NAME}_django_1 python manage.py gen_secret_key) -a ${APP_NAME}
+	heroku config:set SECRET_KEY=$$(docker exec -it ${PROJECT}_django_1 python manage.py gen_secret_key) -a ${APP_NAME}
 	heroku config:set USE_HTTPS_FOR_ASSETS=1 -a ${APP_NAME}
 {%- if cookiecutter.use_aws.lower() == "y" %}
 	heroku config:set AWS_BUCKET_NAME=${APP_NAME} -a ${APP_NAME}
