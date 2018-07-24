@@ -38,7 +38,7 @@ import environ
 #   - https://github.com/joke2k/django-environ
 
 WORKING_PATH = environ.Path(__file__) - 1
-BASE_PATH = WORKING_PATH - 3
+BASE_PATH = WORKING_PATH - 2
 PROJECT_PATH = BASE_PATH.path('apps')
 
 

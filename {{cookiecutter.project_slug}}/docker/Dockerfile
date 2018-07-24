@@ -44,21 +44,14 @@ RUN pip install -r ./requirements.txt
 # Copy is (usually) preferred over Add, see:
 #   https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/#add-or-copy
 
+RUN touch /usr/app/.env
 COPY ./site/ ./
 
-# Copy env.build to .env temporarily for collect static
-# NOTE: This overwrites any .env that may have been added from COPY above
-RUN [ -f ./.build/.env ] || echo "Could not find ./.build/.env"
-COPY ./site/.build/.env .env
 
 # Run Collect Static
 # =====================================
 
-RUN python manage.py collectstatic --no-input
-
-# We can get rid of .env now
-# but leave env.build to keep as a build receipt.
-RUN rm /usr/app/.env
+RUN SECRET_KEY=abcdefghijklmnopqrstuvwxyz python manage.py collectstatic --no-input
 
 # Asset Version
 # =====================================
