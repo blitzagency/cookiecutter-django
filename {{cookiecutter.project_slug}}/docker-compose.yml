@@ -2,6 +2,7 @@ version: "2"
 services:
   django:
     image: python:3
+    restart: unless-stopped
     ports:
       - "8000:8000"
     volumes:
