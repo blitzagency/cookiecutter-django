@@ -43,6 +43,8 @@ if ASSET_VERSION:  # noqa F405
     # set path of assets in s3 bucket, note this is '' by default
     AWS_LOCATION = '%s/' % ASSET_VERSION  # noqa F405
     STATIC_URL += AWS_LOCATION
+
+AWS_PRELOAD_METADATA = True
 {%- else -%}
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 {%- endif %}

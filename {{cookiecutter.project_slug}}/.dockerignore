@@ -9,6 +9,7 @@ tests
 .git/
 *.md
 */collected-static/
+*/@static/
 docker-compose.yml
 circle.yml
 docs/
