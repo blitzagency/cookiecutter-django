@@ -2,6 +2,7 @@
 
 gunicorn
 django-postgrespool
+django-storages~=1.6
 gevent<=1.2.99
 newrelic
 
