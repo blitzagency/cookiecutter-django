@@ -199,9 +199,9 @@ TEMPLATES = [
 # Storages
 # =====================================
 
-USE_HTTPS_FOR_ASSETS = env.bool('USE_HTTPS_FOR_ASSETS', False)
 ASSET_VERSION = env('ASSET_VERSION', default=False)
 {%- if cookiecutter.use_aws.lower() == 'y' %}
+USE_HTTPS_FOR_ASSETS = env.bool('USE_HTTPS_FOR_ASSETS', False)
 AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID', default='')
 AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY', default='')
 AWS_BUCKET_NAME = AWS_STORAGE_BUCKET_NAME = env('AWS_BUCKET_NAME', default='')

@@ -47,6 +47,10 @@ if ASSET_VERSION:  # noqa F405
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 {%- endif %}
 
+
+# Email
+# =====================================
+
 EMAIL_BACKEND = env('EMAIL_BACKEND', default='django.core.mail.backends.smtp.EmailBackend')  # noqa F405
 EMAIL_HOST = env('EMAIL_HOST', default='smtp.gmail.com')  # noqa F405
 EMAIL_PORT = env('EMAIL_PORT', default=587)  # noqa F405
@@ -55,6 +59,10 @@ EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD', default='')  # noqa F405
 EMAIL_SUBJECT_PREFIX = '[%s] ' % SITE_NAME  # noqa F405
 EMAIL_USE_TLS = True
 SERVER_EMAIL = EMAIL_HOST_USER
+
+
+# Logging
+# =====================================
 
 LOGGING = {
     'version': 1,
@@ -120,6 +128,8 @@ LOGGING = {
 # VENDOR CONFIGURATION
 # -------------------------------------
 
+{% if cookiecutter.use_aws.lower() == 'y' -%}
 AWS_HEADERS = {
     'Cache-Control': 'max-age=31536000',
 }
+{%- endif %}
