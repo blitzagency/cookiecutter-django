@@ -9,12 +9,11 @@ from .base import *  # noqa F402
 # Django Setup
 # =====================================
 
-ALLOWED_HOSTS += ('docker.local', '.ngrok.io',)  # noqa F405
+ALLOWED_HOSTS += ('*',)  # noqa F405
 SECRET_KEY = env('SECRET_KEY', default='abcdefghijklmnopqrstuvwxyz')  # noqa F405
 
 INSTALLED_APPS += (  # noqa F405
     'debug_toolbar',
-    'storages',
 )
 
 MIDDLEWARE += (  # noqa F405

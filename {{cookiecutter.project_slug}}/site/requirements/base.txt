@@ -16,7 +16,6 @@ pytz
 django-robots
 django-environ
 django-extensions
-django-storages
 django-model-utils
 djangorestframework
 django-ipware
