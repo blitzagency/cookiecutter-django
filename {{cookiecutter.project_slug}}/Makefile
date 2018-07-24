@@ -165,7 +165,7 @@ heroku.create:
 # Set some boilerplate Heroku app configuration
 .PHONY: heroku.configure
 heroku.configure:
-	heroku config:set DJANGO_SETINGS_MODULE=apps.config.settings.prod -a ${APP_NAME}
+	heroku config:set DJANGO_SETINGS_MODULE=config.settings.prod -a ${APP_NAME}
 	heroku config:set SECRET_KEY=$$(docker exec -it ${PROJECT}_django_1 python manage.py gen_secret_key) -a ${APP_NAME}
 	heroku config:set USE_HTTPS_FOR_ASSETS=1 -a ${APP_NAME}
 {%- if cookiecutter.use_aws.lower() == "y" %}
@@ -251,7 +251,7 @@ heroku.shell: ## Get a session on the heroku container (takes ENV_NAME=<env-name
 	docker run --rm -w /usr/app/site \
 		-v ${LOCATION}:/usr/app \
 		--net ${NAME}_default \
-		-e "DJANGO_SETTINGS_MODULE=apps.config.settings.prod" \
+		-e "DJANGO_SETTINGS_MODULE=config.settings.prod" \
 		-e "PYTHONPATH=/usr/app/site/apps:/usr/app/site/vendor" \
 		-e "DEBUG=True" \
 {%- if cookiecutter.use_aws.lower() == "y" %}

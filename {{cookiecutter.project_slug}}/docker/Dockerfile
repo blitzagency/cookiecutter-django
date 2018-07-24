@@ -12,7 +12,7 @@ FROM blitzagency/python-web:3
 
 # Single line form is preferred for caching
 ENV PYTHONPATH=/usr/app/site/apps:/usr/app/site/vendor \
-    DJANGO_SETTINGS_MODULE=apps.config.settings.prod
+    DJANGO_SETTINGS_MODULE=config.settings.prod
 
 # Working Dir Setup
 # =====================================
