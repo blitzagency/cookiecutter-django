@@ -12,7 +12,7 @@ FROM blitzagency/python-web:3
 
 # Single line form is preferred for caching
 ENV PYTHONPATH=/usr/app/site/apps:/usr/app/site/vendor \
-    DJANGO_SETTINGS_MODULE=apps.config.settings.prod
+    DJANGO_SETTINGS_MODULE=config.settings.prod
 
 # Working Dir Setup
 # =====================================
@@ -44,21 +44,14 @@ RUN pip install -r ./requirements.txt
 # Copy is (usually) preferred over Add, see:
 #   https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/#add-or-copy
 
+RUN touch /usr/app/.env
 COPY ./site/ ./
 
-# Copy env.build to .env temporarily for collect static
-# NOTE: This overwrites any .env that may have been added from COPY above
-RUN [ -f ./.build/.env ] || echo "Could not find ./.build/.env"
-COPY ./site/.build/.env .env
 
 # Run Collect Static
 # =====================================
 
-RUN python manage.py collectstatic --no-input
-
-# We can get rid of .env now
-# but leave env.build to keep as a build receipt.
-RUN rm /usr/app/.env
+RUN SECRET_KEY=abcdefghijklmnopqrstuvwxyz python manage.py collectstatic --no-input
 
 # Asset Version
 # =====================================
@@ -82,4 +75,4 @@ USER heroku
 # CMD is required to run on Heroku
 # $PORT is set by Heroku
 
-CMD newrelic-admin run-program gunicorn apps.config.wsgi --bind 0.0.0.0:$PORT -w 3 -k gevent
+CMD newrelic-admin run-program gunicorn config.wsgi --bind 0.0.0.0:$PORT -w 3 -k gevent

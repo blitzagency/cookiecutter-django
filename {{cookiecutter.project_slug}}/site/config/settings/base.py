@@ -38,7 +38,7 @@ import environ
 #   - https://github.com/joke2k/django-environ
 
 WORKING_PATH = environ.Path(__file__) - 1
-BASE_PATH = WORKING_PATH - 3
+BASE_PATH = WORKING_PATH - 2
 PROJECT_PATH = BASE_PATH.path('apps')
 
 
@@ -55,8 +55,8 @@ IS_PRODUCTION = not env.bool('IS_LOWER_ENVIRONMENT', False)
 # DJANGO CONFIGURATION
 # -------------------------------------
 
-WSGI_APPLICATION = 'apps.config.wsgi.application'
-ROOT_URLCONF = 'apps.config.urls'
+WSGI_APPLICATION = 'config.wsgi.application'
+ROOT_URLCONF = 'config.urls'
 DEBUG = False if IS_PRODUCTION else env.bool('DEBUG', False)
 ALLOWED_HOSTS = ('localhost', '127.0.0.1',)
 SITE_ID = 1
