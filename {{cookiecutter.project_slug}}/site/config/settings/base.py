@@ -56,7 +56,7 @@ IS_PRODUCTION = not env.bool('IS_LOWER_ENVIRONMENT', False)
 # -------------------------------------
 
 WSGI_APPLICATION = 'apps.config.wsgi.application'
-ROOT_URLCONF = 'apps.config.urls'
+ROOT_URLCONF = 'config.urls'
 DEBUG = False if IS_PRODUCTION else env.bool('DEBUG', False)
 ALLOWED_HOSTS = ('localhost', '127.0.0.1',)
 SITE_ID = 1
