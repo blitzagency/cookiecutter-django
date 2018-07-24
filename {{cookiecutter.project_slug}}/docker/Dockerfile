@@ -75,4 +75,4 @@ USER heroku
 # CMD is required to run on Heroku
 # $PORT is set by Heroku
 
-CMD newrelic-admin run-program gunicorn apps.config.wsgi --bind 0.0.0.0:$PORT -w 3 -k gevent
+CMD newrelic-admin run-program gunicorn config.wsgi --bind 0.0.0.0:$PORT -w 3 -k gevent

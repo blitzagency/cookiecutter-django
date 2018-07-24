@@ -55,7 +55,7 @@ IS_PRODUCTION = not env.bool('IS_LOWER_ENVIRONMENT', False)
 # DJANGO CONFIGURATION
 # -------------------------------------
 
-WSGI_APPLICATION = 'apps.config.wsgi.application'
+WSGI_APPLICATION = 'config.wsgi.application'
 ROOT_URLCONF = 'config.urls'
 DEBUG = False if IS_PRODUCTION else env.bool('DEBUG', False)
 ALLOWED_HOSTS = ('localhost', '127.0.0.1',)

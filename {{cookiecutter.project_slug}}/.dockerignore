@@ -3,13 +3,12 @@
 # -------------------------------------
 
 .*
-tests
 .gitignore
-.vagrant/
 .git/
 *.md
-*/collected-static/
-*/@static/node_modules/
+site/.env
+site/collected-static/
+site/@static/node_modules/
 docker-compose.yml
 circle.yml
 docs/
