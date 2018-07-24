@@ -6,10 +6,6 @@
 
 FROM blitzagency/python-web:3
 
-# Build Args
-# =====================================
-# These are passed via the --build-arg flag during `docker build`
-ARG ASSET_VERSION
 
 # ENV Setup
 # =====================================
@@ -70,6 +66,7 @@ RUN rm /usr/app/.env
 # Separate from other ENV to avoid
 # early / unintentional cache invalidation
 
+ARG ASSET_VERSION
 ENV ASSET_VERSION=$ASSET_VERSION
 
 # User Setup
