@@ -2,7 +2,7 @@ version: "2"
 services:
   django:
     image: python:3
-    restart: unless-stopped
+    restart: never
     ports:
       - "8000:8000"
     volumes:
@@ -23,7 +23,7 @@ services:
 
   postgres:
     image: postgres:latest
-    restart: unless-stopped
+    restart: never
     volumes:
       - /usr/lib/postgresql
       - .:/usr/app/django
