@@ -2,28 +2,28 @@ version: "2"
 services:
   django:
     image: python:3
-    restart: on-failure
+    restart: unless-stopped
     ports:
-      - "8000:8000"
+      - 8000:8000
     volumes:
       - .:/usr/app
     stdin_open: true
     working_dir: /usr/app/site
     tty: true
-    command: "/bin/bash"
+    command: /bin/bash
     links:
       - postgres:postgres
     environment:
       DJANGO_SETTINGS_MODULE: config.settings.local
       PYTHONPATH: /usr/app/site/apps:/usr/app/site/vendor
       PIPENV_VENV_IN_PROJECT: 1
-      DEBUG: "true"
+      DEBUG: 1
     logging:
       driver: none
 
   postgres:
     image: postgres:latest
-    restart: on-failure
+    restart: unless-stopped
     volumes:
       - /usr/lib/postgresql
       - .:/usr/app/django
