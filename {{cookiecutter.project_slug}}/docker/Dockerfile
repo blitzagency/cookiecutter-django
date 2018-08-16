@@ -51,7 +51,7 @@ COPY ./site/ ./
 # Run Collect Static
 # =====================================
 
-RUN SECRET_KEY=abcdefghijklmnopqrstuvwxyz python manage.py collectstatic --no-input
+RUN SECRET_KEY=abcdefghijklmnopqrstuvwxyz python manage.py collectstatic -v 0 --no-input
 
 # Asset Version
 # =====================================
