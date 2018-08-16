@@ -167,8 +167,8 @@ heroku.create:
 heroku.configure:
 	heroku config:set DJANGO_SETINGS_MODULE=config.settings.prod -a ${APP_NAME}
 	heroku config:set SECRET_KEY=$$(docker exec -it ${PROJECT}_django_1 python manage.py gen_secret_key) -a ${APP_NAME}
-	heroku config:set USE_HTTPS_FOR_ASSETS=1 -a ${APP_NAME}
 {%- if cookiecutter.use_aws.lower() == "y" %}
+	heroku config:set USE_HTTPS_FOR_ASSETS=1 -a ${APP_NAME}
 	heroku config:set AWS_BUCKET_NAME=${APP_NAME} -a ${APP_NAME}
 	@echo "NOTE: Be sure to set private credentials manually!"
 	@echo "For example:"
@@ -240,8 +240,8 @@ heroku.checkenv:
 heroku.assets:  ## Build Heroku assets (takes ENV_NAME=<env-name>, see help)
 	-cd site/@static && \
 		IS_HEROKU=1 VERSION=$$(git rev-parse HEAD) \
-		USE_HTTPS_FOR_ASSETS=$$(heroku config:get USE_HTTPS_FOR_ASSETS -a ${APP_NAME}) \
 {%- if cookiecutter.use_aws.lower() == "y" %}
+		USE_HTTPS_FOR_ASSETS=$$(heroku config:get USE_HTTPS_FOR_ASSETS -a ${APP_NAME}) \
 		AWS_BUCKET_NAME=$$(heroku config:get AWS_BUCKET_NAME -a ${APP_NAME}) \
 {%- endif %}
 		npm run build
