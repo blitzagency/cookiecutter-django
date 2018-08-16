@@ -215,8 +215,8 @@ buildenv: buildclean
 .PHONY: heroku.deploy
 heroku.deploy: heroku.assets buildenv
 	docker build \
-    --build-arg ASSET_VERSION=$$(git rev-parse HEAD) \
-    . -f docker/Dockerfile -t registry.heroku.com/${APP_NAME}/web:latest
+		--build-arg ASSET_VERSION=$$(git rev-parse HEAD) \
+		. -f docker/Dockerfile -t registry.heroku.com/${APP_NAME}/web:latest
 	docker push registry.heroku.com/${APP_NAME}/web
 	heroku container:release web  -a ${APP_NAME}
 	heroku run ./deploy-tasks.sh -a ${APP_NAME}

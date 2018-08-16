@@ -37,7 +37,7 @@ Our boilerplate automates both the creation of a Heroku app / remote and deploym
 
 The project __Makefile__ documents much of what's happening around creating a Heroku app and pre and post deploy actions. There's a lot going on there but what it essentially boils down to is this:
 
-1. Build a new docker image using the __Dockerfile__ in __docker/heroku/__ (the Dockerfile also runs `manage.py collectstatic`).
+1. Build a new docker image using the __Dockerfile__ in __docker/__ (the Dockerfile also runs `manage.py collectstatic`).
 2. Push new image to the Heroku regisry
 3. Finally, run `manage.py migrate` on newly deploy container.
 
