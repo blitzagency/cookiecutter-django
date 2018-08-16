@@ -219,8 +219,7 @@ heroku.deploy: heroku.assets buildenv
     . -f docker/Dockerfile -t registry.heroku.com/${APP_NAME}/web:latest
 	docker push registry.heroku.com/${APP_NAME}/web
 	heroku container:release web  -a ${APP_NAME}
-	heroku run ./manage.py migrate -a ${APP_NAME}
-	heroku run ./manage.py clear_cache -a ${APP_NAME}
+	heroku run ./deploy-tasks.sh -a ${APP_NAME}
 
 # Exit if ENV_NAME does not match expected value
 .PHONY: heroku.checkenv
