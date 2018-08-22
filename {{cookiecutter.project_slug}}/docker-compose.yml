@@ -1,7 +1,7 @@
 version: "2"
 services:
   django:
-    image: python:3
+    image: python:3.6-stretch
     restart: unless-stopped
     ports:
       - 8000:8000
