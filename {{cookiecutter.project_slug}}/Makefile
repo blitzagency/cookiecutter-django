@@ -214,7 +214,7 @@ buildenv: buildclean
 # 4. Run migrate on the newly deployed / active container
 .PHONY: heroku.deploy
 heroku.deploy: heroku.assets buildenv
-	docker build \
+	docker build --rm \
 		--build-arg ASSET_VERSION=$$(git rev-parse HEAD) \
 		. -f docker/Dockerfile -t registry.heroku.com/${APP_NAME}/web:latest
 	docker push registry.heroku.com/${APP_NAME}/web
