@@ -73,6 +73,10 @@ mo: ## Compile all po -> mo files
 shell: ## Run a bash session on a container
 	docker exec -it ${NAME}_django_1 /bin/bash
 
+.PHONY: dbshell
+dbshell: ## Run a psql session on the local database
+	docker exec -u postgres -it ${NAME}_postgres_1 psql djangodb
+
 .PHONY: test.py
 test.py: ## Run Python / Django test suite
 	docker exec -it ${NAME}_django_1 pytest
