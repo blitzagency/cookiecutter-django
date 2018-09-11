@@ -73,6 +73,10 @@ mo: ## Compile all po -> mo files
 shell: ## Run a bash session on a container
 	docker exec -it ${NAME}_django_1 /bin/bash
 
+.PHONY: dbshell
+dbshell: ## Run a psql session on the local database
+	docker exec -u postgres -it ${NAME}_postgres_1 psql djangodb
+
 .PHONY: test.py
 test.py: ## Run Python / Django test suite
 	docker exec -it ${NAME}_django_1 pytest
@@ -132,12 +136,12 @@ shell.dev: ENV_NAME=dev
 shell.dev: APP_NAME=${PROJECT}-dev
 shell.dev: heroku.shell
 
-.PHONY: deploy.staging
+.PHONY: shell.staging
 shell.staging: ENV_NAME=staging
 shell.staging: APP_NAME=${PROJECT}-staging
 shell.staging: heroku.shell
 
-.PHONY: deploy.prod
+.PHONY: shell.prod
 shell.prod: ENV_NAME=prod
 shell.prod: APP_NAME=${PROJECT}-prod
 shell.prod: heroku.shell
