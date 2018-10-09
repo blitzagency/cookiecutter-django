@@ -18,6 +18,7 @@ services:
       PYTHONPATH: /usr/app/site/apps:/usr/app/site/vendor
       PIPENV_VENV_IN_PROJECT: 1
       DEBUG: 1
+      IS_LOWER_ENVIRONMENT: 1
     logging:
       driver: none
 
