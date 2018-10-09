@@ -126,6 +126,21 @@ LOGGING = {
     }
 }
 
+
+# Non-Prod Sites Basic Authentication
+# =====================================
+
+if not IS_PRODUCTION:  # noqa F405
+    _auth_credentials = env('BASIC_AUTH_CREDENTIALS', default=None)  # noqa F405
+    if _auth_credentials:
+        _auth_credentials = _auth_credentials.split('/')
+        BASIC_AUTH = dict(
+            USERNAME=_auth_credentials[0],
+            PASSWORD=_auth_credentials[1 if len(_auth_credentials) > 1 else 0],
+        )
+        MIDDLEWARE += ('app.utils.basic_auth_middleware.AuthMiddleware',)  # noqa F405
+
+
 # -------------------------------------
 # VENDOR CONFIGURATION
 # -------------------------------------
