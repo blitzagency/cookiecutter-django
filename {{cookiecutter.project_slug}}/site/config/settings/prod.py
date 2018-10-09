@@ -138,7 +138,7 @@ if not IS_PRODUCTION:  # noqa F405
             USERNAME=_auth_credentials[0],
             PASSWORD=_auth_credentials[1 if len(_auth_credentials) > 1 else 0],
         )
-        MIDDLEWARE += ('app.utils.basic_auth_middleware.AuthMiddleware',)  # noqa F405
+        MIDDLEWARE += ('apps.utils.basic_auth_middleware.AuthMiddleware',)  # noqa F405
 
 
 # -------------------------------------
