@@ -41,7 +41,7 @@ init: envfile reqs.git reqs.py reqs.node init.django ## Initialize this project
 
 .PHONY: serve
 serve: ## Start development web server
-	docker exec -it ${NAME}_django_1 python manage.py runserver 0.0.0.0:8000
+	docker exec -it ${NAME}_django python manage.py runserver 0.0.0.0:8000
 
 .PHONY: assets
 assets: ## Start static asset watch / compilation
@@ -53,33 +53,33 @@ envfile: ## copy over the .env file if it doesn't exist
 
 .PHONY: resetdb
 resetdb: ## Reset Django / Postgres database
-	docker exec -it ${NAME}_django_1 python manage.py reset_db --noinput
+	docker exec -it ${NAME}_django python manage.py reset_db --noinput
 
 .PHONY: migrate
 migrate: ## Runs Django makemigrations and migrate in a single command
-	docker exec -it ${NAME}_django_1 python manage.py makemigrations
-	docker exec -it ${NAME}_django_1 python manage.py migrate
+	docker exec -it ${NAME}_django python manage.py makemigrations
+	docker exec -it ${NAME}_django python manage.py migrate
 
 .PHONY: po
 po: ## Create / update po files
-	docker exec -it ${NAME}_django_1 mkdir -p apps/web/locale
-	docker exec -it ${NAME}_django_1 python manage.py makemessages ${OPTS}
+	docker exec -it ${NAME}_django mkdir -p apps/web/locale
+	docker exec -it ${NAME}_django python manage.py makemessages ${OPTS}
 
 .PHONY: mo
 mo: ## Compile all po -> mo files
-	docker exec -it ${NAME}_django_1 python manage.py compilemessages ${OPTS}
+	docker exec -it ${NAME}_django python manage.py compilemessages ${OPTS}
 
 .PHONY: shell
 shell: ## Run a bash session on a container
-	docker exec -it ${NAME}_django_1 /bin/bash
+	docker exec -it ${NAME}_django /bin/bash
 
 .PHONY: dbshell
 dbshell: ## Run a psql session on the local database
-	docker exec -u postgres -it ${NAME}_postgres_1 psql djangodb
+	docker exec -u postgres -it ${NAME}_postgres psql djangodb
 
 .PHONY: test.py
 test.py: ## Run Python / Django test suite
-	docker exec -it ${NAME}_django_1 pytest
+	docker exec -it ${NAME}_django pytest
 
 .PHONY: test.js
 test.js: ## Run Javascript test suite
@@ -92,8 +92,8 @@ reqs.git:
 
 .PHONY: reqs.py
 reqs.py:
-	docker exec -it ${NAME}_django_1 easy_install pdbpp
-	docker exec -it ${NAME}_django_1 pip install -r requirements/local.txt
+	docker exec -it ${NAME}_django easy_install pdbpp
+	docker exec -it ${NAME}_django pip install -r requirements/local.txt
 
 .PHONY: reqs.node
 reqs.node:
@@ -101,8 +101,8 @@ reqs.node:
 
 .PHONY: init.django
 init.django: resetdb
-	docker exec -it ${NAME}_django_1 python manage.py migrate
-	docker exec -it ${NAME}_django_1 python manage.py createsuperuser
+	docker exec -it ${NAME}_django python manage.py migrate
+	docker exec -it ${NAME}_django python manage.py createsuperuser
 
 
 {% if cookiecutter.use_heroku.lower() == "y" -%}
@@ -170,7 +170,7 @@ heroku.create:
 .PHONY: heroku.configure
 heroku.configure:
 	heroku config:set DJANGO_SETINGS_MODULE=config.settings.prod -a ${APP_NAME}
-	heroku config:set SECRET_KEY=$$(docker exec -it ${PROJECT}_django_1 python manage.py gen_secret_key) -a ${APP_NAME}
+	heroku config:set SECRET_KEY=$$(docker exec -it ${PROJECT}_django python manage.py gen_secret_key) -a ${APP_NAME}
 {%- if cookiecutter.use_aws.lower() == "y" %}
 	heroku config:set USE_HTTPS_FOR_ASSETS=1 -a ${APP_NAME}
 	heroku config:set AWS_BUCKET_NAME=${APP_NAME} -a ${APP_NAME}
