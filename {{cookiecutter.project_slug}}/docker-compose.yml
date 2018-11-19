@@ -24,7 +24,7 @@ services:
       driver: none
 
   postgres:
-    image: postgres:latest
+    image: postgres:10.4
     container_name: {{cookiecutter.heroku_slug}}_postgres
     restart: unless-stopped
     volumes:
